@@ -1,0 +1,227 @@
+
+%token <int*(int*int)> NUM
+%token <string*(int*int)> ID STRINGCONST
+%token <(int*int)> ADD SUB XORWITH M
+%token <(int*int)> PLUS MINUS XOR BAND BOR SHIFTL SHIFTR
+%token <(int*int)> EQUAL LESS GREATER NEQ LEQ GEQ LAND NAND
+%token <(int*int)> BEGIN END LBRACK RBRACK LARROW RARROW SEMICOLON
+%token <(int*int)> CALL UNCALL SWAP ASSERT READ WRITE TEST SKIP TIMER EOF
+%token <(int*int)> INCLUDEC
+
+%left SEMICOLON
+
+%start Prog
+%type <RIL.prog> Prog
+%type <RIL.lVal> Lval
+%type <RIL.rVal> Rval
+%type <RIL.rVal list> Rvals
+%type <RIL.updateOp * (int * int)> Update
+%type <RIL.arithOp> Arith
+%type <RIL.relOp> RelOp
+%type <RIL.cond> Cond
+%type <RIL.cond list> Conds
+%type <RIL.entry> Entry
+%type <RIL.exit> Exit
+%type <RIL.entry * RIL.exit -> RIL.block list> Instruct
+%type <RIL.block list> Block Blocks
+
+%%
+
+Lval :	  ID		{ RIL.Var $1 }
+    	| M LBRACK ID RBRACK
+	     			{ RIL.Mem $3 }
+;
+
+Rval :	  Lval		{ RIL.L $1 }
+     	| NUM		{ RIL.Const $1 }
+;
+
+Rvals :				{ [] }
+		| Rval Rvals
+					{ $1 :: $2 }
+;
+
+Update :  ADD		{ (RIL.Add, $1) }
+		| SUB		{ (RIL.Sub, $1) }
+		| XORWITH	{ (RIL.XorWith, $1) }
+;
+
+Arith :	  PLUS		{ RIL.Plus }
+		| MINUS		{ RIL.Minus }
+		| XOR		{ RIL.Xor }
+		| BAND		{ RIL.And }
+		| BOR		{ RIL.Or }
+		| SHIFTL	{ RIL.ShiftL }
+		| SHIFTR	{ RIL.ShiftR }
+;
+
+RelOp :	  EQUAL		{ RIL.Equal }
+		| LESS		{ RIL.Less }
+		| GREATER	{ RIL.Greater }
+		| NEQ		{ RIL.Neq }
+		| LEQ		{ RIL.Leq }
+		| GEQ		{ RIL.Geq }
+		| BAND		{ RIL.IfAnd }
+		| NAND		{ RIL.IfNand }
+;
+
+Cond :	  Lval RelOp Rval
+					{ ($1, $2, $3) }
+;
+
+Conds :	  Cond		{ [$1] }
+		| Cond LAND Conds
+	           		{ $1 :: $3 }
+;
+
+Entry :	  BEGIN ID	{ RIL.Begin $2 }
+		| ID LARROW	{ RIL.Label $1 }
+		| ID SEMICOLON ID LARROW Cond
+					{ RIL.Join ($5, #1 $1, #1 $3, $4) }
+;
+
+Exit :	  END ID	{ RIL.End $2 }
+		| RARROW ID	{ RIL.Goto $2 }
+		| Cond RARROW ID SEMICOLON ID
+					{ RIL.Split ($1, #1 $3, #1 $5, $2) }
+;
+
+Instruct :	  Lval Update Rval Arith Rval
+					{ fn (en,ex) =>
+                         [(en,
+                           RIL.Update ($1, #1 $2, $3, $4, $5, #2 $2),
+                           ex)] }
+			| Lval Update Rval
+					{ fn (en,ex) =>
+                         [(en,
+                           RIL.Update ($1, #1 $2, $3, RIL.Plus,
+                                       RIL.Const (0, (0, 0)), #2 $2),
+                           ex)] }
+			| Lval SWAP Lval
+					{ fn (en,ex) =>
+                         [(en,
+                           RIL.Swap ($1, $3, $2),
+                           ex)] }
+			| CALL ID
+					{ fn (en,ex) =>
+                         [(en,
+                           RIL.Call $2,
+                           ex)] }
+			| UNCALL ID
+					{ fn (en,ex) =>
+                         [(en,
+                           RIL.Uncall $2,
+                           ex)] }
+			| ASSERT Conds
+					{ fn (en,ex) =>
+                         [(en,
+                           RIL.Assert ($2, $1),
+                           ex)] }
+			| READ Lval
+					{ fn (en,ex) =>
+                         [(en,
+                           RIL.Read ($2, $1),
+                           ex)] }
+			| WRITE Lval
+					{ fn (en,ex) =>
+                         [(en,
+                           RIL.Write ($2, $1) ,
+                           ex)]}
+			| TEST Rvals STRINGCONST
+					{ fn (en,ex) =>
+                         [(en,
+                           RIL.Test (#1 $3, $2, $1) ,
+                           ex)]}
+			| INCLUDEC STRINGCONST
+					{ fn (en,ex) =>
+                         [(en,
+                           RIL.IncludeC (#1 $2, $1) ,
+                           ex)]}
+			| Instruct SEMICOLON Instruct
+					{ let
+                        val lab = "dummy"
+                      in
+                        fn (en,ex) =>
+                          let
+                            val bs1 =
+                                $1 (en, RIL.Goto (lab, $2))
+                            val bs2 =
+                                $3 (RIL.Label (lab, $2), ex)
+                            val ([(en1,inst1,ex1)], bs1') =
+                                List.partition
+                                    (fn (en,i,RIL.Goto (l,p)) => l = lab
+                                      | _ => false)
+                                    bs1
+                            val ([(en2,inst2,ex2)], bs2') =
+                                List.partition
+                                    (fn (RIL.Label (l,p),i,ex) => l = lab
+                                      | _ => false)
+                                    bs2
+                            val inst3 =
+                                case (inst1, inst2) of
+                                  (RIL.Skip, _) => inst2
+                                | (_, RIL.Skip) => inst1
+                                | _ => RIL.Semi (inst1, inst2, $2)
+                          in
+                            bs1' @ [(en1, inst3, ex2)] @ bs2'
+                          end
+                      end }
+			| Cond RARROW ID
+					{ let
+                        val lab = "split_" ^ Int.toString (#1 $2)
+                                  ^ "_" ^ Int.toString (#2 $2)
+                      in
+                        fn (en,ex) =>
+                           [(en, RIL.Skip, RIL.Split ($1, #1 $3, lab, $2)),
+                            (RIL.Label (lab, $2), RIL.Skip, ex)]
+                      end }
+			| ID LARROW Cond
+					{ let
+                        val lab = "join_" ^ Int.toString (#1 $2)
+                                  ^ "_" ^ Int.toString (#2 $2)
+                      in
+                        fn (en,ex) =>
+                           [(en, RIL.Skip, RIL.Goto (lab, $2)),
+                           (RIL.Join ($3, #1 $1, lab, $2), RIL.Skip, ex)]
+                      end }
+			| SKIP	{ fn (en,ex) => [(en, RIL.Skip, ex)] }
+			| TIMER	{ fn (en,ex) => [(en, RIL.Timer, ex)] }
+;
+
+Block :	  Entry Instruct Exit
+					{ $2 ($1, $3) }
+;
+
+Blocks :  EOF			{ [] }
+		| Block Blocks	{ $1 @ $2 }
+;
+
+Prog : Blocks		{ let
+                        val bs = $1
+                        val (trivs, nontrivs) =
+                            List.partition
+                                (fn (RIL.Label _, RIL.Skip, RIL.Goto _) => true
+                                  | _ => false)
+                                bs
+                        val table =
+                            List.map
+                                (fn (RIL.Label (en,_), _, RIL.Goto (ex,_)) =>
+                                    (en,ex)
+                                  | _ => raise Domain)
+                                trivs
+                        fun lookup x [] = x
+                          | lookup x ((y,y1) :: t) =
+                            if x=y then y1 else lookup x t
+                        fun forward (en,i,ex) =
+                            (en, i,
+                             case ex of
+                               RIL.Goto (l,pos) =>
+                                 RIL.Goto (lookup l table,pos)
+                             | RIL.Split (c,l1,l2,pos) => 
+                                 RIL.Split (c,lookup l1 table,
+                                            lookup l2 table, pos)
+                             | _ => ex)
+                      in
+                        List.map forward nontrivs
+                      end }
+	  

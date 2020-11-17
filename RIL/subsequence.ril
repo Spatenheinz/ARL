@@ -1,0 +1,288 @@
+// Subsequences program in RIL
+// Finds all subsequences of a list
+// Inputs m, so heapSize is 2^m + b - 1
+
+begin main
+includeC "A = 0;\n";
+// initialize hash codes
+hashA += 366001;
+hashB += 827927;
+hashC += 593041;
+hashT += hashA;
+
+// heap size setup
+read m; // log of heap size
+b += 8; // segment size
+b1 += b - 1;
+hsize += 1<<m;
+hsize += b1; // number of nodes = 2^m + b - 1
+hsizeB += hsize << 2;
+hsizeB += hsize << 2;
+hsizeB += hsize << 2; // number of bytes
+H += 4800; // heap start
+endH += hsizeB + H; // heap end
+lastH += endH - 12; // address of last node in heap
+mask += 4<<m; // Mask used for hashing: 4*(2^m)
+mask -= 4; // for overlapping segments
+//mask -= b<<2; // for non-overlapping segments
+segSize += b1<<2;
+segSize += b1<<2;
+segSize += b1<<2; // size (in bytes) of segment to search =  12(b-1).
+
+stackP += endH;
+stackP += 64;  // initialise stack pointer
+
+call initialise; // initialise constants
+call build; // build list into A0
+call subsequences; // find all subsequences of list
+uncall initialise;
+includeC "printf(\"max refs = %d\\n\",A);";
+
+// print number of free nodes
+assert z == 0;
+z += H;
+dump1 <-- H != z;
+M[z] > 0 --> used1;
+y += 1;
+used1 <-- M[z] > 0;
+z += 12;
+z < endH --> dump1;
+test y "%d,"
+end main
+
+begin initialise  // construct nilnil = [[]]
+  consA += 2;
+  consD += 2;
+  call cons;
+  nilnil <-> consP
+end initialise
+
+begin build    // build list into A0
+  consD += 2;  // []
+  consA += 43;  // integer 1
+  call cons;
+  consP <-> consD;
+  consA += 45;  // integer 2
+  call cons;
+  consP <-> consD;
+  consA += 47;  // integer 3
+  call cons;
+  consP <-> consD;
+  consA += 49;  // integer 4
+  call cons;
+  consP <-> consD;
+  consA += 411;  // integer 5
+  call cons;
+  consP <-> consD;
+  consA += 413;  // integer 6
+  call cons;
+  consP <-> consD;
+  consA += 415;  // integer 7
+  call cons;
+  consP <-> consD;
+  consA += 417;  // integer 8
+  call cons;
+  consP <-> consD;
+  consA += 419;  // integer 9
+  call cons;
+  consP <-> consD;
+  consA += 421;  // integer 10
+  call cons;
+  consP <-> consD;
+  consA += 423;  // integer 11
+  call cons;
+  consP <-> consD;
+  consA += 425;  // integer 12
+  call cons;
+  A0 <-> consP
+end build
+
+begin subsequences // argument in A0, result in R0
+  test A0 "subsequences(%d)\n";
+  A0 != 2 --> rule2;
+    A0 -= 2;
+    R0 += nilnil
+    --> endSS
+  rule2 <--
+    consP <-> A0;
+    uncall cons;  // deconstruct (x :: xs), so consA = x, consD = xs
+    M[stackP] <-> consA;  // save x
+    stackP += 4;
+    A0 <-> consD; // xs to A0
+    call subsequences;  // R0 now holds ss0
+    stackP -= 4;
+    M[stackP] <-> x; // restore x (1st arg of consAll)
+    A1 <-> R0; // 2nd arg of consAll is ss0
+    call consAll; // R0 now holds result for rule 2
+  endSS <-- R0 == nilnil;
+  test R0 "--> %d\n"
+end subsequences
+
+begin consAll // arguments in x and A1, result in R0
+  // test x A1 "consAll(%d,%d)\n";
+  consP <-> A1;
+  uncall cons; // deconstruct (s :: ss), so consA = s, consD = ss
+  //test consA consD "s = %d, ss = %d\n";
+  consD != 2 --> case2;
+    ss1 <-> consD // ss = [] => ss1 = []
+    --> caseEnd
+  case2 <--   // ss != []
+    copyP <-> x;  // x -> copyP and copyQ
+    call copy;
+    M[stackP] <-> copyP;  // save x
+    stackP += 4;
+    M[stackP] <-> consA;  // save s
+    stackP += 4;
+    x <-> copyQ;  // x
+    A1 <-> consD;  // ss -> A1
+    call consAll;
+    ss1 <-> R0;
+    stackP -= 4;
+    M[stackP] <-> consA;  // restore s
+    stackP -= 4;
+    M[stackP] <-> x;  // restore x
+  caseEnd <-- ss1 == 2;
+  copyP <-> consA; // ss -> copyP and copyQ
+  call copy;
+  consA <-> x;
+  consD <-> copyP;
+  call cons;
+  T1 <-> consP; // T1 := x :: s
+  consA <-> copyQ;
+  consD <-> ss1;
+  call cons;  // consP := s :: ss1
+  consD <-> consP;
+  consA <-> T1;
+  call cons; // (x :: s) :: s :: ss1
+  R0 <-> consP
+  // ; test R0 "---> %d\n"
+end consAll
+
+// copy and cons operations
+
+begin copy
+  assert copyP > 0 && copyQ == 0;
+  copyP < H --> copySymbol;
+    M[copyP] += 1;
+    ttt += M[copyP];
+    includeC "if (A < var_ttt) A = var_ttt;";
+    ttt -= M[copyP];
+  copySymbol <-- copyP < H;
+  copyQ += copyP;
+  assert copyP > 0 && copyQ == copyP
+end copy
+
+begin cons  // optimized version
+assert consA != 0;
+assert consD != 0;
+assert consP == 0;
+assert hashV == 0;
+assert segEnd == 0;
+call hash;
+// test consA consD hashV "(%d,%d):%d|";
+segEnd += hashV + segSize;
+consP += hashV;
+consSearchSame <-- consP > hashV;
+  M[consP] == 0 --> consNext;
+    consP += 4;
+    M[consP] != consA --> consNotA;
+      consP += 4;
+      M[consP] == consD --> consFoundSame;
+      consP -= 4;
+    consNotA <-- M[consP] != consA;
+    consP -= 4;
+  consNext <-- M[consP] == 0;
+  consP += 12;
+consP <= segEnd --> consSearchSame;
+consSearchEmpty <-- consP <= segEnd;
+  consP -= 12;
+  consP < hashV --> consFail;
+  M[consP] != 0 --> consSearchEmpty;
+  segEnd -= hashV + segSize;
+  uncall hash;
+  M[consP] += 1;
+  consP += 4;
+  consA <-> M[consP];
+  consP += 4;
+  consD <-> M[consP];
+  consP -= 8;
+consEnd <-- M[consP] > 1;
+assert consP !& 3 && consP >= H && consA == 0 && consD == 0;
+assert hashV == 0 && segEnd == 0;
+failedCons <-- failed > 0 // return point for fail handler
+end cons
+
+consFoundSame <--
+  segEnd -= hashV + segSize; // was 60
+  uncall hash;
+  consD < H --> consSymbolD;
+    M[consD] -= 1;
+  consSymbolD <-- consD < H;
+  consD -= M[consP];
+  consP -= 4;
+  consA < H --> consSymbolA;
+    M[consA] -= 1;
+  consSymbolA <-- consA < H;
+  consA -= M[consP];
+  consP -= 4;
+  M[consP] += 1;
+  ttt += M[consP];
+  includeC "if (A < var_ttt) A = var_ttt;";
+  ttt -= M[consP]
+--> consEnd
+
+
+// handle allocation failure
+// write number of free nodes
+consFail <--
+failed += 1;
+assert z == 0;
+z += H;
+dump <-- H != z;
+M[z] > 0 --> used;
+y += 1;
+used <-- M[z] > 0;
+z += 12;
+z < endH --> dump;
+test y " free nodes: %d,"
+--> failedCons // jump to end of cons procedure
+
+begin hash_alt
+assert hashV == 0 && hashA == 366001 && hashB == 827927 && hashC == 593041;
+hashA += consA;
+hashB += consD;
+hashA -= hashB + hashC;
+hashA ^= hashC >> 13;
+hashB -= hashC + hashA;
+hashB ^= hashA << 8;
+hashC -= hashA + hashB;
+hashC ^= hashB >> 13;
+hashA -= hashB + hashC;
+hashA ^= hashC >> 12;
+hashB -= hashC + hashA;
+hashB ^= hashA << 16;
+hashC -= hashA + hashB;
+hashC ^= hashB >> 5;
+hashA -= hashB + hashC;
+hashA ^= hashC >> 3;
+hashB -= hashC + hashA;
+hashB ^= hashA << 10;
+hashC -= hashA + hashB;
+hashC ^= hashB >> 15;
+hashV += hashC & mask;
+hashV += hashC & mask;
+hashV += hashC & mask;
+hashV += H
+end hash_alt
+
+begin hash
+assert hashV == 0 && hashT ==  366001;
+hashT ^= consA << 7;
+hashT += consA >> 1;
+hashT ^= consD << 5;
+hashT += consD >> 3;
+hashV += hashT & mask;
+hashV += hashT & mask;
+hashV += hashT & mask;
+hashV += H
+end hash
