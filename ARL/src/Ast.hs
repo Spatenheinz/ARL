@@ -1,83 +1,71 @@
 module Ast where
 
-import Text.Parsec.Pos
+import Text.Megaparsec
 
-data Type
-     = Int SourcePos
-     | Stack SourcePos
-     | BoolT SourcePos
+data Prog
+    = Prog [Func]
 
-instance Eq Type where
-   (Int _)   == (Int _) = True
-   (Stack _) == (Stack _) = True
-   (BoolT _) == (BoolT _) = True
-   _         == _         = False
+data Func = Func { funName :: Ident
+                 , funPat  :: [FunPat] }
+    deriving(Show, Eq)
+
+data FunPat = FunPat { funParam :: [LExpr]
+                     , funBody  :: Expr }
+    deriving(Show,Eq)
 
 data Ident =
-  Ident String SourcePos
+  Ident String --SourcePos
+  deriving(Show)
 
 instance Eq Ident where
-  (Ident ident1 _) == (Ident ident2 _ ) = ident1 == ident2
-
-data Lval
-    = Var Ident
-    | Lookup Ident Expr
-    deriving (Eq)
-
-data ModOp
-     = AddEq  -- +=
-     | SubEq  -- -=
-     | XorEq  -- ^=
-     deriving (Eq, Show)
+  (Ident ident1) == (Ident ident2) = ident1 == ident2
 
 data UnaryOp
      = Not
      deriving (Eq, Ord)
 
 -- Binary operators
-data BinOp
-    = Add | Sub | Mul | Div | Mod     -- Arithmetic (+ - * / %)
-    -- | And | Or | Xor                  -- Binary (& | ^)
-    | And | Or                      -- Logical (&& ||)
-    | GT | LT | EQ | NEQ | GE | LE    -- Relational (> < = != >= <=)
-    deriving (Eq, Ord, Show)
+-- data BinOp
+--     = Add | Sub | Mul | Div | Mod     -- Arithmetic (+ - * / %)
+--     -- | And | Or | Xor                  -- Binary (& | ^)
+--     | And | Or                      -- Logical (&& ||)
+--     | GT | LT | EQ | NEQ | GE | LE    -- Relational (> < = != >= <=)
+--     deriving (Eq, Ord, Show)
 
 data Expr
-    = Num Integer SourcePos
-    | Boolean Bool SourcePos
-    | LV Lval SourcePos
-    | UnaryOp UnaryOp Expr
-    | BinOp BinOp Expr Expr
-    deriving (Eq)
+    = LeftT LExpr
+    | Let LExpr LExpr Expr
+    | Case LExpr [(LExpr, Guard, Expr)]
+    deriving(Show, Eq)
 
-data Def
-    = Def Pattern Pattern
+data Guard = Guard [LExpr]
+           deriving (Eq, Show)
 
-data Pattern
-     = Vname
-     | Const
-     | Neq Ident Pattern
-     | Cons Pattern Pattern
+data Value = IntV Integer
+           | TupleV [Value]
+           | ListV  [Value]
+           | FunV String
+           deriving (Show, Eq)
 
-data Rules
-    = Pattern [Def] Pattern
-    | Rules Rules
+data LExpr
+    = Var Ident
+    | Int Integer
+    | Tuple [LExpr]
+    | List LExprList
+    | Neq Ident LExpr
+    | As  Ident LExpr
+    | App (Maybe String) Ident [LExpr]
+    deriving (Show, Eq)
 
--- data MainFunc
---     = MainFunc Rules
-    
-data Func
-    = Func Ident Rules 
-
-data Prog
-    = Prog [Func]
+data LExprList
+    = ListCons LExpr LExprList
+    | ListEnd LExpr
+    | ListNil
+    deriving (Show, Eq)
 
 class Identifiable a where
   ident :: a -> String
 
 instance Identifiable Ident where
-  ident (Ident id _) = id
+  ident (Ident id') = id'
 
-instance Identifiable Lval where
-  ident (Var id) = ident id
-  ident (Lookup id _) = ident id
