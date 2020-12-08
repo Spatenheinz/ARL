@@ -1,7 +1,3 @@
-// Subsequences program in RIL
-// Finds all subsequences of a list
-// Inputs m, so heapSize is 2^m + b - 1
-
 begin main
 includeC "A = 0;\n";
 // initialize hash codes
@@ -34,8 +30,9 @@ stackP += 64;  // initialise stack pointer
 
 call initialise; // initialise constants
 call build; // build list into A0
-call subsequences; // find all subsequences of list
-uncall initialise;
+call subsequences;
+// uncall build;
+//uncall initialise;
 includeC "printf(\"max refs = %d\\n\",A);";
 
 // print number of free nodes
@@ -51,7 +48,9 @@ test y "%d,"
 end main
 
 begin initialise  // construct nilnil = [[]]
+  test consA "init: %d\n";
   consA += 2;
+  test consA "init: %d\n";
   consD += 2;
   call cons;
   nilnil <-> consP
@@ -59,46 +58,18 @@ end initialise
 
 begin build    // build list into A0
   consD += 2;  // []
-  consA += 43;  // integer 1
+  consA += 3;  // integer 1
+  test consA "%d\n";
   call cons;
   consP <-> consD;
-  consA += 45;  // integer 2
-  call cons;
-  consP <-> consD;
-  consA += 47;  // integer 3
-  call cons;
-  consP <-> consD;
-  consA += 49;  // integer 4
-  call cons;
-  consP <-> consD;
-  consA += 411;  // integer 5
-  call cons;
-  consP <-> consD;
-  consA += 413;  // integer 6
-  call cons;
-  consP <-> consD;
-  consA += 415;  // integer 7
-  call cons;
-  consP <-> consD;
-  consA += 417;  // integer 8
-  call cons;
-  consP <-> consD;
-  consA += 419;  // integer 9
-  call cons;
-  consP <-> consD;
-  consA += 421;  // integer 10
-  call cons;
-  consP <-> consD;
-  consA += 423;  // integer 11
-  call cons;
-  consP <-> consD;
-  consA += 425;  // integer 12
+  consA += 7;  // integer 12
+  test consA "%d\n";
   call cons;
   A0 <-> consP
 end build
 
 begin subsequences // argument in A0, result in R0
-  // test A0 "subsequences(%d)\n";
+  test A0 "subsequences(%d)\n";
   A0 != 2 --> rule2;
     A0 -= 2;
     R0 += nilnil
@@ -106,6 +77,7 @@ begin subsequences // argument in A0, result in R0
   rule2 <--
     consP <-> A0;
     uncall cons;  // deconstruct (x :: xs), so consA = x, consD = xs
+    test consA "subs: %d\n";
     M[stackP] <-> consA;  // save x
     stackP += 4;
     A0 <-> consD; // xs to A0
@@ -114,15 +86,15 @@ begin subsequences // argument in A0, result in R0
     M[stackP] <-> x; // restore x (1st arg of consAll)
     A1 <-> R0; // 2nd arg of consAll is ss0
     call consAll; // R0 now holds result for rule 2
-  endSS <-- R0 == nilnil
-  // test R0 "--> %d\n"
+  endSS <-- R0 == nilnil;
+  test R0 "--> %d\n"
 end subsequences
 
 begin consAll // arguments in x and A1, result in R0
-  //test x A1 "consAll(%d,%d)\n";
+  test x A1 "consAll(%d,%d)\n";
   consP <-> A1;
   uncall cons; // deconstruct (s :: ss), so consA = s, consD = ss
-  //test consA consD "s = %d, ss = %d\n";
+  test consA consD "s = %d, ss = %d\n";
   consD != 2 --> case2;
     ss1 <-> consD // ss = [] => ss1 = []
     --> caseEnd
@@ -132,12 +104,16 @@ begin consAll // arguments in x and A1, result in R0
     M[stackP] <-> copyP;  // save x
     stackP += 4;
     M[stackP] <-> consA;  // save s
+    test consA "A0 ---> %d\n";
     stackP += 4;
     x <-> copyQ;  // x
     A1 <-> consD;  // ss -> A1
+  test consA "A1111 ---> %d\n";
     call consAll;
+  test consA "A1112 ---> %d\n";
     ss1 <-> R0;
     stackP -= 4;
+  test consA "A1113 ---> %d\n";
     M[stackP] <-> consA;  // restore s
     stackP -= 4;
     M[stackP] <-> x;  // restore x
@@ -146,19 +122,20 @@ begin consAll // arguments in x and A1, result in R0
   call copy;
   consA <-> x;
   consD <-> copyP;
+  test consA "A ---> %d\n";
   call cons;
   T1 <-> consP; // T1 := x :: s
   consA <-> copyQ;
   consD <-> ss1;
+  test consA "A1 ---> %d\n";
   call cons;  // consP := s :: ss1
   consD <-> consP;
   consA <-> T1;
+  test consA "A2 ---> %d\n";
   call cons; // (x :: s) :: s :: ss1
-  R0 <-> consP
-  // ; test R0 "---> %d\n"
+  R0 <-> consP;
+  test R0 "res ---> %d\n"
 end consAll
-
-// copy and cons operations
 
 begin copy
   assert copyP > 0 && copyQ == 0;

@@ -89,6 +89,8 @@ int main(int ac, int* av)
   goto Label_main;
 
 programEnd:
+  for (int i = 0; i< 0x10000000; i++){
+    if (Mem[i] != 0) { printf("%d at address:%d\n", Mem[i], i);}}
   fprintf(stderr,"\nInstructions: %u\nMemory accesses: %u\n",iCount, mCount);
 
   exit(0);
@@ -107,7 +109,7 @@ count(1, 0);
   var_hashC = (var_hashC + (593041 + 0));
 count(1, 0);
   var_hashT = (var_hashT + (var_hashA + 0));
-  if (var_m != 0 || scanf("%d\n",&var_m) != 1)  { fprintf(stderr,"Read failure at line 14\n");
+  if (var_m != 0 || scanf("%d\n",&var_m) != 1)  { fprintf(stderr,"Read failure at line 10\n");
   goto programEnd;
 }
 count(1, 0);
@@ -145,81 +147,79 @@ count(1, 0);
 count(1, 0);
   var_stackP = (var_stackP + (64 + 0));
   count(2,0);
-   stack[stackPointer++] = &&Return_35_1;
+   stack[stackPointer++] = &&Return_31_1;
   goto Label_initialise;
-  Return_35_1:
+  Return_31_1:
   count(2,0);
-   stack[stackPointer++] = &&Return_36_2;
+   stack[stackPointer++] = &&Return_32_2;
   goto Label_build;
-  Return_36_2:
+  Return_32_2:
   count(2,0);
-   stack[stackPointer++] = &&Return_37_3;
+   stack[stackPointer++] = &&Return_33_3;
   goto Label_subsequences;
-  Return_37_3:
-  count(2,0);
-   stack[stackPointer++] = &&Return_38_4;
-  goto Label__initialise;
-  Return_38_4:
+  Return_33_3:
 
 printf("max refs = %d\n",A);
   if (!(var_z == 0 && 1)){
-    fprintf(stderr,"\nAssertion failure at line 42\n");
+    fprintf(stderr,"\nAssertion failure at line 39\n");
   writeVars(); goto programEnd;
 }
 count(1, 0);
   var_z = (var_z + (var_H + 0));
-  goto Label_join_44_7;
+  goto Label_join_41_7;
 
 Label_dump1:
   if (count(1,0), !(var_H != var_z)){
-    fprintf(stderr,"\nJoin failure at line 44\n");
+    fprintf(stderr,"\nJoin failure at line 41\n");
   writeVars(); goto programEnd;
 }
-  if (count(1,0), (count(0,1), Mem[var_z]) > 0) goto Label_used1; else goto Label_split_45_10;
+  if (count(1,0), (count(0,1), Mem[var_z]) > 0) goto Label_used1; else goto Label_split_42_10;
 
-Label_join_44_7:
+Label_join_41_7:
   if (count(1,0), var_H != var_z){
-    fprintf(stderr,"\nJoin failure at line 44\n");
+    fprintf(stderr,"\nJoin failure at line 41\n");
   writeVars(); goto programEnd;
 }
-  if (count(1,0), (count(0,1), Mem[var_z]) > 0) goto Label_used1; else goto Label_split_45_10;
+  if (count(1,0), (count(0,1), Mem[var_z]) > 0) goto Label_used1; else goto Label_split_42_10;
 
-Label_split_45_10:
+Label_split_42_10:
 count(1, 0);
   var_y = (var_y + (1 + 0));
-  goto Label_join_47_7;
+  goto Label_join_44_7;
 
 Label_used1:
   if (count(1,0), !((count(0,1), Mem[var_z]) > 0)){
-    fprintf(stderr,"\nJoin failure at line 47\n");
+    fprintf(stderr,"\nJoin failure at line 44\n");
   writeVars(); goto programEnd;
 }
 count(1, 0);
   var_z = (var_z + (12 + 0));
-  if (count(1,0), var_z < var_endH) goto Label_dump1; else goto Label_split_49_10;
+  if (count(1,0), var_z < var_endH) goto Label_dump1; else goto Label_split_46_10;
 
-Label_join_47_7:
+Label_join_44_7:
   if (count(1,0), (count(0,1), Mem[var_z]) > 0){
-    fprintf(stderr,"\nJoin failure at line 47\n");
+    fprintf(stderr,"\nJoin failure at line 44\n");
   writeVars(); goto programEnd;
 }
 count(1, 0);
   var_z = (var_z + (12 + 0));
-  if (count(1,0), var_z < var_endH) goto Label_dump1; else goto Label_split_49_10;
+  if (count(1,0), var_z < var_endH) goto Label_dump1; else goto Label_split_46_10;
 
-Label_split_49_10:
+Label_split_46_10:
 fprintf(stderr,"%d,", var_y);
   goto *stack[--stackPointer];
 
 Label_initialise:
+fprintf(stderr,"init: %d\n", var_consA);
 count(1, 0);
   var_consA = (var_consA + (2 + 0));
+fprintf(stderr,"init: %d\n", var_consA);
 count(1, 0);
   var_consD = (var_consD + (2 + 0));
   count(2,0);
-   stack[stackPointer++] = &&Return_56_5;
+   stack[stackPointer++] = &&Return_55_4;
   goto Label_cons;
-  Return_56_5:
+  Return_55_4:
   tmp = var_nilnil;
   var_nilnil = (var_consP);
   var_consP = (tmp);
@@ -229,119 +229,32 @@ Label_build:
 count(1, 0);
   var_consD = (var_consD + (2 + 0));
 count(1, 0);
-  var_consA = (var_consA + (43 + 0));
+  var_consA = (var_consA + (3 + 0));
+fprintf(stderr,"%d\n", var_consA);
   count(2,0);
-   stack[stackPointer++] = &&Return_63_6;
+   stack[stackPointer++] = &&Return_63_5;
   goto Label_cons;
-  Return_63_6:
+  Return_63_5:
   tmp = var_consP;
   var_consP = (var_consD);
   var_consD = (tmp);
 count(1, 0);
-  var_consA = (var_consA + (45 + 0));
+  var_consA = (var_consA + (7 + 0));
+fprintf(stderr,"%d\n", var_consA);
   count(2,0);
-   stack[stackPointer++] = &&Return_66_7;
+   stack[stackPointer++] = &&Return_67_6;
   goto Label_cons;
-  Return_66_7:
-  tmp = var_consP;
-  var_consP = (var_consD);
-  var_consD = (tmp);
-count(1, 0);
-  var_consA = (var_consA + (47 + 0));
-  count(2,0);
-   stack[stackPointer++] = &&Return_69_8;
-  goto Label_cons;
-  Return_69_8:
-  tmp = var_consP;
-  var_consP = (var_consD);
-  var_consD = (tmp);
-count(1, 0);
-  var_consA = (var_consA + (49 + 0));
-  count(2,0);
-   stack[stackPointer++] = &&Return_72_9;
-  goto Label_cons;
-  Return_72_9:
-  tmp = var_consP;
-  var_consP = (var_consD);
-  var_consD = (tmp);
-count(1, 0);
-  var_consA = (var_consA + (411 + 0));
-  count(2,0);
-   stack[stackPointer++] = &&Return_75_10;
-  goto Label_cons;
-  Return_75_10:
-  tmp = var_consP;
-  var_consP = (var_consD);
-  var_consD = (tmp);
-count(1, 0);
-  var_consA = (var_consA + (413 + 0));
-  count(2,0);
-   stack[stackPointer++] = &&Return_78_11;
-  goto Label_cons;
-  Return_78_11:
-  tmp = var_consP;
-  var_consP = (var_consD);
-  var_consD = (tmp);
-count(1, 0);
-  var_consA = (var_consA + (415 + 0));
-  count(2,0);
-   stack[stackPointer++] = &&Return_81_12;
-  goto Label_cons;
-  Return_81_12:
-  tmp = var_consP;
-  var_consP = (var_consD);
-  var_consD = (tmp);
-count(1, 0);
-  var_consA = (var_consA + (417 + 0));
-  count(2,0);
-   stack[stackPointer++] = &&Return_84_13;
-  goto Label_cons;
-  Return_84_13:
-  tmp = var_consP;
-  var_consP = (var_consD);
-  var_consD = (tmp);
-count(1, 0);
-  var_consA = (var_consA + (419 + 0));
-  count(2,0);
-   stack[stackPointer++] = &&Return_87_14;
-  goto Label_cons;
-  Return_87_14:
-  tmp = var_consP;
-  var_consP = (var_consD);
-  var_consD = (tmp);
-count(1, 0);
-  var_consA = (var_consA + (421 + 0));
-  count(2,0);
-   stack[stackPointer++] = &&Return_90_15;
-  goto Label_cons;
-  Return_90_15:
-  tmp = var_consP;
-  var_consP = (var_consD);
-  var_consD = (tmp);
-count(1, 0);
-  var_consA = (var_consA + (423 + 0));
-  count(2,0);
-   stack[stackPointer++] = &&Return_93_16;
-  goto Label_cons;
-  Return_93_16:
-  tmp = var_consP;
-  var_consP = (var_consD);
-  var_consD = (tmp);
-count(1, 0);
-  var_consA = (var_consA + (425 + 0));
-  count(2,0);
-   stack[stackPointer++] = &&Return_96_17;
-  goto Label_cons;
-  Return_96_17:
+  Return_67_6:
   tmp = var_A0;
   var_A0 = (var_consP);
   var_consP = (tmp);
   goto *stack[--stackPointer];
 
 Label_subsequences:
-  if (count(1,0), var_A0 != 2) goto Label_rule2; else goto Label_split_102_11;
+fprintf(stderr,"subsequences(%d)\n", var_A0);
+  if (count(1,0), var_A0 != 2) goto Label_rule2; else goto Label_split_73_11;
 
-Label_split_102_11:
+Label_split_73_11:
 count(1, 0);
   var_A0 = (var_A0 - (2 + 0));
 count(1, 0);
@@ -353,9 +266,10 @@ Label_rule2:
   var_consP = (var_A0);
   var_A0 = (tmp);
   count(2,0);
-   stack[stackPointer++] = &&Return_108_18;
+   stack[stackPointer++] = &&Return_79_7;
   goto Label__cons;
-  Return_108_18:
+  Return_79_7:
+fprintf(stderr,"subs: %d\n", var_consA);
   tmp = (count(0,1), Mem[var_stackP]);
   Mem[var_stackP] = (count(0,1), var_consA);
   var_consA = (tmp);
@@ -365,9 +279,9 @@ count(1, 0);
   var_A0 = (var_consD);
   var_consD = (tmp);
   count(2,0);
-   stack[stackPointer++] = &&Return_112_19;
+   stack[stackPointer++] = &&Return_84_8;
   goto Label_subsequences;
-  Return_112_19:
+  Return_84_8:
 count(1, 0);
   var_stackP = (var_stackP - (4 + 0));
   tmp = (count(0,1), Mem[var_stackP]);
@@ -377,36 +291,40 @@ count(1, 0);
   var_A1 = (var_R0);
   var_R0 = (tmp);
   count(2,0);
-   stack[stackPointer++] = &&Return_116_20;
+   stack[stackPointer++] = &&Return_88_9;
   goto Label_consAll;
-  Return_116_20:
-  goto Label_join_117_9;
+  Return_88_9:
+  goto Label_join_89_9;
 
 Label_endSS:
   if (count(1,0), !(var_R0 == var_nilnil)){
-    fprintf(stderr,"\nJoin failure at line 117\n");
+    fprintf(stderr,"\nJoin failure at line 89\n");
   writeVars(); goto programEnd;
 }
+fprintf(stderr,"--> %d\n", var_R0);
   goto *stack[--stackPointer];
 
-Label_join_117_9:
+Label_join_89_9:
   if (count(1,0), var_R0 == var_nilnil){
-    fprintf(stderr,"\nJoin failure at line 117\n");
+    fprintf(stderr,"\nJoin failure at line 89\n");
   writeVars(); goto programEnd;
 }
+fprintf(stderr,"--> %d\n", var_R0);
   goto *stack[--stackPointer];
 
 Label_consAll:
+fprintf(stderr,"consAll(%d,%d)\n", var_x, var_A1);
   tmp = var_consP;
   var_consP = (var_A1);
   var_A1 = (tmp);
   count(2,0);
-   stack[stackPointer++] = &&Return_124_21;
+   stack[stackPointer++] = &&Return_96_10;
   goto Label__cons;
-  Return_124_21:
-  if (count(1,0), var_consD != 2) goto Label_case2; else goto Label_split_126_14;
+  Return_96_10:
+fprintf(stderr,"s = %d, ss = %d\n", var_consA, var_consD);
+  if (count(1,0), var_consD != 2) goto Label_case2; else goto Label_split_98_14;
 
-Label_split_126_14:
+Label_split_98_14:
   tmp = var_ss1;
   var_ss1 = (var_consD);
   var_consD = (tmp);
@@ -417,9 +335,9 @@ Label_case2:
   var_copyP = (var_x);
   var_x = (tmp);
   count(2,0);
-   stack[stackPointer++] = &&Return_131_22;
+   stack[stackPointer++] = &&Return_103_11;
   goto Label_copy;
-  Return_131_22:
+  Return_103_11:
   tmp = (count(0,1), Mem[var_stackP]);
   Mem[var_stackP] = (count(0,1), var_copyP);
   var_copyP = (tmp);
@@ -428,6 +346,7 @@ count(1, 0);
   tmp = (count(0,1), Mem[var_stackP]);
   Mem[var_stackP] = (count(0,1), var_consA);
   var_consA = (tmp);
+fprintf(stderr,"A0 ---> %d\n", var_consA);
 count(1, 0);
   var_stackP = (var_stackP + (4 + 0));
   tmp = var_x;
@@ -436,15 +355,18 @@ count(1, 0);
   tmp = var_A1;
   var_A1 = (var_consD);
   var_consD = (tmp);
+fprintf(stderr,"A1111 ---> %d\n", var_consA);
   count(2,0);
-   stack[stackPointer++] = &&Return_138_23;
+   stack[stackPointer++] = &&Return_112_12;
   goto Label_consAll;
-  Return_138_23:
+  Return_112_12:
+fprintf(stderr,"A1112 ---> %d\n", var_consA);
   tmp = var_ss1;
   var_ss1 = (var_R0);
   var_R0 = (tmp);
 count(1, 0);
   var_stackP = (var_stackP - (4 + 0));
+fprintf(stderr,"A1113 ---> %d\n", var_consA);
   tmp = (count(0,1), Mem[var_stackP]);
   Mem[var_stackP] = (count(0,1), var_consA);
   var_consA = (tmp);
@@ -453,30 +375,31 @@ count(1, 0);
   tmp = (count(0,1), Mem[var_stackP]);
   Mem[var_stackP] = (count(0,1), var_x);
   var_x = (tmp);
-  goto Label_join_144_11;
+  goto Label_join_120_11;
 
 Label_caseEnd:
   if (count(1,0), !(var_ss1 == 2)){
-    fprintf(stderr,"\nJoin failure at line 144\n");
+    fprintf(stderr,"\nJoin failure at line 120\n");
   writeVars(); goto programEnd;
 }
   tmp = var_copyP;
   var_copyP = (var_consA);
   var_consA = (tmp);
   count(2,0);
-   stack[stackPointer++] = &&Return_146_24;
+   stack[stackPointer++] = &&Return_122_13;
   goto Label_copy;
-  Return_146_24:
+  Return_122_13:
   tmp = var_consA;
   var_consA = (var_x);
   var_x = (tmp);
   tmp = var_consD;
   var_consD = (var_copyP);
   var_copyP = (tmp);
+fprintf(stderr,"A ---> %d\n", var_consA);
   count(2,0);
-   stack[stackPointer++] = &&Return_149_25;
+   stack[stackPointer++] = &&Return_126_14;
   goto Label_cons;
-  Return_149_25:
+  Return_126_14:
   tmp = var_T1;
   var_T1 = (var_consP);
   var_consP = (tmp);
@@ -486,47 +409,51 @@ Label_caseEnd:
   tmp = var_consD;
   var_consD = (var_ss1);
   var_ss1 = (tmp);
+fprintf(stderr,"A1 ---> %d\n", var_consA);
   count(2,0);
-   stack[stackPointer++] = &&Return_153_26;
+   stack[stackPointer++] = &&Return_131_15;
   goto Label_cons;
-  Return_153_26:
+  Return_131_15:
   tmp = var_consD;
   var_consD = (var_consP);
   var_consP = (tmp);
   tmp = var_consA;
   var_consA = (var_T1);
   var_T1 = (tmp);
+fprintf(stderr,"A2 ---> %d\n", var_consA);
   count(2,0);
-   stack[stackPointer++] = &&Return_156_27;
+   stack[stackPointer++] = &&Return_135_16;
   goto Label_cons;
-  Return_156_27:
+  Return_135_16:
   tmp = var_R0;
   var_R0 = (var_consP);
   var_consP = (tmp);
+fprintf(stderr,"res ---> %d\n", var_R0);
   goto *stack[--stackPointer];
 
-Label_join_144_11:
+Label_join_120_11:
   if (count(1,0), var_ss1 == 2){
-    fprintf(stderr,"\nJoin failure at line 144\n");
+    fprintf(stderr,"\nJoin failure at line 120\n");
   writeVars(); goto programEnd;
 }
   tmp = var_copyP;
   var_copyP = (var_consA);
   var_consA = (tmp);
   count(2,0);
-   stack[stackPointer++] = &&Return_146_28;
+   stack[stackPointer++] = &&Return_122_17;
   goto Label_copy;
-  Return_146_28:
+  Return_122_17:
   tmp = var_consA;
   var_consA = (var_x);
   var_x = (tmp);
   tmp = var_consD;
   var_consD = (var_copyP);
   var_copyP = (tmp);
+fprintf(stderr,"A ---> %d\n", var_consA);
   count(2,0);
-   stack[stackPointer++] = &&Return_149_29;
+   stack[stackPointer++] = &&Return_126_18;
   goto Label_cons;
-  Return_149_29:
+  Return_126_18:
   tmp = var_T1;
   var_T1 = (var_consP);
   var_consP = (tmp);
@@ -536,33 +463,36 @@ Label_join_144_11:
   tmp = var_consD;
   var_consD = (var_ss1);
   var_ss1 = (tmp);
+fprintf(stderr,"A1 ---> %d\n", var_consA);
   count(2,0);
-   stack[stackPointer++] = &&Return_153_30;
+   stack[stackPointer++] = &&Return_131_19;
   goto Label_cons;
-  Return_153_30:
+  Return_131_19:
   tmp = var_consD;
   var_consD = (var_consP);
   var_consP = (tmp);
   tmp = var_consA;
   var_consA = (var_T1);
   var_T1 = (tmp);
+fprintf(stderr,"A2 ---> %d\n", var_consA);
   count(2,0);
-   stack[stackPointer++] = &&Return_156_31;
+   stack[stackPointer++] = &&Return_135_20;
   goto Label_cons;
-  Return_156_31:
+  Return_135_20:
   tmp = var_R0;
   var_R0 = (var_consP);
   var_consP = (tmp);
+fprintf(stderr,"res ---> %d\n", var_R0);
   goto *stack[--stackPointer];
 
 Label_copy:
   if (!(var_copyP > 0 && var_copyQ == 0 && 1)){
-    fprintf(stderr,"\nAssertion failure at line 164\n");
+    fprintf(stderr,"\nAssertion failure at line 141\n");
   writeVars(); goto programEnd;
 }
-  if (count(1,0), var_copyP < var_H) goto Label_copySymbol; else goto Label_split_165_13;
+  if (count(1,0), var_copyP < var_H) goto Label_copySymbol; else goto Label_split_142_13;
 
-Label_split_165_13:
+Label_split_142_13:
 count(1, 0);
   Mem[var_copyP] = (count(0,1), (count(0,1), Mem[var_copyP]) + (1 + 0));
 count(1, 0);
@@ -571,158 +501,158 @@ count(1, 0);
 if (A < var_ttt) A = var_ttt;
 count(1, 0);
   var_ttt = (var_ttt - ((count(0,1), Mem[var_copyP]) + 0));
-  goto Label_join_170_14;
+  goto Label_join_147_14;
 
 Label_copySymbol:
   if (count(1,0), !(var_copyP < var_H)){
-    fprintf(stderr,"\nJoin failure at line 170\n");
+    fprintf(stderr,"\nJoin failure at line 147\n");
   writeVars(); goto programEnd;
 }
 count(1, 0);
   var_copyQ = (var_copyQ + (var_copyP + 0));
   if (!(var_copyP > 0 && var_copyQ == var_copyP && 1)){
-    fprintf(stderr,"\nAssertion failure at line 172\n");
+    fprintf(stderr,"\nAssertion failure at line 149\n");
   writeVars(); goto programEnd;
 }
   goto *stack[--stackPointer];
 
-Label_join_170_14:
+Label_join_147_14:
   if (count(1,0), var_copyP < var_H){
-    fprintf(stderr,"\nJoin failure at line 170\n");
+    fprintf(stderr,"\nJoin failure at line 147\n");
   writeVars(); goto programEnd;
 }
 count(1, 0);
   var_copyQ = (var_copyQ + (var_copyP + 0));
   if (!(var_copyP > 0 && var_copyQ == var_copyP && 1)){
-    fprintf(stderr,"\nAssertion failure at line 172\n");
+    fprintf(stderr,"\nAssertion failure at line 149\n");
   writeVars(); goto programEnd;
 }
   goto *stack[--stackPointer];
 
 Label_cons:
   if (!(var_consA != 0 && 1)){
-    fprintf(stderr,"\nAssertion failure at line 176\n");
+    fprintf(stderr,"\nAssertion failure at line 153\n");
   writeVars(); goto programEnd;
 }
   if (!(var_consD != 0 && 1)){
-    fprintf(stderr,"\nAssertion failure at line 177\n");
+    fprintf(stderr,"\nAssertion failure at line 154\n");
   writeVars(); goto programEnd;
 }
   if (!(var_consP == 0 && 1)){
-    fprintf(stderr,"\nAssertion failure at line 178\n");
+    fprintf(stderr,"\nAssertion failure at line 155\n");
   writeVars(); goto programEnd;
 }
   if (!(var_hashV == 0 && 1)){
-    fprintf(stderr,"\nAssertion failure at line 179\n");
+    fprintf(stderr,"\nAssertion failure at line 156\n");
   writeVars(); goto programEnd;
 }
   if (!(var_segEnd == 0 && 1)){
-    fprintf(stderr,"\nAssertion failure at line 180\n");
+    fprintf(stderr,"\nAssertion failure at line 157\n");
   writeVars(); goto programEnd;
 }
   count(2,0);
-   stack[stackPointer++] = &&Return_181_32;
+   stack[stackPointer++] = &&Return_158_21;
   goto Label_hash;
-  Return_181_32:
+  Return_158_21:
 count(1, 0);
   var_segEnd = (var_segEnd + (var_hashV + var_segSize));
 count(1, 0);
   var_consP = (var_consP + (var_hashV + 0));
-  goto Label_join_185_16;
+  goto Label_join_162_16;
 
 Label_consSearchSame:
   if (count(1,0), !(var_consP > var_hashV)){
-    fprintf(stderr,"\nJoin failure at line 185\n");
+    fprintf(stderr,"\nJoin failure at line 162\n");
   writeVars(); goto programEnd;
 }
-  if (count(1,0), (count(0,1), Mem[var_consP]) == 0) goto Label_consNext; else goto Label_split_186_17;
+  if (count(1,0), (count(0,1), Mem[var_consP]) == 0) goto Label_consNext; else goto Label_split_163_17;
 
-Label_join_185_16:
+Label_join_162_16:
   if (count(1,0), var_consP > var_hashV){
-    fprintf(stderr,"\nJoin failure at line 185\n");
+    fprintf(stderr,"\nJoin failure at line 162\n");
   writeVars(); goto programEnd;
 }
-  if (count(1,0), (count(0,1), Mem[var_consP]) == 0) goto Label_consNext; else goto Label_split_186_17;
+  if (count(1,0), (count(0,1), Mem[var_consP]) == 0) goto Label_consNext; else goto Label_split_163_17;
 
-Label_split_186_17:
+Label_split_163_17:
 count(1, 0);
   var_consP = (var_consP + (4 + 0));
-  if (count(1,0), (count(0,1), Mem[var_consP]) != var_consA) goto Label_consNotA; else goto Label_split_188_23;
+  if (count(1,0), (count(0,1), Mem[var_consP]) != var_consA) goto Label_consNotA; else goto Label_split_165_23;
 
-Label_split_188_23:
+Label_split_165_23:
 count(1, 0);
   var_consP = (var_consP + (4 + 0));
-  if (count(1,0), (count(0,1), Mem[var_consP]) == var_consD) goto Label_consFoundSame; else goto Label_split_190_25;
+  if (count(1,0), (count(0,1), Mem[var_consP]) == var_consD) goto Label_consFoundSame; else goto Label_split_167_25;
 
-Label_split_190_25:
+Label_split_167_25:
 count(1, 0);
   var_consP = (var_consP - (4 + 0));
-  goto Label_join_192_14;
+  goto Label_join_169_14;
 
 Label_consNotA:
   if (count(1,0), !((count(0,1), Mem[var_consP]) != var_consA)){
-    fprintf(stderr,"\nJoin failure at line 192\n");
+    fprintf(stderr,"\nJoin failure at line 169\n");
   writeVars(); goto programEnd;
 }
 count(1, 0);
   var_consP = (var_consP - (4 + 0));
-  goto Label_join_194_12;
+  goto Label_join_171_12;
 
-Label_join_192_14:
+Label_join_169_14:
   if (count(1,0), (count(0,1), Mem[var_consP]) != var_consA){
-    fprintf(stderr,"\nJoin failure at line 192\n");
+    fprintf(stderr,"\nJoin failure at line 169\n");
   writeVars(); goto programEnd;
 }
 count(1, 0);
   var_consP = (var_consP - (4 + 0));
-  goto Label_join_194_12;
+  goto Label_join_171_12;
 
 Label_consNext:
   if (count(1,0), !((count(0,1), Mem[var_consP]) == 0)){
-    fprintf(stderr,"\nJoin failure at line 194\n");
+    fprintf(stderr,"\nJoin failure at line 171\n");
   writeVars(); goto programEnd;
 }
 count(1, 0);
   var_consP = (var_consP + (12 + 0));
-  if (count(1,0), var_consP <= var_segEnd) goto Label_consSearchSame; else goto Label_join_197_17;
+  if (count(1,0), var_consP <= var_segEnd) goto Label_consSearchSame; else goto Label_join_174_17;
 
-Label_join_194_12:
+Label_join_171_12:
   if (count(1,0), (count(0,1), Mem[var_consP]) == 0){
-    fprintf(stderr,"\nJoin failure at line 194\n");
+    fprintf(stderr,"\nJoin failure at line 171\n");
   writeVars(); goto programEnd;
 }
 count(1, 0);
   var_consP = (var_consP + (12 + 0));
-  if (count(1,0), var_consP <= var_segEnd) goto Label_consSearchSame; else goto Label_join_197_17;
+  if (count(1,0), var_consP <= var_segEnd) goto Label_consSearchSame; else goto Label_join_174_17;
 
 Label_consSearchEmpty:
   if (count(1,0), !(var_consP <= var_segEnd)){
-    fprintf(stderr,"\nJoin failure at line 197\n");
+    fprintf(stderr,"\nJoin failure at line 174\n");
   writeVars(); goto programEnd;
 }
 count(1, 0);
   var_consP = (var_consP - (12 + 0));
-  if (count(1,0), var_consP < var_hashV) goto Label_consFail; else goto Label_split_199_17;
+  if (count(1,0), var_consP < var_hashV) goto Label_consFail; else goto Label_split_176_17;
 
-Label_join_197_17:
+Label_join_174_17:
   if (count(1,0), var_consP <= var_segEnd){
-    fprintf(stderr,"\nJoin failure at line 197\n");
+    fprintf(stderr,"\nJoin failure at line 174\n");
   writeVars(); goto programEnd;
 }
 count(1, 0);
   var_consP = (var_consP - (12 + 0));
-  if (count(1,0), var_consP < var_hashV) goto Label_consFail; else goto Label_split_199_17;
+  if (count(1,0), var_consP < var_hashV) goto Label_consFail; else goto Label_split_176_17;
 
-Label_split_199_17:
-  if (count(1,0), (count(0,1), Mem[var_consP]) != 0) goto Label_consSearchEmpty; else goto Label_split_200_17;
+Label_split_176_17:
+  if (count(1,0), (count(0,1), Mem[var_consP]) != 0) goto Label_consSearchEmpty; else goto Label_split_177_17;
 
-Label_split_200_17:
+Label_split_177_17:
 count(1, 0);
   var_segEnd = (var_segEnd - (var_hashV + var_segSize));
   count(2,0);
-   stack[stackPointer++] = &&Return_202_33;
+   stack[stackPointer++] = &&Return_179_22;
   goto Label__hash;
-  Return_202_33:
+  Return_179_22:
 count(1, 0);
   Mem[var_consP] = (count(0,1), (count(0,1), Mem[var_consP]) + (1 + 0));
 count(1, 0);
@@ -737,48 +667,48 @@ count(1, 0);
   Mem[var_consP] = (count(0,1), tmp);
 count(1, 0);
   var_consP = (var_consP - (8 + 0));
-  goto Label_join_209_9;
+  goto Label_join_186_9;
 
 Label_consEnd:
   if (count(1,0), !((count(0,1), Mem[var_consP]) > 1)){
-    fprintf(stderr,"\nJoin failure at line 209\n");
+    fprintf(stderr,"\nJoin failure at line 186\n");
   writeVars(); goto programEnd;
 }
   if (!((var_consP & 3) == 0 && var_consP >= var_H && var_consA == 0 && var_consD == 0 && 1)){
-    fprintf(stderr,"\nAssertion failure at line 210\n");
+    fprintf(stderr,"\nAssertion failure at line 187\n");
   writeVars(); goto programEnd;
 }
   if (!(var_hashV == 0 && var_segEnd == 0 && 1)){
-    fprintf(stderr,"\nAssertion failure at line 211\n");
+    fprintf(stderr,"\nAssertion failure at line 188\n");
   writeVars(); goto programEnd;
 }
-  goto Label_join_212_12;
+  goto Label_join_189_12;
 
-Label_join_209_9:
+Label_join_186_9:
   if (count(1,0), (count(0,1), Mem[var_consP]) > 1){
-    fprintf(stderr,"\nJoin failure at line 209\n");
+    fprintf(stderr,"\nJoin failure at line 186\n");
   writeVars(); goto programEnd;
 }
   if (!((var_consP & 3) == 0 && var_consP >= var_H && var_consA == 0 && var_consD == 0 && 1)){
-    fprintf(stderr,"\nAssertion failure at line 210\n");
+    fprintf(stderr,"\nAssertion failure at line 187\n");
   writeVars(); goto programEnd;
 }
   if (!(var_hashV == 0 && var_segEnd == 0 && 1)){
-    fprintf(stderr,"\nAssertion failure at line 211\n");
+    fprintf(stderr,"\nAssertion failure at line 188\n");
   writeVars(); goto programEnd;
 }
-  goto Label_join_212_12;
+  goto Label_join_189_12;
 
 Label_failedCons:
   if (count(1,0), !(var_failed > 0)){
-    fprintf(stderr,"\nJoin failure at line 212\n");
+    fprintf(stderr,"\nJoin failure at line 189\n");
   writeVars(); goto programEnd;
 }
   goto *stack[--stackPointer];
 
-Label_join_212_12:
+Label_join_189_12:
   if (count(1,0), var_failed > 0){
-    fprintf(stderr,"\nJoin failure at line 212\n");
+    fprintf(stderr,"\nJoin failure at line 189\n");
   writeVars(); goto programEnd;
 }
   goto *stack[--stackPointer];
@@ -787,46 +717,46 @@ Label_consFoundSame:
 count(1, 0);
   var_segEnd = (var_segEnd - (var_hashV + var_segSize));
   count(2,0);
-   stack[stackPointer++] = &&Return_217_34;
+   stack[stackPointer++] = &&Return_194_23;
   goto Label__hash;
-  Return_217_34:
-  if (count(1,0), var_consD < var_H) goto Label_consSymbolD; else goto Label_split_218_13;
+  Return_194_23:
+  if (count(1,0), var_consD < var_H) goto Label_consSymbolD; else goto Label_split_195_13;
 
-Label_split_218_13:
+Label_split_195_13:
 count(1, 0);
   Mem[var_consD] = (count(0,1), (count(0,1), Mem[var_consD]) - (1 + 0));
-  goto Label_join_220_15;
+  goto Label_join_197_15;
 
 Label_consSymbolD:
   if (count(1,0), !(var_consD < var_H)){
-    fprintf(stderr,"\nJoin failure at line 220\n");
+    fprintf(stderr,"\nJoin failure at line 197\n");
   writeVars(); goto programEnd;
 }
 count(1, 0);
   var_consD = (var_consD - ((count(0,1), Mem[var_consP]) + 0));
 count(1, 0);
   var_consP = (var_consP - (4 + 0));
-  if (count(1,0), var_consA < var_H) goto Label_consSymbolA; else goto Label_split_223_13;
+  if (count(1,0), var_consA < var_H) goto Label_consSymbolA; else goto Label_split_200_13;
 
-Label_join_220_15:
+Label_join_197_15:
   if (count(1,0), var_consD < var_H){
-    fprintf(stderr,"\nJoin failure at line 220\n");
+    fprintf(stderr,"\nJoin failure at line 197\n");
   writeVars(); goto programEnd;
 }
 count(1, 0);
   var_consD = (var_consD - ((count(0,1), Mem[var_consP]) + 0));
 count(1, 0);
   var_consP = (var_consP - (4 + 0));
-  if (count(1,0), var_consA < var_H) goto Label_consSymbolA; else goto Label_split_223_13;
+  if (count(1,0), var_consA < var_H) goto Label_consSymbolA; else goto Label_split_200_13;
 
-Label_split_223_13:
+Label_split_200_13:
 count(1, 0);
   Mem[var_consA] = (count(0,1), (count(0,1), Mem[var_consA]) - (1 + 0));
-  goto Label_join_225_15;
+  goto Label_join_202_15;
 
 Label_consSymbolA:
   if (count(1,0), !(var_consA < var_H)){
-    fprintf(stderr,"\nJoin failure at line 225\n");
+    fprintf(stderr,"\nJoin failure at line 202\n");
   writeVars(); goto programEnd;
 }
 count(1, 0);
@@ -843,9 +773,9 @@ count(1, 0);
   var_ttt = (var_ttt - ((count(0,1), Mem[var_consP]) + 0));
   goto Label_consEnd;
 
-Label_join_225_15:
+Label_join_202_15:
   if (count(1,0), var_consA < var_H){
-    fprintf(stderr,"\nJoin failure at line 225\n");
+    fprintf(stderr,"\nJoin failure at line 202\n");
   writeVars(); goto programEnd;
 }
 count(1, 0);
@@ -866,57 +796,57 @@ Label_consFail:
 count(1, 0);
   var_failed = (var_failed + (1 + 0));
   if (!(var_z == 0 && 1)){
-    fprintf(stderr,"\nAssertion failure at line 239\n");
+    fprintf(stderr,"\nAssertion failure at line 216\n");
   writeVars(); goto programEnd;
 }
 count(1, 0);
   var_z = (var_z + (var_H + 0));
-  goto Label_join_241_6;
+  goto Label_join_218_6;
 
 Label_dump:
   if (count(1,0), !(var_H != var_z)){
-    fprintf(stderr,"\nJoin failure at line 241\n");
+    fprintf(stderr,"\nJoin failure at line 218\n");
   writeVars(); goto programEnd;
 }
-  if (count(1,0), (count(0,1), Mem[var_z]) > 0) goto Label_used; else goto Label_split_242_10;
+  if (count(1,0), (count(0,1), Mem[var_z]) > 0) goto Label_used; else goto Label_split_219_10;
 
-Label_join_241_6:
+Label_join_218_6:
   if (count(1,0), var_H != var_z){
-    fprintf(stderr,"\nJoin failure at line 241\n");
+    fprintf(stderr,"\nJoin failure at line 218\n");
   writeVars(); goto programEnd;
 }
-  if (count(1,0), (count(0,1), Mem[var_z]) > 0) goto Label_used; else goto Label_split_242_10;
+  if (count(1,0), (count(0,1), Mem[var_z]) > 0) goto Label_used; else goto Label_split_219_10;
 
-Label_split_242_10:
+Label_split_219_10:
 count(1, 0);
   var_y = (var_y + (1 + 0));
-  goto Label_join_244_6;
+  goto Label_join_221_6;
 
 Label_used:
   if (count(1,0), !((count(0,1), Mem[var_z]) > 0)){
-    fprintf(stderr,"\nJoin failure at line 244\n");
+    fprintf(stderr,"\nJoin failure at line 221\n");
   writeVars(); goto programEnd;
 }
 count(1, 0);
   var_z = (var_z + (12 + 0));
-  if (count(1,0), var_z < var_endH) goto Label_dump; else goto Label_split_246_10;
+  if (count(1,0), var_z < var_endH) goto Label_dump; else goto Label_split_223_10;
 
-Label_join_244_6:
+Label_join_221_6:
   if (count(1,0), (count(0,1), Mem[var_z]) > 0){
-    fprintf(stderr,"\nJoin failure at line 244\n");
+    fprintf(stderr,"\nJoin failure at line 221\n");
   writeVars(); goto programEnd;
 }
 count(1, 0);
   var_z = (var_z + (12 + 0));
-  if (count(1,0), var_z < var_endH) goto Label_dump; else goto Label_split_246_10;
+  if (count(1,0), var_z < var_endH) goto Label_dump; else goto Label_split_223_10;
 
-Label_split_246_10:
+Label_split_223_10:
 fprintf(stderr," free nodes: %d,", var_y);
   goto Label_failedCons;
 
 Label_hash_alt:
   if (!(var_hashV == 0 && var_hashA == 366001 && var_hashB == 827927 && var_hashC == 593041 && 1)){
-    fprintf(stderr,"\nAssertion failure at line 251\n");
+    fprintf(stderr,"\nAssertion failure at line 228\n");
   writeVars(); goto programEnd;
 }
 count(1, 0);
@@ -971,7 +901,7 @@ count(1, 0);
 
 Label_hash:
   if (!(var_hashV == 0 && var_hashT == 366001 && 1)){
-    fprintf(stderr,"\nAssertion failure at line 279\n");
+    fprintf(stderr,"\nAssertion failure at line 256\n");
   writeVars(); goto programEnd;
 }
 count(1, 0);
@@ -994,31 +924,27 @@ count(1, 0);
 
 /*  inverse blocks */
 
-Label__join_44_7:
+Label__join_41_7:
 count(1, 0);
   var_z = (var_z - (var_H + 0));
   if (!(var_z == 0 && 1)){
-    fprintf(stderr,"\nAssertion failure at line ~42\n");
+    fprintf(stderr,"\nAssertion failure at line ~39\n");
   writeVars(); goto programEnd;
 }
 
 printf("max refs = %d\n",A);
   count(2,0);
-   stack[stackPointer++] = &&Return_38_35;
-  goto Label_initialise;
-  Return_38_35:
-  count(2,0);
-   stack[stackPointer++] = &&Return_37_36;
+   stack[stackPointer++] = &&Return_33_24;
   goto Label__subsequences;
-  Return_37_36:
+  Return_33_24:
   count(2,0);
-   stack[stackPointer++] = &&Return_36_37;
+   stack[stackPointer++] = &&Return_32_25;
   goto Label__build;
-  Return_36_37:
+  Return_32_25:
   count(2,0);
-   stack[stackPointer++] = &&Return_35_38;
+   stack[stackPointer++] = &&Return_31_26;
   goto Label__initialise;
-  Return_35_38:
+  Return_31_26:
 count(1, 0);
   var_stackP = (var_stackP - (64 + 0));
 count(1, 0);
@@ -1071,57 +997,59 @@ A = 0;
 
 Label__used1:
   if (count(1,0), !((count(0,1), Mem[var_z]) > 0)){
-    fprintf(stderr,"\nJoin failure at line 45\n");
+    fprintf(stderr,"\nJoin failure at line 42\n");
   writeVars(); goto programEnd;
 }
-  if (count(1,0), var_H != var_z) goto Label__dump1; else goto Label__join_44_7;
+  if (count(1,0), var_H != var_z) goto Label__dump1; else goto Label__join_41_7;
 
-Label__split_45_10:
+Label__split_42_10:
   if (count(1,0), (count(0,1), Mem[var_z]) > 0){
-    fprintf(stderr,"\nJoin failure at line 45\n");
+    fprintf(stderr,"\nJoin failure at line 42\n");
   writeVars(); goto programEnd;
 }
-  if (count(1,0), var_H != var_z) goto Label__dump1; else goto Label__join_44_7;
+  if (count(1,0), var_H != var_z) goto Label__dump1; else goto Label__join_41_7;
 
-Label__join_47_7:
+Label__join_44_7:
 count(1, 0);
   var_y = (var_y - (1 + 0));
-  goto Label__split_45_10;
+  goto Label__split_42_10;
 
 Label__dump1:
   if (count(1,0), !(var_z < var_endH)){
-    fprintf(stderr,"\nJoin failure at line 49\n");
+    fprintf(stderr,"\nJoin failure at line 46\n");
   writeVars(); goto programEnd;
 }
 count(1, 0);
   var_z = (var_z - (12 + 0));
-  if (count(1,0), (count(0,1), Mem[var_z]) > 0) goto Label__used1; else goto Label__join_47_7;
+  if (count(1,0), (count(0,1), Mem[var_z]) > 0) goto Label__used1; else goto Label__join_44_7;
 
-Label__split_49_10:
+Label__split_46_10:
   if (count(1,0), var_z < var_endH){
-    fprintf(stderr,"\nJoin failure at line 49\n");
+    fprintf(stderr,"\nJoin failure at line 46\n");
   writeVars(); goto programEnd;
 }
 count(1, 0);
   var_z = (var_z - (12 + 0));
-  if (count(1,0), (count(0,1), Mem[var_z]) > 0) goto Label__used1; else goto Label__join_47_7;
+  if (count(1,0), (count(0,1), Mem[var_z]) > 0) goto Label__used1; else goto Label__join_44_7;
 
 Label__main:
 fprintf(stderr,"%d,", var_y);
-  goto Label__split_49_10;
+  goto Label__split_46_10;
 
 Label__initialise:
   tmp = var_nilnil;
   var_nilnil = (var_consP);
   var_consP = (tmp);
   count(2,0);
-   stack[stackPointer++] = &&Return_56_39;
+   stack[stackPointer++] = &&Return_55_27;
   goto Label__cons;
-  Return_56_39:
+  Return_55_27:
 count(1, 0);
   var_consD = (var_consD - (2 + 0));
+fprintf(stderr,"init: %d\n", var_consA);
 count(1, 0);
   var_consA = (var_consA - (2 + 0));
+fprintf(stderr,"init: %d\n", var_consA);
   goto *stack[--stackPointer];
 
 Label__build:
@@ -1129,126 +1057,40 @@ Label__build:
   var_A0 = (var_consP);
   var_consP = (tmp);
   count(2,0);
-   stack[stackPointer++] = &&Return_96_40;
+   stack[stackPointer++] = &&Return_67_28;
   goto Label__cons;
-  Return_96_40:
+  Return_67_28:
+fprintf(stderr,"%d\n", var_consA);
 count(1, 0);
-  var_consA = (var_consA - (425 + 0));
+  var_consA = (var_consA - (7 + 0));
   tmp = var_consP;
   var_consP = (var_consD);
   var_consD = (tmp);
   count(2,0);
-   stack[stackPointer++] = &&Return_93_41;
+   stack[stackPointer++] = &&Return_63_29;
   goto Label__cons;
-  Return_93_41:
+  Return_63_29:
+fprintf(stderr,"%d\n", var_consA);
 count(1, 0);
-  var_consA = (var_consA - (423 + 0));
-  tmp = var_consP;
-  var_consP = (var_consD);
-  var_consD = (tmp);
-  count(2,0);
-   stack[stackPointer++] = &&Return_90_42;
-  goto Label__cons;
-  Return_90_42:
-count(1, 0);
-  var_consA = (var_consA - (421 + 0));
-  tmp = var_consP;
-  var_consP = (var_consD);
-  var_consD = (tmp);
-  count(2,0);
-   stack[stackPointer++] = &&Return_87_43;
-  goto Label__cons;
-  Return_87_43:
-count(1, 0);
-  var_consA = (var_consA - (419 + 0));
-  tmp = var_consP;
-  var_consP = (var_consD);
-  var_consD = (tmp);
-  count(2,0);
-   stack[stackPointer++] = &&Return_84_44;
-  goto Label__cons;
-  Return_84_44:
-count(1, 0);
-  var_consA = (var_consA - (417 + 0));
-  tmp = var_consP;
-  var_consP = (var_consD);
-  var_consD = (tmp);
-  count(2,0);
-   stack[stackPointer++] = &&Return_81_45;
-  goto Label__cons;
-  Return_81_45:
-count(1, 0);
-  var_consA = (var_consA - (415 + 0));
-  tmp = var_consP;
-  var_consP = (var_consD);
-  var_consD = (tmp);
-  count(2,0);
-   stack[stackPointer++] = &&Return_78_46;
-  goto Label__cons;
-  Return_78_46:
-count(1, 0);
-  var_consA = (var_consA - (413 + 0));
-  tmp = var_consP;
-  var_consP = (var_consD);
-  var_consD = (tmp);
-  count(2,0);
-   stack[stackPointer++] = &&Return_75_47;
-  goto Label__cons;
-  Return_75_47:
-count(1, 0);
-  var_consA = (var_consA - (411 + 0));
-  tmp = var_consP;
-  var_consP = (var_consD);
-  var_consD = (tmp);
-  count(2,0);
-   stack[stackPointer++] = &&Return_72_48;
-  goto Label__cons;
-  Return_72_48:
-count(1, 0);
-  var_consA = (var_consA - (49 + 0));
-  tmp = var_consP;
-  var_consP = (var_consD);
-  var_consD = (tmp);
-  count(2,0);
-   stack[stackPointer++] = &&Return_69_49;
-  goto Label__cons;
-  Return_69_49:
-count(1, 0);
-  var_consA = (var_consA - (47 + 0));
-  tmp = var_consP;
-  var_consP = (var_consD);
-  var_consD = (tmp);
-  count(2,0);
-   stack[stackPointer++] = &&Return_66_50;
-  goto Label__cons;
-  Return_66_50:
-count(1, 0);
-  var_consA = (var_consA - (45 + 0));
-  tmp = var_consP;
-  var_consP = (var_consD);
-  var_consD = (tmp);
-  count(2,0);
-   stack[stackPointer++] = &&Return_63_51;
-  goto Label__cons;
-  Return_63_51:
-count(1, 0);
-  var_consA = (var_consA - (43 + 0));
+  var_consA = (var_consA - (3 + 0));
 count(1, 0);
   var_consD = (var_consD - (2 + 0));
   goto *stack[--stackPointer];
 
 Label__rule2:
   if (count(1,0), !(var_A0 != 2)){
-    fprintf(stderr,"\nJoin failure at line 102\n");
+    fprintf(stderr,"\nJoin failure at line 73\n");
   writeVars(); goto programEnd;
 }
+fprintf(stderr,"subsequences(%d)\n", var_A0);
   goto *stack[--stackPointer];
 
-Label__split_102_11:
+Label__split_73_11:
   if (count(1,0), var_A0 != 2){
-    fprintf(stderr,"\nJoin failure at line 102\n");
+    fprintf(stderr,"\nJoin failure at line 73\n");
   writeVars(); goto programEnd;
 }
+fprintf(stderr,"subsequences(%d)\n", var_A0);
   goto *stack[--stackPointer];
 
 Label__endSS:
@@ -1256,13 +1098,13 @@ count(1, 0);
   var_R0 = (var_R0 - (var_nilnil + 0));
 count(1, 0);
   var_A0 = (var_A0 + (2 + 0));
-  goto Label__split_102_11;
+  goto Label__split_73_11;
 
-Label__join_117_9:
+Label__join_89_9:
   count(2,0);
-   stack[stackPointer++] = &&Return_116_52;
+   stack[stackPointer++] = &&Return_88_30;
   goto Label__consAll;
-  Return_116_52:
+  Return_88_30:
   tmp = var_A1;
   var_A1 = (var_R0);
   var_R0 = (tmp);
@@ -1272,9 +1114,9 @@ Label__join_117_9:
 count(1, 0);
   var_stackP = (var_stackP + (4 + 0));
   count(2,0);
-   stack[stackPointer++] = &&Return_112_53;
+   stack[stackPointer++] = &&Return_84_31;
   goto Label__subsequences;
-  Return_112_53:
+  Return_84_31:
   tmp = var_A0;
   var_A0 = (var_consD);
   var_consD = (tmp);
@@ -1283,53 +1125,59 @@ count(1, 0);
   tmp = (count(0,1), Mem[var_stackP]);
   Mem[var_stackP] = (count(0,1), var_consA);
   var_consA = (tmp);
+fprintf(stderr,"subs: %d\n", var_consA);
   count(2,0);
-   stack[stackPointer++] = &&Return_108_54;
+   stack[stackPointer++] = &&Return_79_32;
   goto Label_cons;
-  Return_108_54:
+  Return_79_32:
   tmp = var_consP;
   var_consP = (var_A0);
   var_A0 = (tmp);
   goto Label__rule2;
 
 Label__subsequences:
-  if (count(1,0), var_R0 == var_nilnil) goto Label__endSS; else goto Label__join_117_9;
+fprintf(stderr,"--> %d\n", var_R0);
+  if (count(1,0), var_R0 == var_nilnil) goto Label__endSS; else goto Label__join_89_9;
 
 Label__case2:
   if (count(1,0), !(var_consD != 2)){
-    fprintf(stderr,"\nJoin failure at line 126\n");
+    fprintf(stderr,"\nJoin failure at line 98\n");
   writeVars(); goto programEnd;
 }
+fprintf(stderr,"s = %d, ss = %d\n", var_consA, var_consD);
   count(2,0);
-   stack[stackPointer++] = &&Return_124_55;
+   stack[stackPointer++] = &&Return_96_33;
   goto Label_cons;
-  Return_124_55:
+  Return_96_33:
   tmp = var_consP;
   var_consP = (var_A1);
   var_A1 = (tmp);
+fprintf(stderr,"consAll(%d,%d)\n", var_x, var_A1);
   goto *stack[--stackPointer];
 
-Label__split_126_14:
+Label__split_98_14:
   if (count(1,0), var_consD != 2){
-    fprintf(stderr,"\nJoin failure at line 126\n");
+    fprintf(stderr,"\nJoin failure at line 98\n");
   writeVars(); goto programEnd;
 }
+fprintf(stderr,"s = %d, ss = %d\n", var_consA, var_consD);
   count(2,0);
-   stack[stackPointer++] = &&Return_124_56;
+   stack[stackPointer++] = &&Return_96_34;
   goto Label_cons;
-  Return_124_56:
+  Return_96_34:
   tmp = var_consP;
   var_consP = (var_A1);
   var_A1 = (tmp);
+fprintf(stderr,"consAll(%d,%d)\n", var_x, var_A1);
   goto *stack[--stackPointer];
 
 Label__caseEnd:
   tmp = var_ss1;
   var_ss1 = (var_consD);
   var_consD = (tmp);
-  goto Label__split_126_14;
+  goto Label__split_98_14;
 
-Label__join_144_11:
+Label__join_120_11:
   tmp = (count(0,1), Mem[var_stackP]);
   Mem[var_stackP] = (count(0,1), var_x);
   var_x = (tmp);
@@ -1338,15 +1186,18 @@ count(1, 0);
   tmp = (count(0,1), Mem[var_stackP]);
   Mem[var_stackP] = (count(0,1), var_consA);
   var_consA = (tmp);
+fprintf(stderr,"A1113 ---> %d\n", var_consA);
 count(1, 0);
   var_stackP = (var_stackP + (4 + 0));
   tmp = var_ss1;
   var_ss1 = (var_R0);
   var_R0 = (tmp);
+fprintf(stderr,"A1112 ---> %d\n", var_consA);
   count(2,0);
-   stack[stackPointer++] = &&Return_138_57;
+   stack[stackPointer++] = &&Return_112_35;
   goto Label__consAll;
-  Return_138_57:
+  Return_112_35:
+fprintf(stderr,"A1111 ---> %d\n", var_consA);
   tmp = var_A1;
   var_A1 = (var_consD);
   var_consD = (tmp);
@@ -1355,6 +1206,7 @@ count(1, 0);
   var_copyQ = (tmp);
 count(1, 0);
   var_stackP = (var_stackP - (4 + 0));
+fprintf(stderr,"A0 ---> %d\n", var_consA);
   tmp = (count(0,1), Mem[var_stackP]);
   Mem[var_stackP] = (count(0,1), var_consA);
   var_consA = (tmp);
@@ -1364,22 +1216,24 @@ count(1, 0);
   Mem[var_stackP] = (count(0,1), var_copyP);
   var_copyP = (tmp);
   count(2,0);
-   stack[stackPointer++] = &&Return_131_58;
+   stack[stackPointer++] = &&Return_103_36;
   goto Label__copy;
-  Return_131_58:
+  Return_103_36:
   tmp = var_copyP;
   var_copyP = (var_x);
   var_x = (tmp);
   goto Label__case2;
 
 Label__consAll:
+fprintf(stderr,"res ---> %d\n", var_R0);
   tmp = var_R0;
   var_R0 = (var_consP);
   var_consP = (tmp);
   count(2,0);
-   stack[stackPointer++] = &&Return_156_59;
+   stack[stackPointer++] = &&Return_135_37;
   goto Label__cons;
-  Return_156_59:
+  Return_135_37:
+fprintf(stderr,"A2 ---> %d\n", var_consA);
   tmp = var_consA;
   var_consA = (var_T1);
   var_T1 = (tmp);
@@ -1387,9 +1241,10 @@ Label__consAll:
   var_consD = (var_consP);
   var_consP = (tmp);
   count(2,0);
-   stack[stackPointer++] = &&Return_153_60;
+   stack[stackPointer++] = &&Return_131_38;
   goto Label__cons;
-  Return_153_60:
+  Return_131_38:
+fprintf(stderr,"A1 ---> %d\n", var_consA);
   tmp = var_consD;
   var_consD = (var_ss1);
   var_ss1 = (tmp);
@@ -1400,9 +1255,10 @@ Label__consAll:
   var_T1 = (var_consP);
   var_consP = (tmp);
   count(2,0);
-   stack[stackPointer++] = &&Return_149_61;
+   stack[stackPointer++] = &&Return_126_39;
   goto Label__cons;
-  Return_149_61:
+  Return_126_39:
+fprintf(stderr,"A ---> %d\n", var_consA);
   tmp = var_consD;
   var_consD = (var_copyP);
   var_copyP = (tmp);
@@ -1410,37 +1266,37 @@ Label__consAll:
   var_consA = (var_x);
   var_x = (tmp);
   count(2,0);
-   stack[stackPointer++] = &&Return_146_62;
+   stack[stackPointer++] = &&Return_122_40;
   goto Label__copy;
-  Return_146_62:
+  Return_122_40:
   tmp = var_copyP;
   var_copyP = (var_consA);
   var_consA = (tmp);
-  if (count(1,0), var_ss1 == 2) goto Label__caseEnd; else goto Label__join_144_11;
+  if (count(1,0), var_ss1 == 2) goto Label__caseEnd; else goto Label__join_120_11;
 
 Label__copySymbol:
   if (count(1,0), !(var_copyP < var_H)){
-    fprintf(stderr,"\nJoin failure at line 165\n");
+    fprintf(stderr,"\nJoin failure at line 142\n");
   writeVars(); goto programEnd;
 }
   if (!(var_copyP > 0 && var_copyQ == 0 && 1)){
-    fprintf(stderr,"\nAssertion failure at line ~164\n");
+    fprintf(stderr,"\nAssertion failure at line ~141\n");
   writeVars(); goto programEnd;
 }
   goto *stack[--stackPointer];
 
-Label__split_165_13:
+Label__split_142_13:
   if (count(1,0), var_copyP < var_H){
-    fprintf(stderr,"\nJoin failure at line 165\n");
+    fprintf(stderr,"\nJoin failure at line 142\n");
   writeVars(); goto programEnd;
 }
   if (!(var_copyP > 0 && var_copyQ == 0 && 1)){
-    fprintf(stderr,"\nAssertion failure at line ~164\n");
+    fprintf(stderr,"\nAssertion failure at line ~141\n");
   writeVars(); goto programEnd;
 }
   goto *stack[--stackPointer];
 
-Label__join_170_14:
+Label__join_147_14:
 count(1, 0);
   var_ttt = (var_ttt + ((count(0,1), Mem[var_copyP]) + 0));
 
@@ -1449,159 +1305,159 @@ count(1, 0);
   var_ttt = (var_ttt - ((count(0,1), Mem[var_copyP]) + 0));
 count(1, 0);
   Mem[var_copyP] = (count(0,1), (count(0,1), Mem[var_copyP]) - (1 + 0));
-  goto Label__split_165_13;
+  goto Label__split_142_13;
 
 Label__copy:
   if (!(var_copyP > 0 && var_copyQ == var_copyP && 1)){
-    fprintf(stderr,"\nAssertion failure at line ~172\n");
+    fprintf(stderr,"\nAssertion failure at line ~149\n");
   writeVars(); goto programEnd;
 }
 count(1, 0);
   var_copyQ = (var_copyQ - (var_copyP + 0));
-  if (count(1,0), var_copyP < var_H) goto Label__copySymbol; else goto Label__join_170_14;
+  if (count(1,0), var_copyP < var_H) goto Label__copySymbol; else goto Label__join_147_14;
 
-Label__join_185_16:
+Label__join_162_16:
 count(1, 0);
   var_consP = (var_consP - (var_hashV + 0));
 count(1, 0);
   var_segEnd = (var_segEnd - (var_hashV + var_segSize));
   count(2,0);
-   stack[stackPointer++] = &&Return_181_63;
+   stack[stackPointer++] = &&Return_158_41;
   goto Label__hash;
-  Return_181_63:
+  Return_158_41:
   if (!(var_segEnd == 0 && 1)){
-    fprintf(stderr,"\nAssertion failure at line ~180\n");
+    fprintf(stderr,"\nAssertion failure at line ~157\n");
   writeVars(); goto programEnd;
 }
   if (!(var_hashV == 0 && 1)){
-    fprintf(stderr,"\nAssertion failure at line ~179\n");
+    fprintf(stderr,"\nAssertion failure at line ~156\n");
   writeVars(); goto programEnd;
 }
   if (!(var_consP == 0 && 1)){
-    fprintf(stderr,"\nAssertion failure at line ~178\n");
+    fprintf(stderr,"\nAssertion failure at line ~155\n");
   writeVars(); goto programEnd;
 }
   if (!(var_consD != 0 && 1)){
-    fprintf(stderr,"\nAssertion failure at line ~177\n");
+    fprintf(stderr,"\nAssertion failure at line ~154\n");
   writeVars(); goto programEnd;
 }
   if (!(var_consA != 0 && 1)){
-    fprintf(stderr,"\nAssertion failure at line ~176\n");
+    fprintf(stderr,"\nAssertion failure at line ~153\n");
   writeVars(); goto programEnd;
 }
   goto *stack[--stackPointer];
 
 Label__consNext:
   if (count(1,0), !((count(0,1), Mem[var_consP]) == 0)){
-    fprintf(stderr,"\nJoin failure at line 186\n");
+    fprintf(stderr,"\nJoin failure at line 163\n");
   writeVars(); goto programEnd;
 }
-  if (count(1,0), var_consP > var_hashV) goto Label__consSearchSame; else goto Label__join_185_16;
+  if (count(1,0), var_consP > var_hashV) goto Label__consSearchSame; else goto Label__join_162_16;
 
-Label__split_186_17:
+Label__split_163_17:
   if (count(1,0), (count(0,1), Mem[var_consP]) == 0){
-    fprintf(stderr,"\nJoin failure at line 186\n");
+    fprintf(stderr,"\nJoin failure at line 163\n");
   writeVars(); goto programEnd;
 }
-  if (count(1,0), var_consP > var_hashV) goto Label__consSearchSame; else goto Label__join_185_16;
+  if (count(1,0), var_consP > var_hashV) goto Label__consSearchSame; else goto Label__join_162_16;
 
 Label__consNotA:
   if (count(1,0), !((count(0,1), Mem[var_consP]) != var_consA)){
-    fprintf(stderr,"\nJoin failure at line 188\n");
+    fprintf(stderr,"\nJoin failure at line 165\n");
   writeVars(); goto programEnd;
 }
 count(1, 0);
   var_consP = (var_consP - (4 + 0));
-  goto Label__split_186_17;
+  goto Label__split_163_17;
 
-Label__split_188_23:
+Label__split_165_23:
   if (count(1,0), (count(0,1), Mem[var_consP]) != var_consA){
-    fprintf(stderr,"\nJoin failure at line 188\n");
+    fprintf(stderr,"\nJoin failure at line 165\n");
   writeVars(); goto programEnd;
 }
 count(1, 0);
   var_consP = (var_consP - (4 + 0));
-  goto Label__split_186_17;
+  goto Label__split_163_17;
 
 Label__consFoundSame:
   if (count(1,0), !((count(0,1), Mem[var_consP]) == var_consD)){
-    fprintf(stderr,"\nJoin failure at line 190\n");
+    fprintf(stderr,"\nJoin failure at line 167\n");
   writeVars(); goto programEnd;
 }
 count(1, 0);
   var_consP = (var_consP - (4 + 0));
-  goto Label__split_188_23;
+  goto Label__split_165_23;
 
-Label__split_190_25:
+Label__split_167_25:
   if (count(1,0), (count(0,1), Mem[var_consP]) == var_consD){
-    fprintf(stderr,"\nJoin failure at line 190\n");
+    fprintf(stderr,"\nJoin failure at line 167\n");
   writeVars(); goto programEnd;
 }
 count(1, 0);
   var_consP = (var_consP - (4 + 0));
-  goto Label__split_188_23;
+  goto Label__split_165_23;
 
-Label__join_192_14:
+Label__join_169_14:
 count(1, 0);
   var_consP = (var_consP + (4 + 0));
-  goto Label__split_190_25;
+  goto Label__split_167_25;
 
-Label__join_194_12:
+Label__join_171_12:
 count(1, 0);
   var_consP = (var_consP + (4 + 0));
-  if (count(1,0), (count(0,1), Mem[var_consP]) != var_consA) goto Label__consNotA; else goto Label__join_192_14;
+  if (count(1,0), (count(0,1), Mem[var_consP]) != var_consA) goto Label__consNotA; else goto Label__join_169_14;
 
 Label__consSearchSame:
   if (count(1,0), !(var_consP <= var_segEnd)){
-    fprintf(stderr,"\nJoin failure at line 196\n");
+    fprintf(stderr,"\nJoin failure at line 173\n");
   writeVars(); goto programEnd;
 }
 count(1, 0);
   var_consP = (var_consP - (12 + 0));
-  if (count(1,0), (count(0,1), Mem[var_consP]) == 0) goto Label__consNext; else goto Label__join_194_12;
+  if (count(1,0), (count(0,1), Mem[var_consP]) == 0) goto Label__consNext; else goto Label__join_171_12;
 
-Label__join_197_17:
+Label__join_174_17:
   if (count(1,0), var_consP <= var_segEnd){
-    fprintf(stderr,"\nJoin failure at line 196\n");
+    fprintf(stderr,"\nJoin failure at line 173\n");
   writeVars(); goto programEnd;
 }
 count(1, 0);
   var_consP = (var_consP - (12 + 0));
-  if (count(1,0), (count(0,1), Mem[var_consP]) == 0) goto Label__consNext; else goto Label__join_194_12;
+  if (count(1,0), (count(0,1), Mem[var_consP]) == 0) goto Label__consNext; else goto Label__join_171_12;
 
 Label__consFail:
   if (count(1,0), !(var_consP < var_hashV)){
-    fprintf(stderr,"\nJoin failure at line 199\n");
+    fprintf(stderr,"\nJoin failure at line 176\n");
   writeVars(); goto programEnd;
 }
 count(1, 0);
   var_consP = (var_consP + (12 + 0));
-  if (count(1,0), var_consP <= var_segEnd) goto Label__consSearchEmpty; else goto Label__join_197_17;
+  if (count(1,0), var_consP <= var_segEnd) goto Label__consSearchEmpty; else goto Label__join_174_17;
 
-Label__split_199_17:
+Label__split_176_17:
   if (count(1,0), var_consP < var_hashV){
-    fprintf(stderr,"\nJoin failure at line 199\n");
+    fprintf(stderr,"\nJoin failure at line 176\n");
   writeVars(); goto programEnd;
 }
 count(1, 0);
   var_consP = (var_consP + (12 + 0));
-  if (count(1,0), var_consP <= var_segEnd) goto Label__consSearchEmpty; else goto Label__join_197_17;
+  if (count(1,0), var_consP <= var_segEnd) goto Label__consSearchEmpty; else goto Label__join_174_17;
 
 Label__consSearchEmpty:
   if (count(1,0), !((count(0,1), Mem[var_consP]) != 0)){
-    fprintf(stderr,"\nJoin failure at line 200\n");
+    fprintf(stderr,"\nJoin failure at line 177\n");
   writeVars(); goto programEnd;
 }
-  goto Label__split_199_17;
+  goto Label__split_176_17;
 
-Label__split_200_17:
+Label__split_177_17:
   if (count(1,0), (count(0,1), Mem[var_consP]) != 0){
-    fprintf(stderr,"\nJoin failure at line 200\n");
+    fprintf(stderr,"\nJoin failure at line 177\n");
   writeVars(); goto programEnd;
 }
-  goto Label__split_199_17;
+  goto Label__split_176_17;
 
-Label__join_209_9:
+Label__join_186_9:
 count(1, 0);
   var_consP = (var_consP + (8 + 0));
   tmp = var_consD;
@@ -1617,84 +1473,84 @@ count(1, 0);
 count(1, 0);
   Mem[var_consP] = (count(0,1), (count(0,1), Mem[var_consP]) - (1 + 0));
   count(2,0);
-   stack[stackPointer++] = &&Return_202_64;
+   stack[stackPointer++] = &&Return_179_42;
   goto Label_hash;
-  Return_202_64:
+  Return_179_42:
 count(1, 0);
   var_segEnd = (var_segEnd + (var_hashV + var_segSize));
-  goto Label__split_200_17;
+  goto Label__split_177_17;
 
-Label__join_212_12:
+Label__join_189_12:
   if (!(var_hashV == 0 && var_segEnd == 0 && 1)){
-    fprintf(stderr,"\nAssertion failure at line ~211\n");
+    fprintf(stderr,"\nAssertion failure at line ~188\n");
   writeVars(); goto programEnd;
 }
   if (!((var_consP & 3) == 0 && var_consP >= var_H && var_consA == 0 && var_consD == 0 && 1)){
-    fprintf(stderr,"\nAssertion failure at line ~210\n");
+    fprintf(stderr,"\nAssertion failure at line ~187\n");
   writeVars(); goto programEnd;
 }
-  if (count(1,0), (count(0,1), Mem[var_consP]) > 1) goto Label__consEnd; else goto Label__join_209_9;
+  if (count(1,0), (count(0,1), Mem[var_consP]) > 1) goto Label__consEnd; else goto Label__join_186_9;
 
 Label__cons:
-  if (count(1,0), var_failed > 0) goto Label__failedCons; else goto Label__join_212_12;
+  if (count(1,0), var_failed > 0) goto Label__failedCons; else goto Label__join_189_12;
 
 Label__consSymbolD:
   if (count(1,0), !(var_consD < var_H)){
-    fprintf(stderr,"\nJoin failure at line 218\n");
+    fprintf(stderr,"\nJoin failure at line 195\n");
   writeVars(); goto programEnd;
 }
   count(2,0);
-   stack[stackPointer++] = &&Return_217_65;
+   stack[stackPointer++] = &&Return_194_43;
   goto Label_hash;
-  Return_217_65:
+  Return_194_43:
 count(1, 0);
   var_segEnd = (var_segEnd + (var_hashV + var_segSize));
   goto Label__consFoundSame;
 
-Label__split_218_13:
+Label__split_195_13:
   if (count(1,0), var_consD < var_H){
-    fprintf(stderr,"\nJoin failure at line 218\n");
+    fprintf(stderr,"\nJoin failure at line 195\n");
   writeVars(); goto programEnd;
 }
   count(2,0);
-   stack[stackPointer++] = &&Return_217_66;
+   stack[stackPointer++] = &&Return_194_44;
   goto Label_hash;
-  Return_217_66:
+  Return_194_44:
 count(1, 0);
   var_segEnd = (var_segEnd + (var_hashV + var_segSize));
   goto Label__consFoundSame;
 
-Label__join_220_15:
+Label__join_197_15:
 count(1, 0);
   Mem[var_consD] = (count(0,1), (count(0,1), Mem[var_consD]) + (1 + 0));
-  goto Label__split_218_13;
+  goto Label__split_195_13;
 
 Label__consSymbolA:
   if (count(1,0), !(var_consA < var_H)){
-    fprintf(stderr,"\nJoin failure at line 223\n");
+    fprintf(stderr,"\nJoin failure at line 200\n");
   writeVars(); goto programEnd;
 }
 count(1, 0);
   var_consP = (var_consP + (4 + 0));
 count(1, 0);
   var_consD = (var_consD + ((count(0,1), Mem[var_consP]) + 0));
-  if (count(1,0), var_consD < var_H) goto Label__consSymbolD; else goto Label__join_220_15;
+  if (count(1,0), var_consD < var_H) goto Label__consSymbolD; else goto Label__join_197_15;
 
-Label__split_223_13:
+Label__split_200_13:
   if (count(1,0), var_consA < var_H){
-    fprintf(stderr,"\nJoin failure at line 223\n");
+    fprintf(stderr,"\nJoin failure at line 200\n");
   writeVars(); goto programEnd;
 }
 count(1, 0);
   var_consP = (var_consP + (4 + 0));
 count(1, 0);
   var_consD = (var_consD + ((count(0,1), Mem[var_consP]) + 0));
-  if (count(1,0), var_consD < var_H) goto Label__consSymbolD; else goto Label__join_220_15;
+  if (count(1,0), var_consD < var_H) goto Label__consSymbolD; else goto Label__join_197_15;
 
-Label__join_225_15:
+Label__join_202_15:
 count(1, 0);
   Mem[var_consA] = (count(0,1), (count(0,1), Mem[var_consA]) + (1 + 0));
-  goto Label__split_223_13;
+  goto Label__split_200_13;
 
 Label__consEnd:
 count(1, 0);
@@ -1709,13 +1565,13 @@ count(1, 0);
   var_consP = (var_consP + (4 + 0));
 count(1, 0);
   var_consA = (var_consA + ((count(0,1), Mem[var_consP]) + 0));
-  if (count(1,0), var_consA < var_H) goto Label__consSymbolA; else goto Label__join_225_15;
+  if (count(1,0), var_consA < var_H) goto Label__consSymbolA; else goto Label__join_202_15;
 
-Label__join_241_6:
+Label__join_218_6:
 count(1, 0);
   var_z = (var_z - (var_H + 0));
   if (!(var_z == 0 && 1)){
-    fprintf(stderr,"\nAssertion failure at line ~239\n");
+    fprintf(stderr,"\nAssertion failure at line ~216\n");
   writeVars(); goto programEnd;
 }
 count(1, 0);
@@ -1724,44 +1580,44 @@ count(1, 0);
 
 Label__used:
   if (count(1,0), !((count(0,1), Mem[var_z]) > 0)){
-    fprintf(stderr,"\nJoin failure at line 242\n");
+    fprintf(stderr,"\nJoin failure at line 219\n");
   writeVars(); goto programEnd;
 }
-  if (count(1,0), var_H != var_z) goto Label__dump; else goto Label__join_241_6;
+  if (count(1,0), var_H != var_z) goto Label__dump; else goto Label__join_218_6;
 
-Label__split_242_10:
+Label__split_219_10:
   if (count(1,0), (count(0,1), Mem[var_z]) > 0){
-    fprintf(stderr,"\nJoin failure at line 242\n");
+    fprintf(stderr,"\nJoin failure at line 219\n");
   writeVars(); goto programEnd;
 }
-  if (count(1,0), var_H != var_z) goto Label__dump; else goto Label__join_241_6;
+  if (count(1,0), var_H != var_z) goto Label__dump; else goto Label__join_218_6;
 
-Label__join_244_6:
+Label__join_221_6:
 count(1, 0);
   var_y = (var_y - (1 + 0));
-  goto Label__split_242_10;
+  goto Label__split_219_10;
 
 Label__dump:
   if (count(1,0), !(var_z < var_endH)){
-    fprintf(stderr,"\nJoin failure at line 246\n");
+    fprintf(stderr,"\nJoin failure at line 223\n");
   writeVars(); goto programEnd;
 }
 count(1, 0);
   var_z = (var_z - (12 + 0));
-  if (count(1,0), (count(0,1), Mem[var_z]) > 0) goto Label__used; else goto Label__join_244_6;
+  if (count(1,0), (count(0,1), Mem[var_z]) > 0) goto Label__used; else goto Label__join_221_6;
 
-Label__split_246_10:
+Label__split_223_10:
   if (count(1,0), var_z < var_endH){
-    fprintf(stderr,"\nJoin failure at line 246\n");
+    fprintf(stderr,"\nJoin failure at line 223\n");
   writeVars(); goto programEnd;
 }
 count(1, 0);
   var_z = (var_z - (12 + 0));
-  if (count(1,0), (count(0,1), Mem[var_z]) > 0) goto Label__used; else goto Label__join_244_6;
+  if (count(1,0), (count(0,1), Mem[var_z]) > 0) goto Label__used; else goto Label__join_221_6;
 
 Label__failedCons:
 fprintf(stderr," free nodes: %d,", var_y);
-  goto Label__split_246_10;
+  goto Label__split_223_10;
 
 Label__hash_alt:
 count(1, 0);
@@ -1813,7 +1669,7 @@ count(1, 0);
 count(1, 0);
   var_hashA = (var_hashA - (var_consA + 0));
   if (!(var_hashV == 0 && var_hashA == 366001 && var_hashB == 827927 && var_hashC == 593041 && 1)){
-    fprintf(stderr,"\nAssertion failure at line ~251\n");
+    fprintf(stderr,"\nAssertion failure at line ~228\n");
   writeVars(); goto programEnd;
 }
   goto *stack[--stackPointer];
@@ -1836,7 +1692,7 @@ count(1, 0);
 count(1, 0);
   var_hashT = (var_hashT ^ (var_consA << 7));
   if (!(var_hashV == 0 && var_hashT == 366001 && 1)){
-    fprintf(stderr,"\nAssertion failure at line ~279\n");
+    fprintf(stderr,"\nAssertion failure at line ~256\n");
   writeVars(); goto programEnd;
 }
   goto *stack[--stackPointer];
