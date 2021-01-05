@@ -11,6 +11,8 @@ import Data.Void
 import Ast
 import Error
 
+import Debug.Trace
+
 type Parser = Parsec Void String
 -- ParseErr :: PA.ParseError -> AErr
 
@@ -43,7 +45,7 @@ calls :: [String]
 calls = ["!loop", "!", "loop"]
 
 rws :: [String]
-rws = ["fun", "main", "let", "in", "true", "false", "case", "of", "as", "/="] ++ calls
+rws = ["fun", "main", "let", "in", "true", "false", "case", "of", "as", "/=", "::"] ++ calls
 
 rword :: String -> Parser ()
 rword w = (lexeme . try) (string w *> notFollowedBy alphaNumChar)
@@ -62,73 +64,82 @@ brackets = between (symbol "[") (symbol "]")
 comSep p = p `sepBy` comma
 colSep p = p `sepBy1` colon
 
-sep' = comSep lExprP
-colsep' = colSep lExprP
+sep' = comSep patternP
+colsep' = colSep patternP
 
 --                  PARSER
 
-identifier :: Parser Ident
+programP :: Parser Prog
+programP =  some funP
+
+identifier :: Parser ID
 identifier = lexeme $ do
         lookAhead lowerChar
         -- pos <- getPosition
         ident' <- some $ (alphaNumChar <|> (oneOf "-_") <?>
                          "identifier cannot be the same as a keyword")
-        return $ Ident ident'
+        return $ ident'
 
 funP :: Parser Func
 funP = L.nonIndented scn $ L.lineFold scn p
   where
     p sc' = do rword "fun"
                id <- identifier
-               p <- some lExprP
+               p <- patternP
+               -- p <- some lExprP
                symbol "="
                sc'
                e <- exprP
                rest <- many $ try pats
-               return $ Func id $ map (\(x,y) -> FunPat x y) $ (p,e):rest
+               return $ Func id $ map (\(x,y) -> R x y) $ (p,e):rest
     pats  = do scn
                rword "|"
-               p <- some lExprP
+               p <- patternP
+               -- p <- some lExprP
                symbol "="
                e <- exprP
                return $ (p,e)
 
-guardP :: Parser Guard
-guardP = try guard' <|> (return $ Guard [])
-  where guard' = do
-          symbol "|"
-          gs <- lExprAP `sepBy1` comma
-          return $ Guard gs
+-- guardP :: Parser Guard
+-- guardP = try guard' <|> (return $ Guard [])
+--   where guard' = do
+--           symbol "|"
+--           gs <- patternAP `sepBy1` comma
+--           return $ Guard gs
                  
 
-lExprP :: Parser LExpr
-lExprP = try as <|> try neq <|> vari <|> int <|>
-  listf <|> try tuple <|> try listc <|> parLE <?> "Left-expression"
+patternP :: Parser Pattern
+patternP = try as <|> try neq <|> vari <|> int <|>
+  -- listf <|> try tuple <|> try listc <|>
+  try pair <|> parLE
+  <?> "Left-expression"
   where
     int    = do i <- integer
-                return $ Int i
+                return $ Const i
     vari   = do var <- identifier
                 return $ Var var
-    tuple  = do les <- parens $ sep'
-                return $ Tuple les
+    -- tuple  = do les <- parens $ sep'
+    --             return $ Tuple les
     neq    = do ident <- identifier
                 rword "/="
-                les <- lExprP
+                les <- patternP
                 return $ Neq ident les
     as     = do ident <- identifier
                 rword "as"
-                les <- lExprP
+                les <- patternP
                 return $ As ident les
-    listc  = do les <- parens $ colsep'
-                return $ List $ foldr (\a b -> ListCons a b)
-                      (ListEnd $ last les) (init les)
-    listf  = do les <- brackets $ sep'
-                return $ List $ foldr (\a b -> ListCons a b) ListNil les
-    parLE  = parens lExprP
+    pair   = do p <- parens $ patternP `sepBy1` (string "::")
+                return $ Pair (head p) (p !! 1)
+    -- listc  = do les <- parens $ colsep'
+    --             return $ Pair $ foldr (\a b -> Cons a b)
+    --                   (Last $ last les) (init les)
+    -- listf  = do les <- brackets $ sep'
+    --             return $ Pair $ foldr (\a b -> Cons a b) Nil les
+    parLE  = parens patternP
 
 exprP :: Parser Expr
 exprP = try (L.lineFold scn letb) <|> try caseb <|>
-  (do e <- lExprAP; return (LeftT e)) <?> "expression"
+  (do e <- patternAP; return (LeftT e)) <?> "expression"
   where
     letb sc' = do ind <- L.indentLevel
                   rword "let"
@@ -137,9 +148,9 @@ exprP = try (L.lineFold scn letb) <|> try caseb <|>
                   l <- some $ try ( do
                     scn
                     ind'' <- L.indentLevel
-                    lhs <- lExprP
+                    lhs <- patternP
                     symbol "="
-                    rhs <- lExprAP
+                    rhs <- patternAP
                     return $ (lhs, rhs, ind'')
                     )
                   mapM_ (\(_,_,i) -> when (i /= ind')
@@ -153,33 +164,33 @@ exprP = try (L.lineFold scn letb) <|> try caseb <|>
                                     Let le1 le2 ex) e l
     caseb    = do ind <- L.indentLevel
                   rword "case"
-                  e <- lExprAP
+                  e <- patternAP
                   rword "of"
                   scn
                   L.indentGuard scn GT ind
                   ind' <- L.indentLevel
                   c <- some $ try (L.lineFold scn cases)
-                  mapM_ (\(_,_,_,i) -> when (i < ind')
+                  mapM_ (\(_,_,i) -> when (i < ind')
                           (L.incorrectIndent EQ ind' i)) c
-                  return $ Case e $ map (\(x,y,z,_) -> (x,y,z)) c
+                  return $ Case e $ map (\(x,y,_) -> (x,y)) c
     cases sc'= do scn
                   ind <- L.indentLevel
-                  le <- lExprP
+                  le <- patternP
                   symbol "->"
                   sc'
                   e <- exprP
-                  return (le, Guard [], e, ind)
+                  return (le, e, ind)
 
 
-lExprAP :: Parser LExpr
-lExprAP = try app <|> try lExprP <|> parLE  <?> "Left-expression"
+patternAP :: Parser Pattern
+patternAP = try app <|> try patternP <|> parLE  <?> "Left-expression"
   where
     app    = do inv <- optional $ choice $ map string calls
                 scn
                 fun <- identifier
-                les <- many lExprP
+                les <- many patternP
                 return $ App inv fun les
-    parLE  = parens lExprAP
+    parLE  = parens patternAP
 
 
 valueP :: Parser Value
@@ -192,7 +203,7 @@ valueP = int <|> list <|> funId <|> try tuple <?>  "Value"
     list   = do vs <- brackets $ comSep valueP
                 return $ ListV vs
     funId  = do i <- identifier
-                return $ FunV $ ident i
+                return $ FunV $ i
 -- parseString :: Parser a -> String -> a
 -- parseString parser str =
 --   case parse parser "" str of

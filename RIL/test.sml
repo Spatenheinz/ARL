@@ -1,6 +1,7 @@
+
 (* RIL parsing and printing *)
 (* compile with mosmlc RShow.sml -o RShow *)
-structure RShow =
+structure test =
 struct
 
   fun createLexerStream ( is : BasicIO.instream ) =
@@ -8,7 +9,7 @@ struct
 
   fun errorMess s = TextIO.output (TextIO.stdErr,s ^ "\n");
 
-  fun rs filename =  
+  fun rs filename =
       let
         val lexbuf = createLexerStream
 			  (BasicIO.open_in (filename ^ ".ril"))
@@ -16,10 +17,10 @@ struct
         let
           val pgm = Parser.Prog Lexer.Token lexbuf
 	  (* val () = Type.checkProgram pgm *)
-          val outfile = TextIO.openOut (filename ^ "_expanded.ril")
+          val outfile = TextIO.openOut (filename ^ "_test.ril")
         in
-          (* TextIO.output (outfile, RIL.showProg pgm); *)
-          TextIO.output (outfile, RIL.showProg pgm);
+          (* TextIO.output (outfile, pgm); *)
+          TextIO.output (outfile, pgm);
 	  TextIO.closeOut outfile
         end
           handle Parsing.yyexit ob => errorMess "Parser-exit\n"
@@ -36,6 +37,6 @@ struct
       end
 
   val _ = (rs (List.nth(Mosml.argv (),1)))
-          handle Subscript => errorMess "call by, e.g.  RShow hash"
+          handle Subscript => errorMess "call by, e.g.  RTest hash"
 
 end

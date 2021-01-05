@@ -8,4 +8,4 @@ mosmlc -o RShow RShow.sml
 mosmlc -c Compiler.sig
 mosmlc -c Compiler.sml
 mosmlc -o comRIL comRIL.sml
-
+mosmlc -o test test.sml

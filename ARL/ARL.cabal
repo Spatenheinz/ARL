@@ -27,17 +27,22 @@ library
   exposed-modules:
       Ast
       Error
+      Eval
       Lib
       Parser
+      PPrinter
+      RIL
   other-modules:
       Paths_ARL
   hs-source-dirs:
       src
   build-depends:
       base >=4.7 && <5
+    , containers >=0.6.2.1 && <1
     , hspec >=2.7.4 && <3
     , hspec-megaparsec >=2.1.0 && <3
     , megaparsec >=8.0.0
+    , mtl >=2.2.2 && <3
     , parsec >=3.1.11 && <4
     , pretty >=1.1.3.6 && <2
   default-language: Haskell2010
@@ -52,9 +57,11 @@ executable ARL-exe
   build-depends:
       ARL
     , base >=4.7 && <5
+    , containers >=0.6.2.1 && <1
     , hspec >=2.7.4 && <3
     , hspec-megaparsec >=2.1.0 && <3
     , megaparsec >=8.0.0
+    , mtl >=2.2.2 && <3
     , parsec >=3.1.11 && <4
     , pretty >=1.1.3.6 && <2
   default-language: Haskell2010
@@ -70,9 +77,11 @@ test-suite ARL-test
   build-depends:
       ARL
     , base >=4.7 && <5
+    , containers >=0.6.2.1 && <1
     , hspec >=2.7.4 && <3
     , hspec-megaparsec >=2.1.0 && <3
     , megaparsec >=8.0.0
+    , mtl >=2.2.2 && <3
     , parsec >=3.1.11 && <4
     , pretty >=1.1.3.6 && <2
   default-language: Haskell2010

@@ -77,6 +77,8 @@ main = hspec $ do
                               }
                      ]
            }
+  describe "Program parsing" $ do
+    it (cp ++ "a program with multiple functions") $ do
           -- it "can parse a simple function" $ do
     --   parse funP "" "fun test a = a\n | test 1 = a" `shouldParse`
     --     (Func (Ident "test") [Var (Ident "a")])
