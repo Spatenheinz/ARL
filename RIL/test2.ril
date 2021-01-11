@@ -69,7 +69,7 @@ begin build    // build list into A0
 end build
 
 begin subsequences // argument in A0, result in R0
-  --> entry1
+  // --> entry1
   // test A0 "subsequences(%d)\n";
   // R0 != 0 --> l1;
   // A0 != 2 --> l2;
@@ -83,20 +83,20 @@ begin subsequences // argument in A0, result in R0
   // --> endSS
   // l3 <--
 
-  entry1 <--
+  // entry1 <--
   A0 != 2 --> l1;
   A0 -= 2;
   l1 <-- A0 != 0;
 
-  A0 != 0 --> l2;
+  A0 != 0 --> entry2;
   skip;
-  l2 <-- A0 != 0;
+  exit2 <-- A0 != 0;
 
   l3 <-- A0 == nilnil;
   A0 += nilnil;
-  A0 == 0 --> l3;
-  // --> endSS
-
+  A0 == 0 --> l3
+  --> endSS
+  entry2 <--
   //////////////////////////////////////////////////////////////////////
   // second part
   consP <-> A0;
@@ -107,7 +107,7 @@ begin subsequences // argument in A0, result in R0
   call subsequences;  // R0 now holds ss0
   stackP -= 4;
   M[stackP] <-> x; // restore x (1st arg of consAll)
-  A1 <-> R0; // 2nd arg of consAll is ss0
+  A1 <-> A0; // 2nd arg of consAll is ss0
   call consAll; // R0 now holds result for rule 2
   endSS <-- R0 == nilnil;
   test R0 "--> %d\n"

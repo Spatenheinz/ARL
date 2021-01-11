@@ -25,13 +25,13 @@ source-repository head
 
 library
   exposed-modules:
-      Ast
-      Error
-      Eval
-      Lib
-      Parser
-      PPrinter
-      RIL
+      Arl.Ast
+      Arl.Error
+      Arl.Eval
+      Arl.Parser
+      Arl.PPrinter
+      Arl.RIL
+      Main
   other-modules:
       Paths_ARL
   hs-source-dirs:
@@ -50,9 +50,15 @@ library
 executable ARL-exe
   main-is: Main.hs
   other-modules:
+      Arl.Ast
+      Arl.Error
+      Arl.Eval
+      Arl.Parser
+      Arl.PPrinter
+      Arl.RIL
       Paths_ARL
   hs-source-dirs:
-      app
+      src
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       ARL
