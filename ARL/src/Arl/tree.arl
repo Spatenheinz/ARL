@@ -1,0 +1,6 @@
+fun main =
+    flip
+// fun flip (l,r) = let fl = flip l in
+//                  let fr = flip r in
+//                  (fr, lr)
+//          | x     = x
