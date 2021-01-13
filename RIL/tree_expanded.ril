@@ -1,0 +1,352 @@
+begin main
+includeC A = 0;
+;
+hashA += 366001 + 0;
+hashB += 827927 + 0;
+hashC += 593041 + 0;
+hashT += hashA + 0;
+read m;
+b += 8 + 0;
+b1 += b - 1;
+hsize += 1 << m;
+hsize += b1 + 0;
+hsizeB += hsize << 2;
+hsizeB += hsize << 2;
+hsizeB += hsize << 2;
+H += 4800 + 0;
+endH += hsizeB + H;
+lastH += endH - 12;
+mask += 4 << m;
+mask -= 4 + 0;
+segSize += b1 << 2;
+segSize += b1 << 2;
+segSize += b1 << 2;
+stackP += endH + 0;
+stackP += 64 + 0;
+call initialise;
+call build;
+call flip;
+includeC printf("max refs = %d\n",A);;
+assert z == 0;
+z += H + 0
+ --> join_42_7
+
+dump1; join_42_7 <-- H != z
+skip
+M[z] > 0 --> used1; split_43_10
+
+split_43_10 <-- 
+y += 1 + 0
+ --> join_45_7
+
+used1; join_45_7 <-- M[z] > 0
+z += 12 + 0
+z < endH --> dump1; split_47_10
+
+split_47_10 <-- 
+test %d, y 
+end main
+
+begin initialise
+test init: %d
+ consA ;
+consA += 2 + 0;
+test init: %d
+ consA ;
+consD += 2 + 0;
+call cons;
+nilnil <-> consP
+end initialise
+
+begin build
+consD += 2 + 0;
+consA += 3 + 0;
+test %d
+ consA ;
+call cons;
+consP <-> consD;
+consA += 7 + 0;
+test %d
+ consA ;
+call cons;
+A0 <-> consP
+end build
+
+begin flip
+skip
+ --> entryLR
+
+exitLR <-- 
+skip
+end flip
+
+entryLR <-- 
+skip
+A0 & 3 --> l1; split_83_8
+
+split_83_8 <-- 
+A0 <-> consP;
+uncall cons;
+p1 <-> consA
+consA != 0 --> l3; split_87_12
+
+split_87_12 <-- 
+p2 <-> consD
+consD == 0 --> l4; join_90_4
+
+l3; join_90_4 <-- consA != 0
+skip
+ --> join_92_6
+
+snd1; join_92_6 <-- A0 == p1
+p1 <-> copyP;
+call copy
+A0 != 0 --> snd1; split_95_9
+
+split_95_9 <-- 
+call cons
+ --> join_98_4
+
+l4; join_98_4 <-- consP == 0
+skip
+ --> join_99_4
+
+l1; join_99_4 <-- consP & 3
+skip
+A0 != 0 --> Entry2; join_104_6
+
+let1; join_104_6 <-- A0 == p1
+p1 <-> copyP;
+call copy
+A0 != 0 --> let1; split_107_9
+
+split_107_9 <-- 
+call flip;
+A0 <-> fl;
+assert A0 == 0
+ --> join_112_6
+
+let2; join_112_6 <-- A0 == p2
+p2 <-> copyP;
+call copy
+A0 != 0 --> let2; split_115_9
+
+split_115_9 <-- 
+call flip;
+A0 <-> fr;
+assert A0 == 0
+ --> join_120_7
+
+exit2; join_120_7 <-- A != 0
+skip
+ --> join_122_6
+
+res1; join_122_6 <-- A0 & 3
+call cons;
+fr <-> consA
+ --> join_125_6
+
+res3; join_125_6 <-- consA == 0
+lr <-> consD
+ --> join_127_6
+
+res4; join_127_6 <-- consD != 0
+skip
+consA == 0 --> res3; split_128_12
+
+split_128_12 <-- 
+skip
+A0 != fr --> resE1; split_129_10
+
+split_129_10 <-- 
+fr <-> copyP
+ --> join_131_7
+
+resE1; join_131_7 <-- A0 != 0
+uncall cons
+A0 != 0 --> res4; split_133_9
+
+split_133_9 <-- 
+skip
+A0 & 3 --> res1; exitLR
+
+Entry2 <-- 
+x <-> A0
+A0 != 0 --> entry3; join_140_7
+
+exit3; join_140_7 <-- A0 != 0
+x <-> A0
+ --> exit2
+
+entry3 <-- 
+assert A0 != A0
+ --> exit3
+
+begin copy
+assert copyP > 0 && copyQ == 0
+copyP < H --> copySymbol; split_151_13
+
+split_151_13 <-- 
+M[copyP] += 1 + 0;
+ttt += M[copyP] + 0;
+includeC if (A < var_ttt) A = var_ttt;;
+ttt -= M[copyP] + 0
+ --> join_156_14
+
+copySymbol; join_156_14 <-- copyP < H
+copyQ += copyP + 0;
+assert copyP > 0 && copyQ == copyP
+end copy
+
+begin cons
+assert consA != 0;
+assert consD != 0;
+assert consP == 0;
+assert hashV == 0;
+assert segEnd == 0;
+call hash;
+segEnd += hashV + segSize;
+consP += hashV + 0
+ --> join_171_16
+
+consSearchSame; join_171_16 <-- consP > hashV
+skip
+M[consP] == 0 --> consNext; split_172_17
+
+split_172_17 <-- 
+consP += 4 + 0
+M[consP] != consA --> consNotA; split_174_23
+
+split_174_23 <-- 
+consP += 4 + 0
+M[consP] == consD --> consFoundSame; split_176_25
+
+split_176_25 <-- 
+consP -= 4 + 0
+ --> join_178_14
+
+consNotA; join_178_14 <-- M[consP] != consA
+consP -= 4 + 0
+ --> join_180_12
+
+consNext; join_180_12 <-- M[consP] == 0
+consP += 12 + 0
+consP <= segEnd --> consSearchSame; join_183_17
+
+consSearchEmpty; join_183_17 <-- consP <= segEnd
+consP -= 12 + 0
+consP < hashV --> consFail; split_185_17
+
+split_185_17 <-- 
+skip
+M[consP] != 0 --> consSearchEmpty; split_186_17
+
+split_186_17 <-- 
+segEnd -= hashV + segSize;
+uncall hash;
+M[consP] += 1 + 0;
+consP += 4 + 0;
+consA <-> M[consP];
+consP += 4 + 0;
+consD <-> M[consP];
+consP -= 8 + 0
+ --> join_195_9
+
+consEnd; join_195_9 <-- M[consP] > 1
+assert consP & 3 && consP >= H && consA == 0 && consD == 0;
+assert hashV == 0 && segEnd == 0
+ --> join_198_12
+
+failedCons; join_198_12 <-- failed > 0
+skip
+end cons
+
+consFoundSame <-- 
+segEnd -= hashV + segSize;
+uncall hash
+consD < H --> consSymbolD; split_204_13
+
+split_204_13 <-- 
+M[consD] -= 1 + 0
+ --> join_206_15
+
+consSymbolD; join_206_15 <-- consD < H
+consD -= M[consP] + 0;
+consP -= 4 + 0
+consA < H --> consSymbolA; split_209_13
+
+split_209_13 <-- 
+M[consA] -= 1 + 0
+ --> join_211_15
+
+consSymbolA; join_211_15 <-- consA < H
+consA -= M[consP] + 0;
+consP -= 4 + 0;
+M[consP] += 1 + 0;
+ttt += M[consP] + 0;
+includeC if (A < var_ttt) A = var_ttt;;
+ttt -= M[consP] + 0
+ --> consEnd
+
+consFail <-- 
+failed += 1 + 0;
+assert z == 0;
+z += H + 0
+ --> join_227_6
+
+dump; join_227_6 <-- H != z
+skip
+M[z] > 0 --> used; split_228_10
+
+split_228_10 <-- 
+y += 1 + 0
+ --> join_230_6
+
+used; join_230_6 <-- M[z] > 0
+z += 12 + 0
+z < endH --> dump; split_232_10
+
+split_232_10 <-- 
+test  free nodes: %d, y 
+ --> failedCons
+
+begin hash_alt
+assert hashV == 0 && hashA == 366001 && hashB == 827927 && hashC == 593041;
+hashA += consA + 0;
+hashB += consD + 0;
+hashA -= hashB + hashC;
+hashA ^= hashC >> 13;
+hashB -= hashC + hashA;
+hashB ^= hashA << 8;
+hashC -= hashA + hashB;
+hashC ^= hashB >> 13;
+hashA -= hashB + hashC;
+hashA ^= hashC >> 12;
+hashB -= hashC + hashA;
+hashB ^= hashA << 16;
+hashC -= hashA + hashB;
+hashC ^= hashB >> 5;
+hashA -= hashB + hashC;
+hashA ^= hashC >> 3;
+hashB -= hashC + hashA;
+hashB ^= hashA << 10;
+hashC -= hashA + hashB;
+hashC ^= hashB >> 15;
+hashV += hashC & mask;
+hashV += hashC & mask;
+hashV += hashC & mask;
+hashV += H + 0
+end hash_alt
+
+begin hash
+assert hashV == 0 && hashT == 366001;
+hashT ^= consA << 7;
+hashT += consA >> 1;
+hashT ^= consD << 5;
+hashT += consD >> 3;
+hashV += hashT & mask;
+hashV += hashT & mask;
+hashV += hashT & mask;
+hashV += H + 0
+end hash
+

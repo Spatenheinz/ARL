@@ -1,4 +1,3 @@
-
 begin main
 includeC "A = 0;\n";
 // initialize hash codes
@@ -8,10 +7,10 @@ hashC += 593041;
 hashT += hashA;
 
 // heap size setup
-read m; // log of heap size
+// read m; // log of heap size
 b += 8; // segment size
 b1 += b - 1;
-hsize += 1<<m;
+hsize += 1<<15;
 hsize += b1; // number of nodes = 2^m + b - 1
 hsizeB += hsize << 2;
 hsizeB += hsize << 2;
@@ -19,7 +18,7 @@ hsizeB += hsize << 2; // number of bytes
 H += 4800; // heap start
 endH += hsizeB + H; // heap end
 lastH += endH - 12; // address of last node in heap
-mask += 4<<m; // Mask used for hashing: 4*(2^m)
+mask += 4<<15; // Mask used for hashing: 4*(2^m)
 mask -= 4; // for overlapping segments
 //mask -= b<<2; // for non-overlapping segments
 segSize += b1<<2;
@@ -31,7 +30,21 @@ stackP += 64;  // initialise stack pointer
 
 call initialise; // initialise constants
 call build; // build list into A0
-call flip;
+uncall flip;
+test A0 consD "res: %d %d\n";
+A0 <-> consP;
+uncall cons;
+test consA consD consP "res after cons %d - %d - %d\n";
+consA <-> consP;
+consD <-> res1;
+uncall cons;
+
+test consA consD "res after cons %d - %d\n";
+consA <-> lhs1;
+consD <-> lhs2;
+consP <-> res1;
+uncall cons;
+test lhs1 lhs2 consA consD "final: %d - %d - %d - %d\n";
 // uncall build;
 //uncall initialise;
 includeC "printf(\"max refs = %d\\n\",A);";
@@ -58,13 +71,21 @@ begin initialise  // construct nilnil = [[]]
 end initialise
 
 begin build    // build list into A0
-  consD += 2;  // []
-  consA += 3;  // integer 1
+  consD += 3;  // []
+  consA += 5;  // integer 1
   test consA "%d\n";
   call cons;
-  consP <-> consD;
-  consA += 7;  // integer 12
+  lhs <-> consP;
+  consD += 7;
+  consA += 9;  // integer 12
   test consA "%d\n";
+  // call cons;
+  // consP <-> consD;
+  // consA += 5;
+  test consP "%d\n";
+  call cons;
+  lhs <-> consA;
+  consP <-> consD;
   call cons;
   A0 <-> consP
 end build
@@ -73,12 +94,14 @@ end build
 //               let fr = call flip r in
 //               (fr, lr)
 begin flip
---> entryLR;
+skip
+--> entryLR
 exitLR <--
+skip
 end flip
 
 entryLR <--
-A0 & 3 --> l1;
+A0 & 3 --> l1;              // lhs
 A0 <-> consP;
 uncall cons;
 p1 <-> consA;
@@ -87,57 +110,77 @@ p2 <-> consD;
 consD == 0 --> l4;
 l3 <-- consA != 0;
 
-snd1 <-- A0 == p1;
-p1 <-> copyP;
-call copy;
-A0 != 0 --> snd1;
+p1 <-> consA;
 
+// A0 == 0 --> snd1;
+// // call copy;
+// // p1 <-> copyP;
+// snd1 <-- A0 == p1;
+
+test consA consD "first vcons %d %d \n";
 call cons;
-l4 <-- consP == 0;
-l1 <-- consP & 3;
+A0 <-> consP;
+l4 <-- A0 == 0;
+l1 <-- A0 & 3;
 // ---------------------first check done
 
 A0 != 0 --> Entry2;
 // let defs
-let1 <-- A0 == p1;
-p1 <-> copyP;
-call copy;
-A0 != 0 --> let1;
+A0 <-> p1;
+M[stackP] <-> p2;
+stackP += 4;
+M[stackP] <-> fr;
+stackP += 4;
 call flip;
+stackP -= 4;
+M[stackP] <-> fr;
+stackP -= 4;
+M[stackP] <-> p2;
+test A0 fl p2 " test: %d %d %d";
 A0 <-> fl;
 assert A0 == 0;
 
-let2 <-- A0 == p2;
-p2 <-> copyP;
-call copy;
-A0 != 0 --> let2;
+A0 <-> p2;
+M[stackP] <-> p1;
+stackP += 4;
+M[stackP] <-> fl;
+stackP += 4;
 call flip;
+stackP -= 4;
+M[stackP] <-> fl;
+stackP -= 4;
+M[stackP] <-> p2;
 A0 <-> fr;
 assert A0 == 0;
 
-exit2 <-- A != 0;  // exit
+exit2 <-- A0 != 0;  // exit
 
-res1 <-- A0 & 3;
-call cons;
-fr <-> consA;
-res3 <-- consA == 0;
-lr <-> consD;
-res4 <-- consD != 0;
-consA == 0 --> res3;
-A0 != fr --> resE1;
-fr <-> copyP;
-resE1 <-- A0 != 0;
+
+// in part
+A0 & 3 --> res1;
+test fr fl "something wroing here %d %d\n";
+A0 == 0 --> res4;
+A0 <-> consP;
 uncall cons;
-A0 != 0 --> res4;
-A0 !& 3 --> res1
+fr <-> consA; //copyP;
+consA == 0 --> res3;
+res4 <-- consD == 0;
+fl <-> consD;
+res3 <-- consA != 0;
+fr <-> consA;
+call cons;
+consP <-> A0;
+res1 <-- A0 & 3
+
 --> exitLR        // exit
 
 Entry2 <--
 x <-> A0;
 A0 != 0 --> entry3;
 exit3 <-- A0 != 0;
-x <-> A0
---> Exit2
+x <-> A0;
+test x A0 p1 p2 " second rule %d,%d --- %d/%d\n"
+--> exit2
 
 entry3 <--
 assert A0 != A0
