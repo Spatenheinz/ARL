@@ -31,22 +31,30 @@ stackP += 64;  // initialise stack pointer
 call initialise; // initialise constants
 call build; // build list into A0
 uncall flip;
-test A0 consD "res: %d %d\n";
-A0 <-> consP;
-uncall cons;
-test consA consD consP "res after cons %d - %d - %d\n";
-consA <-> consP;
-consD <-> res1;
-uncall cons;
-
-test consA consD "res after cons %d - %d\n";
-consA <-> lhs1;
-consD <-> lhs2;
-consP <-> res1;
-uncall cons;
-test lhs1 lhs2 consA consD "final: %d - %d - %d - %d\n";
+// test A0 consD "res: %d %d\n";
+// A0 <-> consP;
+// uncall cons;
+// test consA consD consP "res after cons %d - %d - %d\n";
+// consA <-> consP;
+// consD <-> res1;
+// uncall cons;
+// test consA consD "res after cons %d - %d\n";
+// consA <-> lhs1;
+// consD <-> lhs2;
+// consP <-> res1;
+// uncall cons;
+// test lhs1 lhs2 consA consD "final: %d - %d - %d - %d\n";
+// consA <-> consP;
+// consD <-> res2;
+// uncall cons;
+// test lhs1 lhs2 rhs1 consA consD "final: %d - %d - %d - %d - %d\n";
+// consA <-> rhs1;
+// consD <-> consP;
+// uncall cons;
+// test lhs1 lhs2 rhs1 consA consD "final: %d - %d - %d - %d - %d\n";
 // uncall build;
 //uncall initialise;
+// includeC "for(int i = 0; i < 0x10000000; i++) { uint a = Mem[i]; if (a != 0) { printf("ayy %d\n",a);}}";
 includeC "printf(\"max refs = %d\\n\",A);";
 
 // print number of free nodes
@@ -62,23 +70,28 @@ test y "%d,"
 end main
 
 begin initialise  // construct nilnil = [[]]
-  test consA "init: %d\n";
   consA += 2;
-  test consA "init: %d\n";
   consD += 2;
   call cons;
   nilnil <-> consP
 end initialise
 
 begin build    // build list into A0
-  consD += 3;  // []
-  consA += 5;  // integer 1
-  test consA "%d\n";
+  consD += 7;  // []
+  consA += 9;  // integer 1
+  call cons;
+  lhs1 <-> consP;
+  consA += 11;
+  consD += 13;
+  test consA consD "snd %d %d";
+  call cons;
+  lhs2 <-> consP;
+  lhs1 <-> consA;
+  lhs2 <-> consD;
   call cons;
   lhs <-> consP;
-  consD += 7;
-  consA += 9;  // integer 12
-  test consA "%d\n";
+  consD += 3;
+  consA += 5;  // integer 12
   // call cons;
   // consP <-> consD;
   // consA += 5;
@@ -131,7 +144,15 @@ M[stackP] <-> p2;
 stackP += 4;
 M[stackP] <-> fr;
 stackP += 4;
+M[stackP] <-> p1;
+stackP += 4;
+M[stackP] <-> fl;
+stackP += 4;
 call flip;
+stackP -= 4;
+M[stackP] <-> fl;
+stackP -= 4;
+M[stackP] <-> p1;
 stackP -= 4;
 M[stackP] <-> fr;
 stackP -= 4;
@@ -141,6 +162,10 @@ A0 <-> fl;
 assert A0 == 0;
 
 A0 <-> p2;
+M[stackP] <-> p2;
+stackP += 4;
+M[stackP] <-> fr;
+stackP += 4;
 M[stackP] <-> p1;
 stackP += 4;
 M[stackP] <-> fl;
@@ -148,6 +173,10 @@ stackP += 4;
 call flip;
 stackP -= 4;
 M[stackP] <-> fl;
+stackP -= 4;
+M[stackP] <-> p1;
+stackP -= 4;
+M[stackP] <-> fr;
 stackP -= 4;
 M[stackP] <-> p2;
 A0 <-> fr;
@@ -158,7 +187,7 @@ exit2 <-- A0 != 0;  // exit
 
 // in part
 A0 & 3 --> res1;
-test fr fl "something wroing here %d %d\n";
+test fr fl A0 "something wroing here %d %d -- %d\n";
 A0 == 0 --> res4;
 A0 <-> consP;
 uncall cons;

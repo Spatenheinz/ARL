@@ -1,6 +1,6 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.34.2.
+-- This file has been generated from package.yaml by hpack version 0.34.3.
 --
 -- see: https://github.com/sol/hpack
 
@@ -42,9 +42,7 @@ library
     , hspec >=2.7.4 && <3
     , hspec-megaparsec >=2.1.0 && <3
     , megaparsec >=8.0.0
-    , mtl >=2.2.2 && <3
-    , parsec >=3.1.11 && <4
-    , pretty >=1.1.3.6 && <2
+    , parser-combinators >=1.2.1 && <2
   default-language: Haskell2010
 
 executable ARL-exe
@@ -67,9 +65,7 @@ executable ARL-exe
     , hspec >=2.7.4 && <3
     , hspec-megaparsec >=2.1.0 && <3
     , megaparsec >=8.0.0
-    , mtl >=2.2.2 && <3
-    , parsec >=3.1.11 && <4
-    , pretty >=1.1.3.6 && <2
+    , parser-combinators >=1.2.1 && <2
   default-language: Haskell2010
 
 test-suite ARL-test
@@ -87,7 +83,5 @@ test-suite ARL-test
     , hspec >=2.7.4 && <3
     , hspec-megaparsec >=2.1.0 && <3
     , megaparsec >=8.0.0
-    , mtl >=2.2.2 && <3
-    , parsec >=3.1.11 && <4
-    , pretty >=1.1.3.6 && <2
+    , parser-combinators >=1.2.1 && <2
   default-language: Haskell2010

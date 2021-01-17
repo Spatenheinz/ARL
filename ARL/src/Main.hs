@@ -18,7 +18,7 @@ use = "usage: ARL [opts] filename"
 run file =
   do inp <- readFile file
      case parseFile file inp of
-       Left e -> print $ parseErrorPretty $ NE.head $ bundleErrors e--errorBundlePretty e
+       Left e -> print $ errorBundlePretty e --parseErrorPretty $ NE.head $ bundleErrors e--errorBundlePretty e
        Right prog -> print prog
 
 main :: IO()
