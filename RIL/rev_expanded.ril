@@ -1,0 +1,504 @@
+begin main
+includeC A = 0;
+;
+hashA += 366001 + 0;
+hashB += 827927 + 0;
+hashC += 593041 + 0;
+hashT += hashA + 0;
+b += 8 + 0;
+b1 += b - 1;
+hsize += 1 << 15;
+hsize += b1 + 0;
+hsizeB += hsize << 2;
+hsizeB += hsize << 2;
+hsizeB += hsize << 2;
+H += 4800 + 0;
+endH += hsizeB + H;
+lastH += endH - 12;
+mask += 4 << 15;
+mask -= 4 + 0;
+segSize += b1 << 2;
+segSize += b1 << 2;
+segSize += b1 << 2;
+stackP += endH + 0;
+stackP += 64 + 0;
+call initialise;
+call build;
+call reverse;
+includeC printf("max refs = %d\n",A);;
+assert z == 0;
+z += H + 0
+ --> join_37_7
+
+dump1; join_37_7 <-- H != z
+skip
+M[z] > 0 --> used1; split_38_10
+
+split_38_10 <-- 
+y += 1 + 0
+ --> join_40_7
+
+used1; join_40_7 <-- M[z] > 0
+z += 12 + 0
+z < endH --> dump1; split_42_10
+
+split_42_10 <-- 
+test %d, y 
+end main
+
+begin initialise
+consA += 2 + 0;
+consD += 2 + 0;
+call cons;
+nilnil <-> consP
+end initialise
+
+begin build
+consD += 2 + 0;
+consA += 9 + 0;
+call cons;
+A <-> consP
+end build
+
+begin reverse
+skip
+ --> reverse_entry_1
+
+reverse_exit_1 <-- 
+skip
+end reverse
+
+reverse_entry_1 <-- 
+xs <-> A
+A != 0 --> reverse_entry_2; join_78_21
+
+C2__ys_rev_xs_C2__1; join_78_21 <-- A != 0
+test i A: %d P: %d a: %d d: %d xs: %d x: %d ys:%d
+ A consP consA consD xs x ys 
+A & 3 --> inv_xs_C2_3; split_80_7
+
+split_80_7 <-- 
+skip
+A == 0 --> inv_xs_C2_5; split_81_8
+
+split_81_8 <-- 
+test i A: %d P: %d a: %d d: %d xs: %d x: %d ys:%d
+ A consP consA consD xs x ys ;
+A <-> consP;
+uncall cons;
+test i A: %d P: %d a: %d d: %d xs: %d x: %d ys:%d
+ A consP consA consD xs x ys ;
+A <-> consA;
+M[stackP] <-> consD;
+stackP += 4 + 0;
+xs <-> A
+A != 0 --> inv_xs_C2_4; join_94_13
+
+inv_xs_C2_5; join_94_13 <-- A == 0
+skip
+A != 0 --> inv_5reverse6; split_95_8
+
+split_95_8 <-- 
+A += 2 + 0
+ --> join_97_15
+
+inv_5reverse6; join_97_15 <-- A != 2
+A <-> consD
+ --> join_99_13
+
+inv_xs_C2_4; join_99_13 <-- A != 0
+xs <-> A;
+A <-> consA;
+call cons;
+consP <-> A
+ --> join_104_13
+
+inv_xs_C2_3; join_104_13 <-- A & 3
+test A: %d P: %d a: %d d: %d xs: %d x: %d ys:%d
+ A consP consA consD xs x ys 
+A & 3 --> C2__ys7; split_108_7
+
+split_108_7 <-- 
+A <-> consP;
+uncall cons;
+test A: %d P: %d a: %d d: %d xs: %d x: %d ys:%d
+ A consP consA consD xs x ys ;
+A <-> consA;
+M[stackP] <-> consD;
+stackP += 4 + 0;
+test iA: %d P: %d a: %d d: %d xs: %d x: %d ys:%d
+ A consP consA consD xs x ys 
+A != 2 --> reverse10; split_116_8
+
+split_116_8 <-- 
+A -= 2 + 0
+ --> join_118_11
+
+reverse10; join_118_11 <-- A != 0
+skip
+A != 0 --> C2__ys8; split_119_8
+
+split_119_8 <-- 
+stackP -= 4 + 0;
+A <-> M[stackP];
+ys <-> A
+A == 0 --> C2__ys9; join_124_9
+
+C2__ys8; join_124_9 <-- A != 0
+skip
+A != 0 --> inv_5reverse11; split_126_8
+
+split_126_8 <-- 
+A += 2 + 0
+ --> join_128_16
+
+inv_5reverse11; join_128_16 <-- A != 2
+stackP -= 4 + 0;
+M[stackP] <-> consD;
+A <-> consA;
+test A: %d P: %d a: %d d: %d xs: %d x: %d ys:%d
+ A consP consA consD xs x ys ;
+call cons;
+A <-> consP
+ --> join_137_9
+
+C2__ys9; join_137_9 <-- A == 0
+skip
+ --> join_138_9
+
+C2__ys7; join_138_9 <-- A & 3
+skip
+A == 0 --> C2__ys_rev_xs_C2__2; split_139_8
+
+split_139_8 <-- 
+test A: %d P: %d a: %d d: %d xs: %d x: %d ys:%d
+ A consP consA consD xs x ys ;
+call rev;
+test A: %d P: %d a: %d d: %d xs: %d x: %d ys:%d
+ A consP consA consD xs x ys 
+ --> C2__ys_rev_xs_C2__1
+
+C2__ys_rev_xs_C2__2 <-- 
+assert A == 0
+ --> join_147_16
+
+reverse_exit_2; join_147_16 <-- A != 0
+ys <-> A
+ --> reverse_exit_1
+
+reverse_entry_2 <-- 
+assert A != A
+ --> reverse_exit_2
+
+begin rev
+skip
+ --> rev_entry_1
+
+rev_exit_1 <-- 
+test A: %d P: %d a: %d d: %d xs: %d x: %d ys:%d
+ A consP consA consD xs x ys 
+end rev
+
+rev_entry_1 <-- 
+skip
+A & 3 --> x_xs_ys7; split_170_7
+
+split_170_7 <-- 
+A <-> consP;
+uncall cons;
+test A: %d P: %d a: %d d: %d xs: %d x: %d ys:%d
+ A consP consA consD xs x ys ;
+A <-> consA;
+M[stackP] <-> consD;
+stackP += 4 + 0
+A & 3 --> x_xs10; split_179_7
+
+split_179_7 <-- 
+A <-> consP;
+uncall cons;
+A <-> consA;
+M[stackP] <-> consD;
+stackP += 4 + 0;
+x <-> A;
+test A: %d P: %d a: %d d: %d xs: %d x: %d ys:%d
+ A consP consA consD xs x ys 
+A != 0 --> x_xs11; split_187_8
+
+split_187_8 <-- 
+stackP -= 4 + 0;
+A <-> M[stackP];
+xs <-> A;
+test A: %d P: %d a: %d d: %d xs: %d x: %d ys:%d
+ A consP consA consD xs x ys 
+A == 0 --> x_xs12; join_193_8
+
+x_xs11; join_193_8 <-- A != 0
+x <-> A;
+A <-> consA;
+call cons;
+A <-> consP
+ --> join_198_8
+
+x_xs12; join_198_8 <-- A == 0
+skip
+ --> join_199_8
+
+x_xs10; join_199_8 <-- A & 3
+skip
+A != 0 --> x_xs_ys8; split_200_8
+
+split_200_8 <-- 
+stackP -= 4 + 0;
+A <-> M[stackP];
+ys <-> A;
+test A: %d P: %d a: %d d: %d xs: %d x: %d ys:%d
+ A consP consA consD xs x ys 
+A == 0 --> x_xs_ys9; join_206_10
+
+x_xs_ys8; join_206_10 <-- A != 0
+skip
+A & 3 --> inv_x_xs13; split_207_7
+
+split_207_7 <-- 
+skip
+A == 0 --> inv_x_xs15; split_208_8
+
+split_208_8 <-- 
+A <-> consP;
+uncall cons;
+A <-> consA;
+x <-> A
+A != 0 --> inv_x_xs14; join_214_12
+
+inv_x_xs15; join_214_12 <-- A == 0
+xs <-> A;
+A <-> consD
+ --> join_217_12
+
+inv_x_xs14; join_217_12 <-- A != 0
+x <-> A;
+A <-> consA;
+call cons;
+consP <-> A
+ --> join_222_12
+
+inv_x_xs13; join_222_12 <-- A & 3
+A <-> consA;
+call cons;
+A <-> consP
+ --> join_226_10
+
+x_xs_ys9; join_226_10 <-- A == 0
+skip
+ --> join_227_10
+
+x_xs_ys7; join_227_10 <-- A & 3
+skip
+A != 0 --> rev_entry_2; join_233_12
+
+rev_exit_2; join_233_12 <-- A != 0
+skip
+A & 3 --> inv_xs_x_ys1; split_237_7
+
+split_237_7 <-- 
+skip
+A == 0 --> inv_xs_x_ys3; split_238_8
+
+split_238_8 <-- 
+A <-> consP;
+uncall cons;
+A <-> consA;
+xs <-> A
+A != 0 --> inv_xs_x_ys2; join_244_14
+
+inv_xs_x_ys3; join_244_14 <-- A == 0
+test A: %d P: %d a: %d d: %d xs: %d x: %d ys:%d
+ A consP consA consD xs x ys 
+A & 3 --> inv_x_ys4; split_246_7
+
+split_246_7 <-- 
+skip
+A == 0 --> inv_x_ys6; split_247_8
+
+split_247_8 <-- 
+A <-> consP;
+uncall cons;
+A <-> consA;
+x <-> A
+A != 0 --> inv_x_ys5; join_253_11
+
+inv_x_ys6; join_253_11 <-- A == 0
+test A: %d P: %d a: %d d: %d xs: %d x: %d ys:%d
+ A consP consA consD xs x ys ;
+ys <-> A;
+A <-> consD
+ --> join_257_11
+
+inv_x_ys5; join_257_11 <-- A != 0
+x <-> A;
+A <-> consA;
+call cons;
+test A: %d P: %d a: %d d: %d xs: %d x: %d ys:%d
+ A consP consA consD xs x ys ;
+consP <-> A
+ --> join_263_11
+
+inv_x_ys4; join_263_11 <-- A & 3
+A <-> consD
+ --> join_265_14
+
+inv_xs_x_ys2; join_265_14 <-- A != 0
+xs <-> A;
+A <-> consA;
+call cons;
+consP <-> A
+ --> join_270_14
+
+inv_xs_x_ys1; join_270_14 <-- A & 3
+skip
+ --> rev_exit_1
+
+rev_entry_2 <-- 
+assert A != A
+ --> rev_exit_2
+
+begin copy
+assert copyP > 0 && copyQ == 0
+copyP < H --> copySymbol; split_279_11
+
+split_279_11 <-- 
+M[copyP] += 1 + 0;
+ttt += M[copyP] + 0;
+includeC if (A < var_ttt) A = var_ttt;;
+ttt -= M[copyP] + 0
+ --> join_284_12
+
+copySymbol; join_284_12 <-- copyP < H
+copyQ += copyP + 0;
+assert copyP > 0 && copyQ == copyP
+end copy
+
+begin cons
+assert consA != 0;
+assert consD != 0;
+assert consP == 0;
+assert hashV == 0;
+assert segEnd == 0;
+call hash;
+segEnd += hashV + segSize;
+consP += hashV + 0
+ --> join_298_16
+
+consSearchSame; join_298_16 <-- consP > hashV
+skip
+M[consP] == 0 --> consNext; split_299_15
+
+split_299_15 <-- 
+consP += 4 + 0
+M[consP] != consA --> consNotA; split_301_19
+
+split_301_19 <-- 
+consP += 4 + 0
+M[consP] == consD --> consFoundSame; split_303_19
+
+split_303_19 <-- 
+consP -= 4 + 0
+ --> join_305_10
+
+consNotA; join_305_10 <-- M[consP] != consA
+consP -= 4 + 0
+ --> join_307_10
+
+consNext; join_307_10 <-- M[consP] == 0
+consP += 12 + 0
+consP <= segEnd --> consSearchSame; join_310_17
+
+consSearchEmpty; join_310_17 <-- consP <= segEnd
+consP -= 12 + 0
+consP < hashV --> consFail; split_312_15
+
+split_312_15 <-- 
+skip
+M[consP] != 0 --> consSearchEmpty; split_313_15
+
+split_313_15 <-- 
+segEnd -= hashV + segSize;
+uncall hash;
+M[consP] += 1 + 0;
+consP += 4 + 0;
+consA <-> M[consP];
+consP += 4 + 0;
+consD <-> M[consP];
+consP -= 8 + 0
+ --> join_322_9
+
+consEnd; join_322_9 <-- M[consP] > 1
+assert consP & 3 && consP >= H && consA == 0 && consD == 0;
+assert hashV == 0 && segEnd == 0
+ --> join_325_12
+
+failedCons; join_325_12 <-- failed > 0
+skip
+end cons
+
+consFoundSame <-- 
+segEnd -= hashV + segSize;
+uncall hash
+consD < H --> consSymbolD; split_331_11
+
+split_331_11 <-- 
+M[consD] -= 1 + 0
+ --> join_333_13
+
+consSymbolD; join_333_13 <-- consD < H
+consD -= M[consP] + 0;
+consP -= 4 + 0
+consA < H --> consSymbolA; split_336_11
+
+split_336_11 <-- 
+M[consA] -= 1 + 0
+ --> join_338_13
+
+consSymbolA; join_338_13 <-- consA < H
+consA -= M[consP] + 0;
+consP -= 4 + 0;
+M[consP] += 1 + 0;
+ttt += M[consP] + 0;
+includeC if (A < var_ttt) A = var_ttt;;
+ttt -= M[consP] + 0
+ --> consEnd
+
+consFail <-- 
+failed += 1 + 0;
+assert z == 0;
+z += H + 0
+ --> join_350_6
+
+dump; join_350_6 <-- H != z
+skip
+M[z] > 0 --> used; split_351_10
+
+split_351_10 <-- 
+y += 1 + 0
+ --> join_353_6
+
+used; join_353_6 <-- M[z] > 0
+z += 12 + 0
+z < endH --> dump; split_355_10
+
+split_355_10 <-- 
+test  free nodes: %d, y 
+ --> failedCons
+
+begin hash
+assert hashV == 0 && hashT == 366001;
+hashT ^= consA << 7;
+hashT += consA >> 1;
+hashT ^= consD << 5;
+hashT += consD >> 3;
+hashV += hashT & mask;
+hashV += hashT & mask;
+hashV += hashT & mask;
+hashV += H + 0
+end hash
+

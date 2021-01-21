@@ -5,5 +5,5 @@ fun main =
 fun flip (l,r) =
      let fl = flip l in
      let fr = flip r in
-     (fr, lr)
+     (fr, fl)
     | x     = x

@@ -139,46 +139,48 @@ l1 <-- A0 & 3;
 
 A0 != 0 --> Entry2;
 // let defs
+test A consP consA consD p1 p2 fl fr "b A: %d P: %d a: %d d: %d l: %d r: %d fl:%d fr:%d\n";
 A0 <-> p1;
 M[stackP] <-> p2;
 stackP += 4;
-M[stackP] <-> fr;
-stackP += 4;
-M[stackP] <-> p1;
-stackP += 4;
-M[stackP] <-> fl;
-stackP += 4;
+// M[stackP] <-> fr;
+// stackP += 4;
+// M[stackP] <-> p1;
+// stackP += 4;
+// M[stackP] <-> fl;
+// stackP += 4;
 call flip;
-stackP -= 4;
-M[stackP] <-> fl;
-stackP -= 4;
-M[stackP] <-> p1;
-stackP -= 4;
-M[stackP] <-> fr;
+// stackP -= 4;
+// M[stackP] <-> fl;
+// stackP -= 4;
+// M[stackP] <-> p1;
+// stackP -= 4;
+// M[stackP] <-> fr;
 stackP -= 4;
 M[stackP] <-> p2;
 test A0 fl p2 " test: %d %d %d";
 A0 <-> fl;
+test A consP consA consD l r fl fr "A: %d P: %d a: %d d: %d l: %d r: %d fl:%d fr:%d\n";
 assert A0 == 0;
 
 A0 <-> p2;
-M[stackP] <-> p2;
-stackP += 4;
-M[stackP] <-> fr;
-stackP += 4;
-M[stackP] <-> p1;
-stackP += 4;
+// M[stackP] <-> p2;
+// stackP += 4;
+// M[stackP] <-> fr;
+// stackP += 4;
+// M[stackP] <-> p1;
+// stackP += 4;
 M[stackP] <-> fl;
 stackP += 4;
 call flip;
 stackP -= 4;
 M[stackP] <-> fl;
-stackP -= 4;
-M[stackP] <-> p1;
-stackP -= 4;
-M[stackP] <-> fr;
-stackP -= 4;
-M[stackP] <-> p2;
+// stackP -= 4;
+// M[stackP] <-> p1;
+// stackP -= 4;
+// M[stackP] <-> fr;
+// stackP -= 4;
+// M[stackP] <-> p2;
 A0 <-> fr;
 assert A0 == 0;
 
@@ -199,7 +201,8 @@ res3 <-- consA != 0;
 fr <-> consA;
 call cons;
 consP <-> A0;
-res1 <-- A0 & 3
+res1 <-- A0 & 3;
+skip
 
 --> exitLR        // exit
 

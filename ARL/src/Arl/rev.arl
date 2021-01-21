@@ -1,0 +1,8 @@
+fun reverse xs =
+     let ([], ys) = loop rev (xs,[]) in
+     ys
+
+fun rev ((x,xs), ys) = (xs, (x, ys))
+
+fun main =
+    reverse

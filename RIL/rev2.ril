@@ -1,0 +1,379 @@
+begin main
+includeC "A = 0;\n";
+// initialize hash codes
+hashA += 366001;
+hashB += 827927;
+hashC += 593041;
+hashT += hashA;
+// heap size setup
+// read m; // log of heap size
+b += 8; // segment size
+b1 += b - 1;
+hsize += 1<<15;
+hsize += b1; // number of nodes = 2^m + b - 1
+hsizeB += hsize << 2;
+hsizeB += hsize << 2;
+hsizeB += hsize << 2; // number of bytes
+H += 4800; // heap start
+endH += hsizeB + H; // heap end
+lastH += endH - 12; // address of last node in heap
+mask += 4<<15; // Mask used for hashing: 4*(2^m)
+mask -= 4;
+segSize += b1<<2;
+segSize += b1<<2;
+segSize += b1<<2;
+stackP += endH;
+stackP += 64;
+call initialise;
+call build;
+
+
+call reverse;
+
+
+includeC "printf(\"max refs = %d\\n\",A);";
+assert z == 0;
+z += H;
+dump1 <-- H != z;
+M[z] > 0 --> used1;
+y += 1;
+used1 <-- M[z] > 0;
+z += 12;
+z < endH --> dump1;
+test y "%d,"
+end main
+
+
+begin initialise
+consA += 2;
+consD += 2;
+call cons;
+nilnil <-> consP
+end initialise
+
+
+begin build
+consD += 2;
+consA += 7;
+call cons;
+A <-> consP;
+skip
+end build
+
+
+begin reverse
+skip
+--> reverse_entry_1
+reverse_exit_1 <--
+skip
+end reverse
+
+reverse_entry_1 <--
+// input of rule1
+xs <-> A;
+A != 0 --> reverse_entry_2;
+
+//def starts here
+
+C2__ys_rev_xs_C2__1 <-- A != 0;
+test A consP consA consD xs x ys "i A: %d P: %d a: %d d: %d xs: %d x: %d ys:%d\n";
+A & 3 --> inv_xs_C2_3;
+consD <-> M[stackP];
+stackP += 4;
+consA <-> M[stackP];
+stackP += 4;
+test A consP consA consD xs x ys "i A: %d P: %d a: %d d: %d xs: %d x: %d ys:%d\n";
+A == 0 --> inv_xs_C2_5;
+A <-> consP;
+uncall cons;
+A <-> consA;
+xs <-> A;
+A != 0 --> inv_xs_C2_4;
+inv_xs_C2_5 <-- A == 0;
+A != 0 --> inv_5reverse6;
+A += 2;
+inv_5reverse6 <-- A != 2;
+inv_xs_C2_4 <-- A != 0;
+xs <-> A;
+A <-> consA;
+call cons;
+stackP -= 4;
+consA <-> M[stackP];
+stackP -= 4;
+consD <-> M[stackP];
+inv_xs_C2_3 <-- A & 3;
+
+//Patterns starts here
+A & 3 --> C2__ys7;
+consD <-> M[stackP];
+stackP += 4;
+consA <-> M[stackP];
+stackP += 4;
+A <-> consP;
+uncall cons;
+A <-> consA;
+A != 2 --> reverse10;
+A -= 2;
+reverse10 <-- A != 0;
+A != 0 -->C2__ys8;
+ys <-> A;
+A == 0 -->C2__ys9;
+C2__ys8 <-- A != 0;
+A != 0 --> inv_5reverse11;
+A += 2;
+inv_5reverse11 <-- A != 2;
+A <-> consA;
+call cons;
+A <-> consP;
+C2__ys9 <-- A == 0;
+stackP -= 4;
+consA <-> M[stackP];
+stackP -= 4;
+consD <-> M[stackP];
+C2__ys7 <-- A & 3;
+A == 0 --> C2__ys_rev_xs_C2__2;
+call rev
+--> C2__ys_rev_xs_C2__1
+C2__ys_rev_xs_C2__2 <--
+assert A == 0;
+reverse_exit_2 <-- A != 0;
+
+ // res starts here
+
+ys <-> A;
+skip
+--> reverse_exit_1
+
+reverse_entry_2 <--
+assert A != A
+--> reverse_exit_2
+begin rev
+skip
+--> rev_entry_1
+rev_exit_1 <--
+skip
+end rev
+
+rev_entry_1 <--
+// input of rule1
+
+//Patterns starts here
+A & 3 --> x_xs_ys7;
+consD <-> M[stackP];
+stackP += 4;
+consA <-> M[stackP];
+stackP += 4;
+A <-> consP;
+uncall cons;
+A <-> consA;
+
+//Patterns starts here
+A & 3 --> x_xs10;
+consD <-> M[stackP];
+stackP += 4;
+consA <-> M[stackP];
+stackP += 4;
+A <-> consP;
+uncall cons;
+A <-> consA;
+x <-> A;
+A != 0 -->x_xs11;
+xs <-> A;
+A == 0 -->x_xs12;
+x_xs11 <-- A != 0;
+x <-> A;
+A <-> consA;
+call cons;
+A <-> consP;
+x_xs12 <-- A == 0;
+stackP -= 4;
+consA <-> M[stackP];
+stackP -= 4;
+consD <-> M[stackP];
+x_xs10 <-- A & 3;
+A != 0 -->x_xs_ys8;
+ys <-> A;
+A == 0 -->x_xs_ys9;
+x_xs_ys8 <-- A != 0;
+A & 3 --> inv_x_xs13;
+consD <-> M[stackP];
+stackP += 4;
+consA <-> M[stackP];
+stackP += 4;
+A == 0 --> inv_x_xs15;
+A <-> consP;
+uncall cons;
+A <-> consA;
+x <-> A;
+A != 0 --> inv_x_xs14;
+inv_x_xs15 <-- A == 0;
+xs <-> A;
+inv_x_xs14 <-- A != 0;
+x <-> A;
+A <-> consA;
+call cons;
+stackP -= 4;
+consA <-> M[stackP];
+stackP -= 4;
+consD <-> M[stackP];
+inv_x_xs13 <-- A & 3;
+A <-> consA;
+call cons;
+A <-> consP;
+x_xs_ys9 <-- A == 0;
+stackP -= 4;
+consA <-> M[stackP];
+stackP -= 4;
+consD <-> M[stackP];
+x_xs_ys7 <-- A & 3;
+A != 0 --> rev_entry_2;
+
+//def starts here
+
+
+rev_exit_2 <-- A != 0;
+
+ // res starts here
+
+A & 3 --> inv_xs_x_ys1;
+consD <-> M[stackP];
+stackP += 4;
+consA <-> M[stackP];
+stackP += 4;
+A == 0 --> inv_xs_x_ys3;
+A <-> consP;
+uncall cons;
+A <-> consA;
+xs <-> A;
+A != 0 --> inv_xs_x_ys2;
+inv_xs_x_ys3 <-- A == 0;
+A & 3 --> inv_x_ys4;
+consD <-> M[stackP];
+stackP += 4;
+consA <-> M[stackP];
+stackP += 4;
+A == 0 --> inv_x_ys6;
+A <-> consP;
+uncall cons;
+A <-> consA;
+x <-> A;
+A != 0 --> inv_x_ys5;
+inv_x_ys6 <-- A == 0;
+ys <-> A;
+inv_x_ys5 <-- A != 0;
+x <-> A;
+A <-> consA;
+call cons;
+stackP -= 4;
+consA <-> M[stackP];
+stackP -= 4;
+consD <-> M[stackP];
+inv_x_ys4 <-- A & 3;
+inv_xs_x_ys2 <-- A != 0;
+xs <-> A;
+A <-> consA;
+call cons;
+stackP -= 4;
+consA <-> M[stackP];
+stackP -= 4;
+consD <-> M[stackP];
+inv_xs_x_ys1 <-- A & 3;
+skip
+--> rev_exit_1
+
+rev_entry_2 <--
+assert A != A
+--> rev_exit_2
+begin copy
+assert copyP > 0 && copyQ == 0;
+copyP < H --> copySymbol;
+M[copyP] += 1;
+ttt += M[copyP];
+includeC "if (A < var_ttt) A = var_ttt;";
+ttt -= M[copyP];
+copySymbol <-- copyP < H;
+copyQ += copyP;
+assert copyP > 0 && copyQ == copyP
+end copy
+//The rest of the file is cons
+begin cons
+assert consA != 0;
+assert consD != 0;
+assert consP == 0;
+assert hashV == 0;
+assert segEnd == 0;
+call hash;
+segEnd += hashV + segSize;
+consP += hashV;
+consSearchSame <-- consP > hashV;
+M[consP] == 0 --> consNext;
+consP += 4;
+M[consP] != consA --> consNotA;
+consP += 4;
+M[consP] == consD --> consFoundSame;
+consP -= 4;
+consNotA <-- M[consP] != consA;
+consP -= 4;
+consNext <-- M[consP] == 0;
+consP += 12;
+consP <= segEnd --> consSearchSame;
+consSearchEmpty <-- consP <= segEnd;
+consP -= 12;
+consP < hashV --> consFail;
+M[consP] != 0 --> consSearchEmpty;
+segEnd -= hashV + segSize;
+uncall hash;
+M[consP] += 1;
+consP += 4;
+consA <-> M[consP];
+consP += 4;
+consD <-> M[consP];
+consP -= 8;
+consEnd <-- M[consP] > 1;
+assert consP !& 3 && consP >= H && consA == 0 && consD == 0;
+assert hashV == 0 && segEnd == 0;
+failedCons <-- failed > 0 // return point for fail handler
+end cons
+
+consFoundSame <--
+segEnd -= hashV + segSize; // was 60
+uncall hash;
+consD < H --> consSymbolD;
+M[consD] -= 1;
+consSymbolD <-- consD < H;
+consD -= M[consP];
+consP -= 4;
+consA < H --> consSymbolA;
+M[consA] -= 1;
+consSymbolA <-- consA < H;
+consA -= M[consP];
+consP -= 4;
+M[consP] += 1;
+ttt += M[consP];
+includeC "if (A < var_ttt) A = var_ttt;";
+ttt -= M[consP]
+--> consEnd
+consFail <--
+failed += 1;
+assert z == 0;
+z += H;
+dump <-- H != z;
+M[z] > 0 --> used;
+y += 1;
+used <-- M[z] > 0;
+z += 12;
+z < endH --> dump;
+test y " free nodes: %d,"
+--> failedCons // jump to end of cons procedure
+
+begin hash
+assert hashV == 0 && hashT ==  366001;
+hashT ^= consA << 7;
+hashT += consA >> 1;
+hashT ^= consD << 5;
+hashT += consD >> 3;
+hashV += hashT & mask;
+hashV += hashT & mask;
+hashV += hashT & mask;
+hashV += H
+end hash

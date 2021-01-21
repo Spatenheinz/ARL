@@ -1,3 +1,4 @@
+{-# LANGUAGE NamedFieldPuns #-}
 module Arl.Parser where
 
 --import Prelude hiding --(GT, LT, EQ)
@@ -95,21 +96,22 @@ funP = L.nonIndented scn $ L.lineFold scn p
     mainP  = do symbol "="; some $ try funC
 
 ruleP :: Pos -> Parser Rule
-ruleP ind = do p <- patternP
+ruleP ind = do args <- patternP
                symbol "="
                scn
                ind' <- L.indentLevel
                L.indentGuard scn GT ind
-               defs <- many $ defP ind'
+               body <- many $ defP ind'
                L.indentGuard sc EQ ind'
-               R p defs <$> patternP
+               output <- patternP
+               return $ Rule { args, body, output }
 
 patternP :: Parser Pattern
 patternP = try as <|> try neq <|> try nilnil <|> var <|> const' <|> try pair <|> parLE <?> "Pattern"
   where
     nilnil = rword "[[]]" >> return NilNil
     const' = (integer <|> nils) <&> Const
-    nils   = rword "[]" >> return 1
+    nils   = rword "[]" >> return 2
     var    = identifier <&> Var
     neq    = do ident <- identifier; rword "<>"; Neq ident <$> patternP
     as     = do ident <- identifier; rword "as"; As ident <$> pair --patternP
@@ -121,39 +123,34 @@ patternP = try as <|> try neq <|> try nilnil <|> var <|> const' <|> try pair <|>
              ]
     parLE  = parens patternP
 
--- pairP :: Parser Pattern
--- pairP = makeExprParser patternP
---     [
---       [InfixR $ Pair <$ symbol "::"],
---       [InfixR $ Pair <$ symbol ","]
---     ]
-
 defP :: Pos -> Parser Def
 defP ind = try call <|> try loop <?> "Let def"
   where
       call   = do L.indentGuard scn EQ ind;
                   rword "let"
-                  lhs <- patternP
+                  res <- patternP
                   symbol "="
                   uncall <- observing $ symbol "!"
                   fname <- identifier
-                  rhs <- patternP
+                  input <- patternP
                   rword "in"
                   scn
                   case uncall of
-                    Left _ -> return $ Call lhs fname rhs
-                    Right _ -> return $ Uncall lhs fname rhs
-      loop   = do rword "let"
-                  lhs <- patternP
+                    Left _ -> return $ Call { res, fname, input }
+                    Right _ -> return $ Uncall { res, fname, input }
+      loop   = do L.indentGuard scn EQ ind;
+                  rword "let"
+                  res <- patternP
                   symbol "="
                   uncall <- observing $ symbol "!"
                   rword "loop"
                   fname <- identifier
-                  rhs <- patternP
+                  input <- patternP
                   rword "in"
+                  scn
                   case uncall of
-                    Left _ -> return $ Loop lhs fname rhs
-                    Right _ -> return $ Unloop lhs fname rhs
+                    Left _ -> return $ Loop { res, fname, input }
+                    Right _ -> return $ Unloop { res, fname, input }
 
 parseFile :: String -> String -> Either (ParseErrorBundle String Void ) Prog
 parseFile file str =

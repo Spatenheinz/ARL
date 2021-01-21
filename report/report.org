@@ -204,7 +204,7 @@ every variable only occurs once in the flip example.
 *Translation Scheme (pairs)*
 \begin{lstlisting}
 $P\llb (p_1,p_2) \rrb v =$
-   v & 3 --> l$_2$;
+   v & 3 --> l$_1$;
    v <-> consP;
    uncall cons;
    $P \llb p_1 \rrb$consA;
@@ -218,6 +218,7 @@ $P\llb (p_1,p_2) \rrb v =$
    l$_3$ <-- v == 0;
    l$_1$ <-- v & 3;
 \end{lstlisting}
+When translating a pattern to RIL, we first start by checking whether or not v is a pointer to a pair, since we can safely skip unfolding the pattern if it is not. we will then move the v into consP as this is the variable used by the cons sub-routine. The results of these are stored in consA and consD. We therefore recursively check if p_1 can be correctly unfolded, meaning the value of consA should be 0. If this is not the case we jump to l_2 reconstructing the p_1. Afterwards p_2 is checked in the same way and is the result of consD 0, then we have safely deconstructed the pattern.
 #+END_minipage
 \qquad
 #+ATTR_LATEX: :options [t]{0.4\textwidth}
@@ -225,7 +226,7 @@ $P\llb (p_1,p_2) \rrb v =$
 *Example flip*
 \begin{lstlisting}
 $P\llb (p_1,p_2) \rrb A =$
-   A & 3 --> l$_2$;
+   A & 3 --> l$_1$;
    A <-> consP;
    uncall cons;
    l <-> consA;
@@ -233,49 +234,75 @@ $P\llb (p_1,p_2) \rrb A =$
    r <-> consD;
    consD == 0 --> l$_3$;
    l$_2$ <-- consA != 0;
-
    l <-> consA;
-
    call cons;
    v <-> consP;
    l$_3$ <-- v == 0;
    l$_1$ <-- v & 3;
 \end{lstlisting}
-This is used both as a deconstruction of pair in the argument of the first rule of flip and its inverse in constructing the result (fr, fl) in the same rule. Every case of translation of a subterm i.e. \(P \llb p_1 \rrb consA\) translates into the simple case ~l <-> consA~.
+This is used both as a deconstruction of pair in the argument of the first rule of flip and its inverse in constructing the result (fr, fl) in the same rule. Every case of translation of a subterm i.e. \(P \llb p_1 \rrb consA\) translates into the simple case
 
-every variable only occurs once in the flip example.
+~l <-> consA~.
+
+Every variable only occurs once in the flip example.
 #+END_minipage
 *** stuff that is not included in flip
 #+ATTR_LATEX: :options [t]{0.6\textwidth}
 #+BEGIN_minipage
-*Translation Scheme*
+*Translation Scheme (constant)*
 \begin{lstlisting}
-$P\llb x \rrb v =$
-   x <-> v
+$P \llb k \rrb v =$
+    v != k --> l$_1$;
+    v -= k;
+    l$_1$ <-- v != 0;
 \end{lstlisting}
-where x is a variable. This is the most basic rule and will be valid whenever x first occurs, if x however is not the first occurence we will need to use the copy subroutine.
-\begin{lstlisting}
-$P\llb x \rrb v =$
-   v != x --> l$_1$;
-   v <-> copyQ;
-   x <-> copyP;
-   uncall copy;
-   l$_1$ <-- v != 0;
-\end{lstlisting}
-What we first need to do is to check whether or not x and v is identical. This is a prerequisite for the copy subroutine to work. we then switch the values into the variables that is used in the routine. we switch v into copyQ as this is the value that will be consumed. x will be switched into copyP as this is the value that will be saved.
+Constants is quite simple. firstly the constant needs be equivalent to v for the pattern to match. Is this the case, we subtract k from v, essentially setting v = 0.
 #+END_minipage
 \qquad
 #+ATTR_LATEX: :options [t]{0.4\textwidth}
 #+BEGIN_minipage
 *Example flip*
-\begin{lstlisting}
-$P\llb x \rrb A =$
-   x <-> A
-\end{lstlisting}
-This evaluation happens, a few times in the translation of flip. One of these is when we want to destruct our input of the second rule. Essentially we bind the input A into x and clears A.
-
-every variable only occurs once in the flip example.
 #+END_minipage
+
+
+#+ATTR_LATEX: :options [t]{0.6\textwidth}
+#+BEGIN_minipage
+*Translation Scheme (not equal)*
+\begin{lstlisting}
+$P \llb x \neq p \rrb v =$
+    assert x == 0;
+    $P \llb p \rrb v$
+    x += v;
+    $\overline{P \llb p \rrb v}$
+    v -= x
+\end{lstlisting}
+When evaluating a not equal pattern, we first needs to assume x is 0 otherwise our two updates, first to x then to v, would compromise the integrity of v. For instance in the case of flip the rule ~| x = x~ could be written as ~| x <> (l,r) = x <> (fr,fl)~. In such a case p would not be a pointer (v !& 3), thus we skip the entire evaluation of p. we would then subtract, v from x, do nothing once again, and then subtract a value larger than v from v, which is nonsensical. Therefore x must be 0 before the evaluation.
+#+END_minipage
+
+
+#+ATTR_LATEX: :options [t]{0.6\textwidth}
+#+BEGIN_minipage
+*Translation Scheme (As pattern)*
+\begin{lstlisting}
+$P \llb x \uptext{as} (p_1,p_2) \rrb v =$
+   v & 3 --> l$_1$;
+   x <-> fieldsP;
+   call fields
+   $P \llb p_1 \rrb$fieldsA;
+   consA != 0 --> l$_2$;
+   $P \llb p_2 \rrb$fieldsD;
+   consD == 0 --> l$_3$;
+   l$_2$ <-- consA != 0;
+   $\overline{P \llb p_1 \rrb consA}$;
+   uncall fields;
+   x <-> fieldsP;
+   l$_3$ <-- v == 0;
+   l$_1$ <-- v & 3;
+\end{lstlisting}
+An as pattern is almost identical from the pairs, the only difference is that we want to keep the integrity of x, which is done by using the fields sub-routine.
+#+END_minipage
+*** Let definitions
+*** TODO describe the let defs
 * Parsing
 The compiler for ARL has been written in haskell using Megaparsec as parsing library. This was chosen over lexer/parser tools such as Alex/Happy, because of familiarity and because ARL as a language is quite small, thus making it pretty easy to implement. Megaparsec was chosen over other parsing libraries such as Parsec for 2 main reasons. First ARL is an indentation sensitive language, chosen to have quite strict rules, which we will se later on. Second Megaparsec makes position handling extremely easy giving exact position of when parsing failed with out having to bundle the AST with positions.
 
@@ -367,11 +394,15 @@ patternP = try as <|> try neq <|> try nilnil <|> var <|> const' <|> try pair <|>
     parLE  = parens patternP
 #+END_SRC
 * Evaluation
-loop
-call stack (easy as parameters, is always in A0 and res is always in A0)?
-describe the patterns in terms of RIL not c
-describe how we implement this in haskell
+*** TODO describe how the compiler is implemented.
 
 * Results
+*** TODO describe tests
+*** TODO describe how well the project has come along
 
+* How to use - code structure
+*** TODO describe the code structure and how to run the program.
+* Conclusion
+*** TODO
 * References
+*** TODO fill, mostly with references in the introduction.
