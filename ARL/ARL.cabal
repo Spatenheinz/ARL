@@ -26,11 +26,10 @@ source-repository head
 library
   exposed-modules:
       Arl.Ast
-      Arl.Error
       Arl.Eval
       Arl.Parser
-      Arl.PPrinter
       Arl.RIL
+      Arl.RilEnv
       Arl.RilState
       Arl.Utils
       Main
@@ -52,11 +51,10 @@ executable ARL-exe
   main-is: Main.hs
   other-modules:
       Arl.Ast
-      Arl.Error
       Arl.Eval
       Arl.Parser
-      Arl.PPrinter
       Arl.RIL
+      Arl.RilEnv
       Arl.RilState
       Arl.Utils
       Paths_ARL

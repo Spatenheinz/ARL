@@ -28,18 +28,8 @@ call initialise;
 call build;
 
 
-call reverse;
-A <-> consP;
-uncall cons;
-test consA consD "%d %d\n";
-A <-> consA;
-consD <-> consP;
-uncall cons;
-test consA consD "%d %d\n";
-A0 <-> consA;
-consD <-> consP;
-uncall cons;
-test consA consD "%d %d\n";
+uncall reverse;
+
 
 includeC "printf(\"max refs = %d\\n\",A);";
 assert z == 0;
@@ -65,12 +55,6 @@ end initialise
 begin build
 consD += 2;
 consA += 7;
-call cons;
-consD <-> consP;
-consA += 9;
-call cons;
-consD <-> consP;
-consA += 11;
 call cons;
 A <-> consP;
 skip

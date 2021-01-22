@@ -29,7 +29,32 @@ call build;
 
 
 call flip;
-
+begin build    // build list into A0
+  consD += 7;  // []
+  consA += 9;  // integer 1
+  call cons;
+  lhs1 <-> consP;
+  consA += 11;
+  consD += 13;
+  test consA consD "snd %d %d";
+  call cons;
+  lhs2 <-> consP;
+  lhs1 <-> consA;
+  lhs2 <-> consD;
+  call cons;
+  lhs <-> consP;
+  consD += 3;
+  consA += 5;  // integer 12
+  // call cons;
+  // consP <-> consD;
+  // consA += 5;
+  test consP "%d\n";
+  call cons;
+  lhs <-> consA;
+  consP <-> consD;
+  call cons;
+  A <-> consP
+end build
 
 includeC "printf(\"max refs = %d\\n\",A);";
 assert z == 0;

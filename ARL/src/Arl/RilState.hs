@@ -4,6 +4,7 @@ module Arl.RilState where
 
 import Control.Monad.State
 import Arl.Ast
+import Arl.Utils
 import Data.List
 import qualified Data.Map as M
 
@@ -86,43 +87,12 @@ rmVar v =
 resetSt :: (MonadState RilState m) => m()
 resetSt = put emptyState
 
--- READER
-getLiveVars :: Rule -> M.Map String [ID]
-getLiveVars r@Rule{args, body, output} =
-  let live = init (allVars (formatRule r)) in
-  let defs = map unique body in
-  M.fromList $ zip defs live
-
 -- UTILS
-extractVars :: Pattern -> [ID]
-extractVars (Var v) = [v]
-extractVars (Pair car cdr) = extractVars car ++ extractVars cdr
-extractVars (As x pair) = x : extractVars pair
-extractVars (Neq x pair) = x : extractVars pair
-extractVars _ = []
-
+-- makes the map used to check if a variables has already been used
 copies :: [ID] -> M.Map ID Int
 copies = M.fromList . map (\x -> (head x, length x)) . group . sort
 
+-- takes a pattern and extracts the vars putting them into the map
 getVars :: Pattern -> M.Map ID Int
 getVars = copies . extractVars
-
-dCount :: Int -> Maybe Int
-dCount count = if count == 1 then Nothing else Just $ count-1
-
-copiesVar :: Def -> [ID]
-copiesVar def = concatMap extractVars (res def : [input def])
-
-formatRule :: Rule -> [[ID]]
-formatRule Rule {args, body, output} =
-  extractVars args : map copiesVar body ++ [extractVars output]
-
-liveVars :: [[ID]] -> [ID]
-liveVars [] = []
-liveVars [x] = []
-liveVars [x,xs] = []
-liveVars (x:xs:xss) = filter (`elem` head xss) x ++ liveVars( x: tail xss)
-
-allVars [x] = []
-allVars x = liveVars x : allVars (tail x)
 

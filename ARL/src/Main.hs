@@ -8,8 +8,17 @@ import Data.Map as M hiding (partition)
 import Text.Megaparsec.Error
 
 import Arl.Parser
+import Arl.Ast
 import Arl.Eval
 import Arl.RilState
+import Arl.RilEnv
+
+-- ------------------------PREPROCESSING -----------------------
+multiMain :: Prog -> Either String Prog'
+multiMain (mains, funcs) = if length mains > 1 then
+                             Left "multiple main functions declared"
+                          else
+                            Right (head mains, funcs)
 
 
 argP = do partition (\x -> head x == '-') <$> getArgs

@@ -12,12 +12,8 @@ import Control.Monad.Combinators.Expr
 import Data.Void
 import Data.Functor
 import Arl.Ast
-import Arl.Error
-
-import Debug.Trace
 
 type Parser = Parsec Void String
--- ParseErr :: PA.ParseError -> AErr
 
 --                  LEXER
 lineComment :: Parser ()

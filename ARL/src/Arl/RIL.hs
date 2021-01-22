@@ -74,16 +74,34 @@ copy :: String
 copy = newlines
   [ "begin copy"
   , "assert copyP > 0 && copyQ == 0;"
-  , "copyP < H --> copySymbol;"
+  , "copyP < H --> copySymbol;" --- copyP !& 3 =>
   , "M[copyP] += 1;"
   , "ttt += M[copyP];"
   , "includeC \"if (A < var_ttt) A = var_ttt;\";"
   , "ttt -= M[copyP];"
-  , "copySymbol <-- copyP < H;"
+  , "copySymbol <-- copyP < H;" ---
   , "copyQ += copyP;"
   , "assert copyP > 0 && copyQ == copyP"
   , "end copy"
   ]
+
+fields :: String
+fields = newlines
+  [ "begin fields"
+  , "assert fieldsP !& 3 && fieldsA == 0 && fieldsD == 0;"
+  , "fieldsP += 4;"
+  , "fieldsA < H --> fields1;"
+  , "M[fieldsA] += 1;"
+  , "fields1 <-- fieldsA !& 3;"
+  , "fieldsP += 4;"
+  , "fieldsD += M[fieldsP];"
+  , "fieldsD < H --> fields2;"
+  , "M[fieldsD] += 1;"
+  , "fields2 <-- fieldsD < H;"
+  , "fieldsP -= 8;"
+  , "assert fieldsP !& 3 && fieldsA && fieldsD > 0"
+  ]
+
 
 cons :: String
 cons = newlines
