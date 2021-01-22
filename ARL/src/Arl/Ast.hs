@@ -1,7 +1,5 @@
 module Arl.Ast where
 
-import Data.List
-
 type ID = String
 
 type Prog = ([Main],[Func])
@@ -50,41 +48,6 @@ instance Ident Def where
   ident (Unloop _ id _) = id
 
 
-extractVars :: Pattern -> [ID]
-extractVars (Var v) = [v]
-extractVars (Pair car cdr) = extractVars car ++ extractVars cdr
-extractVars (As x pair) = x : extractVars pair
-extractVars (Neq x pair) = x : extractVars pair
-extractVars _ = []
-
-copies :: [ID] -> [(ID, Int)]
-copies = map (\x -> (head x, length x)) . group
-
-vAndC = copies . extractVars
-
-copiesVar :: Def -> [(ID, Int)]
-copiesVar def = concatMap (copies . extractVars) (res def : [input def])
-
-formatRule :: Rule -> [[(ID, Int)]]
-formatRule Rule {args, body, output} =
-  vAndC args : map copiesVar body ++ [vAndC output]
-
-liveVars :: [[ID]] -> [ID]
-liveVars [] = []
-liveVars [x] = []
-liveVars [x,xs] = []
-liveVars (x:xs:xss) = filter (`elem` head xss) x ++ liveVars( x: tail xss)
-
-allVars [x] = []
-allVars x = liveVars x : allVars (tail x)
-
--- mkEnv :; [Func] -> Map ID (Map ID Int)
-mkenv (Func fname rules) =
-  let idxs =  map (\x -> fname ++ unique (args x)) rules in
-  let vars = map formatRule rules in
-  zip idxs vars
-
--- mkEnv
 class Unique a where
   unique :: a -> String
 

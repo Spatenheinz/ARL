@@ -30,16 +30,19 @@ int main(int ac, int* av)
   uint var_A = 0;
   uint var_p2 = 0;
   uint var_p1 = 0;
-  uint var_A0 = 0;
   uint var_lhs = 0;
-  uint var_lhs2 = 0;
-  uint var_lhs1 = 0;
-  uint var_consP = 0;
   uint var_nilnil = 0;
-  uint var_consD = 0;
-  uint var_consA = 0;
   uint var_y = 0;
   uint var_z = 0;
+  uint var_rhs1 = 0;
+  uint var_res2 = 0;
+  uint var_lhs2 = 0;
+  uint var_lhs1 = 0;
+  uint var_res1 = 0;
+  uint var_consA = 0;
+  uint var_consP = 0;
+  uint var_consD = 0;
+  uint var_A0 = 0;
   uint var_stackP = 0;
   uint var_segSize = 0;
   uint var_mask = 0;
@@ -70,16 +73,19 @@ int main(int ac, int* av)
     printf("var_A = \%u\n",var_A);
     printf("var_p2 = \%u\n",var_p2);
     printf("var_p1 = \%u\n",var_p1);
-    printf("var_A0 = \%u\n",var_A0);
     printf("var_lhs = \%u\n",var_lhs);
-    printf("var_lhs2 = \%u\n",var_lhs2);
-    printf("var_lhs1 = \%u\n",var_lhs1);
-    printf("var_consP = \%u\n",var_consP);
     printf("var_nilnil = \%u\n",var_nilnil);
-    printf("var_consD = \%u\n",var_consD);
-    printf("var_consA = \%u\n",var_consA);
     printf("var_y = \%u\n",var_y);
     printf("var_z = \%u\n",var_z);
+    printf("var_rhs1 = \%u\n",var_rhs1);
+    printf("var_res2 = \%u\n",var_res2);
+    printf("var_lhs2 = \%u\n",var_lhs2);
+    printf("var_lhs1 = \%u\n",var_lhs1);
+    printf("var_res1 = \%u\n",var_res1);
+    printf("var_consA = \%u\n",var_consA);
+    printf("var_consP = \%u\n",var_consP);
+    printf("var_consD = \%u\n",var_consD);
+    printf("var_A0 = \%u\n",var_A0);
     printf("var_stackP = \%u\n",var_stackP);
     printf("var_segSize = \%u\n",var_segSize);
     printf("var_mask = \%u\n",var_mask);
@@ -163,6 +169,51 @@ count(1, 0);
    stack[stackPointer++] = &&Return_33_3;
   goto Label__flip;
   Return_33_3:
+fprintf(stderr,"res: %d %d\n", var_A0, var_consD);
+  tmp = var_A0;
+  var_A0 = (var_consP);
+  var_consP = (tmp);
+  count(2,0);
+   stack[stackPointer++] = &&Return_36_4;
+  goto Label__cons;
+  Return_36_4:
+fprintf(stderr,"res after cons %d - %d - %d\n", var_consA, var_consD, var_consP);
+  tmp = var_consA;
+  var_consA = (var_consP);
+  var_consP = (tmp);
+  tmp = var_consD;
+  var_consD = (var_res1);
+  var_res1 = (tmp);
+  count(2,0);
+   stack[stackPointer++] = &&Return_40_5;
+  goto Label__cons;
+  Return_40_5:
+fprintf(stderr,"res after cons %d - %d\n", var_consA, var_consD);
+  tmp = var_consA;
+  var_consA = (var_lhs1);
+  var_lhs1 = (tmp);
+  tmp = var_consD;
+  var_consD = (var_lhs2);
+  var_lhs2 = (tmp);
+  tmp = var_consP;
+  var_consP = (var_res1);
+  var_res1 = (tmp);
+  count(2,0);
+   stack[stackPointer++] = &&Return_45_6;
+  goto Label__cons;
+  Return_45_6:
+fprintf(stderr,"final: %d - %d - %d - %d\n", var_lhs1, var_lhs2, var_consA, var_consD);
+  tmp = var_consA;
+  var_consA = (var_consP);
+  var_consP = (tmp);
+  tmp = var_consD;
+  var_consD = (var_res2);
+  var_res2 = (tmp);
+  count(2,0);
+   stack[stackPointer++] = &&Return_49_7;
+  goto Label__cons;
+  Return_49_7:
+fprintf(stderr,"final: %d - %d - %d - %d - %d\n", var_lhs1, var_lhs2, var_rhs1, var_consA, var_consD);
 
 printf("max refs = %d\n",A);
   if (!(var_z == 0 && 1)){
@@ -220,9 +271,9 @@ count(1, 0);
 count(1, 0);
   var_consD = (var_consD + (2 + 0));
   count(2,0);
-   stack[stackPointer++] = &&Return_75_4;
+   stack[stackPointer++] = &&Return_75_8;
   goto Label_cons;
-  Return_75_4:
+  Return_75_8:
   tmp = var_nilnil;
   var_nilnil = (var_consP);
   var_consP = (tmp);
@@ -234,9 +285,9 @@ count(1, 0);
 count(1, 0);
   var_consA = (var_consA + (9 + 0));
   count(2,0);
-   stack[stackPointer++] = &&Return_82_5;
+   stack[stackPointer++] = &&Return_82_9;
   goto Label_cons;
-  Return_82_5:
+  Return_82_9:
   tmp = var_lhs1;
   var_lhs1 = (var_consP);
   var_consP = (tmp);
@@ -246,9 +297,9 @@ count(1, 0);
   var_consD = (var_consD + (13 + 0));
 fprintf(stderr,"snd %d %d", var_consA, var_consD);
   count(2,0);
-   stack[stackPointer++] = &&Return_87_6;
+   stack[stackPointer++] = &&Return_87_10;
   goto Label_cons;
-  Return_87_6:
+  Return_87_10:
   tmp = var_lhs2;
   var_lhs2 = (var_consP);
   var_consP = (tmp);
@@ -259,9 +310,9 @@ fprintf(stderr,"snd %d %d", var_consA, var_consD);
   var_lhs2 = (var_consD);
   var_consD = (tmp);
   count(2,0);
-   stack[stackPointer++] = &&Return_91_7;
+   stack[stackPointer++] = &&Return_91_11;
   goto Label_cons;
-  Return_91_7:
+  Return_91_11:
   tmp = var_lhs;
   var_lhs = (var_consP);
   var_consP = (tmp);
@@ -271,9 +322,9 @@ count(1, 0);
   var_consA = (var_consA + (5 + 0));
 fprintf(stderr,"%d\n", var_consP);
   count(2,0);
-   stack[stackPointer++] = &&Return_99_8;
+   stack[stackPointer++] = &&Return_99_12;
   goto Label_cons;
-  Return_99_8:
+  Return_99_12:
   tmp = var_lhs;
   var_lhs = (var_consA);
   var_consA = (tmp);
@@ -281,9 +332,9 @@ fprintf(stderr,"%d\n", var_consP);
   var_consP = (var_consD);
   var_consD = (tmp);
   count(2,0);
-   stack[stackPointer++] = &&Return_102_9;
+   stack[stackPointer++] = &&Return_102_13;
   goto Label_cons;
-  Return_102_9:
+  Return_102_13:
   tmp = var_A0;
   var_A0 = (var_consP);
   var_consP = (tmp);
@@ -303,9 +354,9 @@ Label_split_117_8:
   var_A0 = (var_consP);
   var_consP = (tmp);
   count(2,0);
-   stack[stackPointer++] = &&Return_119_10;
+   stack[stackPointer++] = &&Return_119_14;
   goto Label__cons;
-  Return_119_10:
+  Return_119_14:
   tmp = var_p1;
   var_p1 = (var_consA);
   var_consA = (tmp);
@@ -327,9 +378,9 @@ Label_l3:
   var_consA = (tmp);
 fprintf(stderr,"first vcons %d %d \n", var_consA, var_consD);
   count(2,0);
-   stack[stackPointer++] = &&Return_134_11;
+   stack[stackPointer++] = &&Return_134_15;
   goto Label_cons;
-  Return_134_11:
+  Return_134_15:
   tmp = var_A0;
   var_A0 = (var_consP);
   var_consP = (tmp);
@@ -345,9 +396,9 @@ Label_join_124_4:
   var_consA = (tmp);
 fprintf(stderr,"first vcons %d %d \n", var_consA, var_consD);
   count(2,0);
-   stack[stackPointer++] = &&Return_134_12;
+   stack[stackPointer++] = &&Return_134_16;
   goto Label_cons;
-  Return_134_12:
+  Return_134_16:
   tmp = var_A0;
   var_A0 = (var_consP);
   var_consP = (tmp);
@@ -392,9 +443,9 @@ fprintf(stderr,"b A: %d P: %d a: %d d: %d l: %d r: %d fl:%d fr:%d\n", var_A, var
 count(1, 0);
   var_stackP = (var_stackP + (4 + 0));
   count(2,0);
-   stack[stackPointer++] = &&Return_152_13;
+   stack[stackPointer++] = &&Return_152_17;
   goto Label_flip;
-  Return_152_13:
+  Return_152_17:
 count(1, 0);
   var_stackP = (var_stackP - (4 + 0));
   tmp = (count(0,1), Mem[var_stackP]);
@@ -418,9 +469,9 @@ fprintf(stderr,"A: %d P: %d a: %d d: %d l: %d r: %d fl:%d fr:%d\n", var_A, var_c
 count(1, 0);
   var_stackP = (var_stackP + (4 + 0));
   count(2,0);
-   stack[stackPointer++] = &&Return_175_14;
+   stack[stackPointer++] = &&Return_175_18;
   goto Label_flip;
-  Return_175_14:
+  Return_175_18:
 count(1, 0);
   var_stackP = (var_stackP - (4 + 0));
   tmp = (count(0,1), Mem[var_stackP]);
@@ -458,9 +509,9 @@ Label_split_193_9:
   var_A0 = (var_consP);
   var_consP = (tmp);
   count(2,0);
-   stack[stackPointer++] = &&Return_195_15;
+   stack[stackPointer++] = &&Return_195_19;
   goto Label__cons;
-  Return_195_15:
+  Return_195_19:
   tmp = var_fr;
   var_fr = (var_consA);
   var_consA = (tmp);
@@ -495,9 +546,9 @@ Label_res3:
   var_fr = (var_consA);
   var_consA = (tmp);
   count(2,0);
-   stack[stackPointer++] = &&Return_202_16;
+   stack[stackPointer++] = &&Return_202_20;
   goto Label_cons;
-  Return_202_16:
+  Return_202_20:
   tmp = var_consP;
   var_consP = (var_A0);
   var_A0 = (tmp);
@@ -512,9 +563,9 @@ Label_join_200_6:
   var_fr = (var_consA);
   var_consA = (tmp);
   count(2,0);
-   stack[stackPointer++] = &&Return_202_17;
+   stack[stackPointer++] = &&Return_202_21;
   goto Label_cons;
-  Return_202_17:
+  Return_202_21:
   tmp = var_consP;
   var_consP = (var_A0);
   var_A0 = (tmp);
@@ -635,9 +686,9 @@ Label_cons:
   writeVars(); goto programEnd;
 }
   count(2,0);
-   stack[stackPointer++] = &&Return_240_18;
+   stack[stackPointer++] = &&Return_240_22;
   goto Label_hash;
-  Return_240_18:
+  Return_240_22:
 count(1, 0);
   var_segEnd = (var_segEnd + (var_hashV + var_segSize));
 count(1, 0);
@@ -734,9 +785,9 @@ Label_split_259_17:
 count(1, 0);
   var_segEnd = (var_segEnd - (var_hashV + var_segSize));
   count(2,0);
-   stack[stackPointer++] = &&Return_261_19;
+   stack[stackPointer++] = &&Return_261_23;
   goto Label__hash;
-  Return_261_19:
+  Return_261_23:
 count(1, 0);
   Mem[var_consP] = (count(0,1), (count(0,1), Mem[var_consP]) + (1 + 0));
 count(1, 0);
@@ -801,9 +852,9 @@ Label_consFoundSame:
 count(1, 0);
   var_segEnd = (var_segEnd - (var_hashV + var_segSize));
   count(2,0);
-   stack[stackPointer++] = &&Return_276_20;
+   stack[stackPointer++] = &&Return_276_24;
   goto Label__hash;
-  Return_276_20:
+  Return_276_24:
   if (count(1,0), var_consD < var_H) goto Label_consSymbolD; else goto Label_split_277_13;
 
 Label_split_277_13:
@@ -1017,18 +1068,63 @@ count(1, 0);
 }
 
 printf("max refs = %d\n",A);
+fprintf(stderr,"final: %d - %d - %d - %d - %d\n", var_lhs1, var_lhs2, var_rhs1, var_consA, var_consD);
   count(2,0);
-   stack[stackPointer++] = &&Return_33_21;
+   stack[stackPointer++] = &&Return_49_25;
+  goto Label_cons;
+  Return_49_25:
+  tmp = var_consD;
+  var_consD = (var_res2);
+  var_res2 = (tmp);
+  tmp = var_consA;
+  var_consA = (var_consP);
+  var_consP = (tmp);
+fprintf(stderr,"final: %d - %d - %d - %d\n", var_lhs1, var_lhs2, var_consA, var_consD);
+  count(2,0);
+   stack[stackPointer++] = &&Return_45_26;
+  goto Label_cons;
+  Return_45_26:
+  tmp = var_consP;
+  var_consP = (var_res1);
+  var_res1 = (tmp);
+  tmp = var_consD;
+  var_consD = (var_lhs2);
+  var_lhs2 = (tmp);
+  tmp = var_consA;
+  var_consA = (var_lhs1);
+  var_lhs1 = (tmp);
+fprintf(stderr,"res after cons %d - %d\n", var_consA, var_consD);
+  count(2,0);
+   stack[stackPointer++] = &&Return_40_27;
+  goto Label_cons;
+  Return_40_27:
+  tmp = var_consD;
+  var_consD = (var_res1);
+  var_res1 = (tmp);
+  tmp = var_consA;
+  var_consA = (var_consP);
+  var_consP = (tmp);
+fprintf(stderr,"res after cons %d - %d - %d\n", var_consA, var_consD, var_consP);
+  count(2,0);
+   stack[stackPointer++] = &&Return_36_28;
+  goto Label_cons;
+  Return_36_28:
+  tmp = var_A0;
+  var_A0 = (var_consP);
+  var_consP = (tmp);
+fprintf(stderr,"res: %d %d\n", var_A0, var_consD);
+  count(2,0);
+   stack[stackPointer++] = &&Return_33_29;
   goto Label_flip;
-  Return_33_21:
+  Return_33_29:
   count(2,0);
-   stack[stackPointer++] = &&Return_32_22;
+   stack[stackPointer++] = &&Return_32_30;
   goto Label__build;
-  Return_32_22:
+  Return_32_30:
   count(2,0);
-   stack[stackPointer++] = &&Return_31_23;
+   stack[stackPointer++] = &&Return_31_31;
   goto Label__initialise;
-  Return_31_23:
+  Return_31_31:
 count(1, 0);
   var_stackP = (var_stackP - (64 + 0));
 count(1, 0);
@@ -1122,9 +1218,9 @@ Label__initialise:
   var_nilnil = (var_consP);
   var_consP = (tmp);
   count(2,0);
-   stack[stackPointer++] = &&Return_75_24;
+   stack[stackPointer++] = &&Return_75_32;
   goto Label__cons;
-  Return_75_24:
+  Return_75_32:
 count(1, 0);
   var_consD = (var_consD - (2 + 0));
 count(1, 0);
@@ -1136,9 +1232,9 @@ Label__build:
   var_A0 = (var_consP);
   var_consP = (tmp);
   count(2,0);
-   stack[stackPointer++] = &&Return_102_25;
+   stack[stackPointer++] = &&Return_102_33;
   goto Label__cons;
-  Return_102_25:
+  Return_102_33:
   tmp = var_consP;
   var_consP = (var_consD);
   var_consD = (tmp);
@@ -1146,9 +1242,9 @@ Label__build:
   var_lhs = (var_consA);
   var_consA = (tmp);
   count(2,0);
-   stack[stackPointer++] = &&Return_99_26;
+   stack[stackPointer++] = &&Return_99_34;
   goto Label__cons;
-  Return_99_26:
+  Return_99_34:
 fprintf(stderr,"%d\n", var_consP);
 count(1, 0);
   var_consA = (var_consA - (5 + 0));
@@ -1158,9 +1254,9 @@ count(1, 0);
   var_lhs = (var_consP);
   var_consP = (tmp);
   count(2,0);
-   stack[stackPointer++] = &&Return_91_27;
+   stack[stackPointer++] = &&Return_91_35;
   goto Label__cons;
-  Return_91_27:
+  Return_91_35:
   tmp = var_lhs2;
   var_lhs2 = (var_consD);
   var_consD = (tmp);
@@ -1171,9 +1267,9 @@ count(1, 0);
   var_lhs2 = (var_consP);
   var_consP = (tmp);
   count(2,0);
-   stack[stackPointer++] = &&Return_87_28;
+   stack[stackPointer++] = &&Return_87_36;
   goto Label__cons;
-  Return_87_28:
+  Return_87_36:
 fprintf(stderr,"snd %d %d", var_consA, var_consD);
 count(1, 0);
   var_consD = (var_consD - (13 + 0));
@@ -1183,9 +1279,9 @@ count(1, 0);
   var_lhs1 = (var_consP);
   var_consP = (tmp);
   count(2,0);
-   stack[stackPointer++] = &&Return_82_29;
+   stack[stackPointer++] = &&Return_82_37;
   goto Label__cons;
-  Return_82_29:
+  Return_82_37:
 count(1, 0);
   var_consA = (var_consA - (9 + 0));
 count(1, 0);
@@ -1221,9 +1317,9 @@ Label__l3:
   var_p1 = (var_consA);
   var_consA = (tmp);
   count(2,0);
-   stack[stackPointer++] = &&Return_119_30;
+   stack[stackPointer++] = &&Return_119_38;
   goto Label_cons;
-  Return_119_30:
+  Return_119_38:
   tmp = var_A0;
   var_A0 = (var_consP);
   var_consP = (tmp);
@@ -1238,9 +1334,9 @@ Label__split_121_12:
   var_p1 = (var_consA);
   var_consA = (tmp);
   count(2,0);
-   stack[stackPointer++] = &&Return_119_31;
+   stack[stackPointer++] = &&Return_119_39;
   goto Label_cons;
-  Return_119_31:
+  Return_119_39:
   tmp = var_A0;
   var_A0 = (var_consP);
   var_consP = (tmp);
@@ -1271,9 +1367,9 @@ Label__join_136_4:
   var_A0 = (var_consP);
   var_consP = (tmp);
   count(2,0);
-   stack[stackPointer++] = &&Return_134_32;
+   stack[stackPointer++] = &&Return_134_40;
   goto Label__cons;
-  Return_134_32:
+  Return_134_40:
 fprintf(stderr,"first vcons %d %d \n", var_consA, var_consD);
   tmp = var_p1;
   var_p1 = (var_consA);
@@ -1311,9 +1407,9 @@ Label__join_187_7:
 count(1, 0);
   var_stackP = (var_stackP + (4 + 0));
   count(2,0);
-   stack[stackPointer++] = &&Return_175_33;
+   stack[stackPointer++] = &&Return_175_41;
   goto Label__flip;
-  Return_175_33:
+  Return_175_41:
 count(1, 0);
   var_stackP = (var_stackP - (4 + 0));
   tmp = (count(0,1), Mem[var_stackP]);
@@ -1337,9 +1433,9 @@ fprintf(stderr," test: %d %d %d", var_A0, var_fl, var_p2);
 count(1, 0);
   var_stackP = (var_stackP + (4 + 0));
   count(2,0);
-   stack[stackPointer++] = &&Return_152_34;
+   stack[stackPointer++] = &&Return_152_42;
   goto Label__flip;
-  Return_152_34:
+  Return_152_42:
 count(1, 0);
   var_stackP = (var_stackP - (4 + 0));
   tmp = (count(0,1), Mem[var_stackP]);
@@ -1390,9 +1486,9 @@ Label__res3:
   var_fr = (var_consA);
   var_consA = (tmp);
   count(2,0);
-   stack[stackPointer++] = &&Return_195_35;
+   stack[stackPointer++] = &&Return_195_43;
   goto Label_cons;
-  Return_195_35:
+  Return_195_43:
   tmp = var_A0;
   var_A0 = (var_consP);
   var_consP = (tmp);
@@ -1407,9 +1503,9 @@ Label__join_198_6:
   var_fr = (var_consA);
   var_consA = (tmp);
   count(2,0);
-   stack[stackPointer++] = &&Return_195_36;
+   stack[stackPointer++] = &&Return_195_44;
   goto Label_cons;
-  Return_195_36:
+  Return_195_44:
   tmp = var_A0;
   var_A0 = (var_consP);
   var_consP = (tmp);
@@ -1426,9 +1522,9 @@ Label__join_204_6:
   var_consP = (var_A0);
   var_A0 = (tmp);
   count(2,0);
-   stack[stackPointer++] = &&Return_202_37;
+   stack[stackPointer++] = &&Return_202_45;
   goto Label__cons;
-  Return_202_37:
+  Return_202_45:
   tmp = var_fr;
   var_fr = (var_consA);
   var_consA = (tmp);
@@ -1519,9 +1615,9 @@ count(1, 0);
 count(1, 0);
   var_segEnd = (var_segEnd - (var_hashV + var_segSize));
   count(2,0);
-   stack[stackPointer++] = &&Return_240_38;
+   stack[stackPointer++] = &&Return_240_46;
   goto Label__hash;
-  Return_240_38:
+  Return_240_46:
   if (!(var_segEnd == 0 && 1)){
     fprintf(stderr,"\nAssertion failure at line ~239\n");
   writeVars(); goto programEnd;
@@ -1670,9 +1766,9 @@ count(1, 0);
 count(1, 0);
   Mem[var_consP] = (count(0,1), (count(0,1), Mem[var_consP]) - (1 + 0));
   count(2,0);
-   stack[stackPointer++] = &&Return_261_39;
+   stack[stackPointer++] = &&Return_261_47;
   goto Label_hash;
-  Return_261_39:
+  Return_261_47:
 count(1, 0);
   var_segEnd = (var_segEnd + (var_hashV + var_segSize));
   goto Label__split_259_17;
@@ -1697,9 +1793,9 @@ Label__consSymbolD:
   writeVars(); goto programEnd;
 }
   count(2,0);
-   stack[stackPointer++] = &&Return_276_40;
+   stack[stackPointer++] = &&Return_276_48;
   goto Label_hash;
-  Return_276_40:
+  Return_276_48:
 count(1, 0);
   var_segEnd = (var_segEnd + (var_hashV + var_segSize));
   goto Label__consFoundSame;
@@ -1710,9 +1806,9 @@ Label__split_277_13:
   writeVars(); goto programEnd;
 }
   count(2,0);
-   stack[stackPointer++] = &&Return_276_41;
+   stack[stackPointer++] = &&Return_276_49;
   goto Label_hash;
-  Return_276_41:
+  Return_276_49:
 count(1, 0);
   var_segEnd = (var_segEnd + (var_hashV + var_segSize));
   goto Label__consFoundSame;
