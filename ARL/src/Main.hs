@@ -20,7 +20,7 @@ run file =
   do inp <- readFile file
      case parseFile file inp of
        Left e -> print $ errorBundlePretty e --parseErrorPretty $ NE.head $ bundleErrors e--errorBundlePretty e
-       Right prog -> case runEval M.empty emptyState . evalProg <$> multiMain prog of
+       Right prog -> case runEval baseEnv emptyState . evalProg <$> multiMain prog of
                        Left e -> print e
                        Right (str,state) -> do putStrLn str
 

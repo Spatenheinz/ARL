@@ -12,7 +12,9 @@ import Arl.RIL
 import Arl.Utils
 import Arl.RilState
 
-type Env = M.Map String [ID]
+type Env = (String, M.Map String [ID])
+
+baseEnv = ("A", M.empty)
 -- type Fenv = M.Map ID [Rule]
 type Prog' = (Main, [Func])
 
@@ -32,6 +34,9 @@ rmUnused (main, funcs) = (main, filter (\x -> ident x `elem` map ident main) fun
 
 -- runEval :: Env -> Integer -> Eval a -> (Either String a, Integer)
 -- runEval env st e = runIdentity (runStateT (runExceptT (runReaderT e env)) st)
+
+-- envU (v,m) = (v,m)
+-- stdEnv = ("A", M.empty :: M.Map String [ID])
 
 type Eval a = ReaderT Env (StateT RilState Identity) a
 
@@ -86,10 +91,10 @@ evalRules :: Rule -> Eval String
 evalRules r@Rule{args, body, output} =
   do st <- get
      putVars output
-     res' <- evalInvPattern output "A"
+     res' <- local (const ("A", M.empty)) $ evalInvPattern output
      putVars args
-     inp' <- evalPattern args "A"
-     defs' <- local (const (getLiveVars r)) $ mapM evalDef body
+     inp' <- local (const ("A", M.empty)) $ evalPattern args
+     defs' <- local (const ("A", getLiveVars r)) $ mapM evalDef body
      ruleTick
      return $ newlines
             [ fnameS st ++ "_entry_" ++ rLabel st ++ " <--"
@@ -106,143 +111,171 @@ evalRules r@Rule{args, body, output} =
             , "\n"
             ]
 
-evalPattern :: Pattern -> String -> Eval String
-evalPattern (Var x) v =
-  do st <- innerTick
+evalPattern :: Pattern -> Eval String
+evalPattern (Var x) =
+  do (v,_) <- ask
+     st <- innerTick
      rmVar x
      case M.lookup x (pVars st) of
        Just _ -> return $ x ++ " <-> " ++ v ++ ";"
        Nothing -> return $ newlines
-                    [ v ++ " != " ++ x ++ " --> " ++ label st ++ ";"
-                    , x ++ " <-> copyP;"
-                    , "call copy;"
+                    [ vNeqxJ v x (label st)
                     , x ++ " <-> copyP;"
                     , v ++ " <-> copyQ;"
-                    , label st ++ " <-- " ++ v ++ " != 0;"
+                    , "uncall copy;"
+                    , x ++ " <-> copyP;"
+                    , vNeq0E (label st) v
                     ]
-evalPattern NilNil v =
-  do st <- innerTick
+evalPattern NilNil =
+  do (v,_) <- ask
+     st <- innerTick
      return $ newlines
         [ v ++ " != nilnil --> " ++ label st ++ ";"
         , v ++ " -= nilnil;"
         , label st ++ " <-- " ++ v ++ " != 0;"
         ]
-evalPattern (Const c) v =
-  do st <- innerTick
+evalPattern (Const c) =
+  do (v,_) <- ask
+     st <- innerTick
      return $ newlines
-        [ v ++ " != " ++ show rval ++ " --> " ++ label st ++ ";"
+        [ vNeqxJ v (show rval) (label st)
         , v ++ " -= " ++ show rval ++ ";"
-        , label st ++ " <-- " ++ v ++ " != 0;"
+        , vNeq0E (label st) v
         ]
   where rval = if c == 2 then c else c*2+1
-evalPattern p@(Pair car cdr) v =
-  do putVars p
+evalPattern p@(Pair car cdr) =
+  do (v,_) <- ask
+     putVars p
      st1 <- innerTick
      st2 <- innerTick
      st3 <- innerTick
      let t1 = "t" ++ show (labNo st1) ++ unique p
      let t2 = "t" ++ show (labNo st2) ++ unique p
-     car' <- evalPattern car t1
-     cdr' <- evalPattern cdr t2
+     car' <- local (const (t1, M.empty)) $ evalPattern car
+     cdr' <- local (const (t2, M.empty)) $ evalPattern cdr
      putVars car
-     carInv' <- evalInvPattern car t1
+     carInv' <- local (const (t1, M.empty)) $ evalInvPattern car
      return $ newlines
         [ "\n//Patterns starts here"
-        , v ++ " & 3 --> " ++ label st1 ++ ";"
+        , isPointerJ v (label st1)
         , v ++ " <-> consP;"
         , "uncall cons;"
         , t1 ++ " <-> consA;"
         , t2 ++ " <-> consD;"
         , car'
-        , t1 ++ " != 0 -->" ++ label st2 ++ ";"
+        , vNeq0J t1 (label st2)
         , cdr'
-        , t2 ++ " == 0 -->" ++ label st3 ++ ";"
-        , label st2 ++ " <-- " ++ t1 ++ " != 0;"
+        , vEq0J t2 (label st3)
+        , vNeq0E (label st2) t1
         , carInv'
         , t1 ++ " <-> consA;"
         , t2 ++ " <-> consD;"
         , "call cons;"
         , v ++ " <-> consP;"
-        , label st3 ++ " <-- " ++ v ++ " == 0;"
-        , label st1 ++ " <-- " ++ v ++ " & 3;"
+        , vEq0E (label st3) v
+        , isPointerE (label st1) v
         ]
-evalPattern (Neq id pat) _ = undefined
-evalPattern (As id pat) _ = undefined
+evalPattern (Neq id pat) =
+  do (v, _) <- ask
+     pat1 <- local (const ("A", M.empty)) $ evalPattern pat
+     pat2 <- local (const ("A", M.empty)) $ evalInvPattern pat
+     return $ newlines
+        [ assert0 id
+        , pat1
+        , plus id v
+        , pat2
+        , sub v id
+        ]
+evalPattern (As id pat) = undefined
 
-evalInvPattern :: Pattern -> String -> Eval String
-evalInvPattern (Var x) v =
-  do st <- innerTick
+evalInvPattern :: Pattern -> Eval String
+evalInvPattern (Var x) =
+  do (v, _) <- ask
+     st <- innerTick
      rmVar x
      case M.lookup x (pVars st) of
        Just _ -> return $ x ++ " <-> " ++ v ++ ";"
        Nothing -> return $ newlines
-                    [ label st ++ " <-- " ++ v ++ " != 0;"
+                    [ vNeq0E (label st) v
+                    , x ++ " <-> copyP;"
+                    , "call copy;"
+                    , x ++ " <-> copyP;"
                     , v ++ " <-> copyQ;"
-                    , x ++ " <-> copyP;"
-                    , "uncall copy;"
-                    , x ++ " <-> copyP;"
-                    , v ++ " != " ++ x ++ " --> " ++ label st ++ ";"
+                    , vNeq0J v (label st)
                     ]
-evalInvPattern NilNil v =
-  do st <- innerTick
+evalInvPattern NilNil =
+  do (v,_) <- ask
+     st <- innerTick
      return $ newlines
-        [ label st ++ " <-- " ++ v ++ " != 0;"
+        [ vNeq0E (label st) v
         , v ++ " += nilnil;"
-        , v ++ " != nilnil --> " ++ label st ++ ";"
+        , vNeq0J v (label st)
         ]
-evalInvPattern (Const c) v =
-  do st <- innerTick
+evalInvPattern (Const c) =
+  do (v,_) <- ask
+     st <- innerTick
      return $ newlines
-        [ v ++ " != 0 --> " ++ invP ++ label st ++ ";"
+        [ vNeq0J v (invP ++ label st)
         , v ++ " += " ++ show rval ++ ";"
-        , invP ++ label st ++ " <-- " ++ v ++ " != " ++ show rval ++ ";"
+        , vNeqxE (invP ++ label st) v (show rval)
         ]
   where invP = "inv_" ++ show (2*c+1)
         rval = if c == 2 then c else 2*c+1
-evalInvPattern p@(Pair car cdr) v =
-  do putVars p
+evalInvPattern p@(Pair car cdr) =
+  do (v, _) <- ask
+     putVars p
      st1 <- innerTick
      st2 <- innerTick
      st3 <- innerTick
      let t1 = "inv_t" ++ label st1 ++ unique p
      let t2 = "inv_t" ++ label st2 ++ unique p
-     car' <- evalPattern car t1
+     car' <- local (const (t1, M.empty)) $ evalPattern car
      putVars p
-     carInv' <- evalInvPattern car t1
-     cdrInv' <- evalInvPattern cdr t2
+     carInv' <- local (const (t1, M.empty)) $ evalInvPattern car
+     cdrInv' <- local (const (t2, M.empty)) $ evalInvPattern cdr
      return $ newlines
-        [ v  ++ " & 3 --> " ++ invP ++ label st1 ++ ";"
-        , v ++ " == 0 --> " ++ invP ++ label st3 ++ ";"
+        [ isPointerJ v (invP ++ label st1)
+        , vEq0J v (invP ++ label st3)
         , "A <-> consP;"
         , "uncall cons;"
         , t1 ++ " <-> consA;"
         , t2 ++ " <-> consD;"
         , car'
-        , t1 ++ " != 0 --> " ++ invP ++ label st2 ++";"
-        , invP ++ label st3 ++ " <-- " ++ t2 ++ " == 0;"
+        , vNeq0J t1 (invP ++ label st2)
+        , vEq0E (invP ++ label st3) t2
         , cdrInv'
-        , invP ++ label st2 ++ " <-- " ++ t1 ++ " != 0;"
+        , vNeq0E (invP ++ label st2) t1
         , carInv'
         , t1 ++ " <-> consA;"
         , t2 ++ " <-> consD;"
         , "call cons;"
         , v ++ " <-> consP;"
-        , invP ++ label st1 ++ " <-- "++ v ++ " & 3;"
+        , isPointerE (invP ++ label st1) v
         ]
   where invP = "inv_" ++ unique p
-evalInvPattern (Neq id pat) _ = undefined
-evalInvPattern (As id pat) _ = undefined
+evalInvPattern (Neq id pat) =
+  do (v, _) <- ask
+     pat1 <- local (const ("A", M.empty)) $ evalPattern pat
+     pat2 <- local (const ("A", M.empty)) $ evalInvPattern pat
+     return $ newlines
+        [ plus v id
+        , pat2
+        , sub id v
+        , pat1
+        , assert0 id
+        ]
+evalInvPattern (As id pat) = undefined
 
 evalDef def =
-  do env <- ask
+  do (v, env) <- ask
      putVars $ res def
      putVars $ input def
      innerTick
      st <- get
      innerTick
      st2 <- get
-     arg' <- evalInvPattern (input def) "A"
-     l' <- evalPattern (res def) "A"
+     arg' <- local (const ("A", M.empty)) $ evalInvPattern (input def)
+     l' <- local (const ("A", M.empty)) $ evalPattern (res def)
      let live = case M.lookup (unique def) env of
                   Nothing -> undefined --throwError "live variables for def " ++ show d ++ "not defined"
                   Just live' -> live'
