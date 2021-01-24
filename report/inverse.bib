@@ -1,0 +1,2542 @@
+
+@STRING{LNCS = "LNCS "} % "Lecture Notes in Computer Science "
+
+
+%JACOBS references
+@ARTICLE{B73,
+
+  author={C. H. {Bennett}},
+
+  journal={IBM Journal of Research and Development},
+
+  title={Logical Reversibility of Computation},
+
+  year={1973},
+
+  volume={17},
+
+  number={6},
+
+  pages={525-532},
+
+  doi={10.1147/rd.176.0525}}
+
+@ARTICLE{L61,
+
+  author={R. {Landauer}},
+
+  journal={IBM Journal of Research and Development},
+
+  title={Irreversibility and Heat Generation in the Computing Process},
+
+  year={1961},
+
+  volume={5},
+
+  number={3},
+
+  pages={183-191},
+
+  doi={10.1147/rd.53.0183}}
+
+@Inbook{Schordan2020,
+author="Schordan, Markus
+and Oppelstrup, Tomas
+and Thomsen, Michael Kirkedal
+and Gl{\"u}ck, Robert",
+editor="Ulidowski, Irek
+and Lanese, Ivan
+and Schultz, Ulrik Pagh
+and Ferreira, Carla",
+title="Reversible Languages and Incremental State Saving in Optimistic Parallel Discrete Event Simulation",
+bookTitle="Reversible Computation: Extending Horizons of Computing: Selected Results of the COST Action IC1405",
+year="2020",
+publisher="Springer International Publishing",
+address="Cham",
+pages="187--207",
+abstract="Optimistic parallel discrete event simulation (PDES) requires to do a distributed rollback if conflicts are detected during a simulation due to the massively parallel optimistic execution approach. When a rollback of a simulation is performed each node that is determined to be in a wrong state must be restored to one of its previous states. This can be achieved through reverse computation or by restoring a previous checkpoint. In this paper we investigate and compare both approaches, reverse computation and a variant of checkpointing, incremental state saving (also called incremental checkpointing), to restore a previous program state as part of an optimistic parallel discrete event simulation. We present a benchmark model that is specifically designed for evaluating the performance of approaches to reversibility in PDES. Our benchmarking model has mathematical properties that allow to tune the amount of arithmetic operations relative to the amount of memory operations. These tuning opportunities are the basis for our systematic performance evaluation.",
+isbn="978-3-030-47361-7",
+doi="10.1007/978-3-030-47361-7_9",
+url="https://doi.org/10.1007/978-3-030-47361-7_9"
+}
+@article{Mogensen2018ReversibleGC,
+  title={Reversible Garbage Collection for Reversible Functional Languages},
+  author={Torben {\aE}. Mogensen},
+  journal={New Generation Computing},
+  year={2018},
+  volume={36},
+  pages={203-232}
+}
+% IMPERATIVE PROGRAMMING
+
+@Article{Briggs:87,
+   Author     = {Briggs, James S.},
+   Title      = {Generating reversible programs},
+   Journal    = {Software Practice and Experience},
+   Volume     = {17},
+   Pages      = {439--453},
+   Year       = {1987}
+}
+
+@Article{CPF:99,
+   Author     = {Carothers, Christopher D. and Perumalla, Kalyan S. and
+                 Fujimoto, Richard M.},
+   Title      = {Efficient optimistic parallel simulations using reverse
+                 computation},
+   Journal    = {ACM TOMACS},
+   Volume     = {9},
+   Number     = {3},
+   Pages      = {224--253},
+   Year       = {1999}
+}
+
+@article{ChenUdding:SCP90,
+   author =  {Chen, Wei and Udding, Jan Tijmen},
+   title =   {Program Inversion: {M}ore than Fun!},
+   journal = {Science of Computer Programming},
+   year =    1990,
+   volume =  15,
+   pages =   {1--13},
+}
+
+@InProceedings{Dijkstra:78,
+   Author     = {Dijkstra, Edsger W.},
+   Title      = {Program inversion},
+   BookTitle  = {Program Construction: International Summer School},
+   Editor     = {Bauer, F. L. and Broy, M.},
+   Location   = {Marktoberdorf, Germany},
+   Publisher  = {Springer-Verlag},
+   Series     = LNCS # 69,
+   Pages      = {54--57},
+   Year       = 1978
+}
+
+@incollection{Dijkstra:book82,
+   author =    {Dijkstra, Edsger W.},
+   title =     {{EWD}671: Program Inversion},
+   booktitle = {Selected Writings on Computing: {A} Personal Perspective},
+   publisher = {Springer-Verlag},
+   pages =     {351--354},
+   year =      1982
+}
+
+@article{FeijenEtal:IPL87,
+   author =  {Feijen, W. H. J. and Van~Gasteren, A. J. M. and Gries, David},
+   title =   {In-Situ Inversion of a Cyclic Permutation},
+   journal = {Information Processing Letters},
+   year =    1987,
+   volume =  24,
+   pages =   {11--14}
+}
+
+@incollection{GriesSnepscheut:90,
+   author =    {Gries, David and van~de~Snepscheut, Jan L. A.},
+   title =     {Inorder Traversal of a Binary Tree and its Inversion},
+   booktitle = {Formal Development of Programs and Proofs},
+   editor =    {Dijkstra, Edsger W.},
+   publisher = {Addison Wesley},
+   pages =     {37--42},
+   year =      1990
+}
+
+@inbook{Gries:81:inv,
+   author =    {Gries, David},
+   title =     {The Science of Programming},
+   chapter =   {21 Inverting Programs},
+   series    = {Texts and Monographs in Computer Science},
+   publisher = {Springer-Verlag},
+   pages =     {265--274},
+   year =      1981
+}
+
+@InProceedings{PetersCarothers:03,
+   Author     = {Peters, Michael D. and Carothers, Christopher D.},
+   Title      = {An algorithm for fully reversible optimistic parallel 
+simulation},
+   BookTitle  = {Proceedings of the 2003 Winter Simulation Conference},
+   Editor     = {Chick, S. and S\'{a}nchez, P. J. and Ferrin, D. and 
+Morrice, D. J.},
+   Location   = {New Orleans, Louisiana},
+   Pages      = {864--871},
+   Year       = {2003}
+}
+
+@Article{vanSnepscheut:91:traversal,
+   Author     = {van de Snepscheut, Jan L. A.},
+   Title      = {Inversion of a recursive tree traversal},
+   Journal    = {Information Processing Letters},
+   Volume     = {39},
+   Number     = {5},
+   Pages      = {265--267},
+   Year       = {1991}
+}
+
+@InCollection{vanSnepscheut:93:inv,
+   author     = {van de Snepscheut, Jan L. A.},
+   title      = {Program Inversion (Chapter 11)},
+   booktitle  = {What Computing is All About},
+   series     = {Texts and Monographs in Computer Science},
+   publisher  = {Springer-Verlag},
+   pages      = {219--251},
+   year       = {1993}
+}
+
+@InCollection{Mogensen:05:semi,
+   author     = {Mogensen, Torben {\AE}.},
+   title      = {Semi-Inversion of Guarded Equations},
+   booktitle  = {GPCE'05},
+   series     = {Lecture Notes in Computer Science 3676},
+   publisher  = {Springer-Verlag},
+   pages      = {189--204},
+   year       = {2005}
+}
+
+@InCollection{Mogensen:06:report,
+   author     = {Mogensen, Torben {\AE}.},
+   title      = {Report on an Implementation of a Semi-Inverter},
+   booktitle  = {PSI'06},
+   series     = {Lecture Notes in Computer Science 4378},
+   publisher  = {Springer-Verlag},
+   pages      = {322--334},
+   year       = {2007}
+}
+
+
+% FUNCTIONAL PROGRAMMING
+% ----------------------
+
+@TechReport{Abramsky:01,
+   Author     = {Abramsky, Samson},
+   Title      = {A structural approach to reversible computation},
+   Institution= {Oxford University Computing Laboratory},
+   Number     = {},
+   Type       = {Manuscript},
+   Year       = {2001}
+}
+
+@MastersThesis{Andersen:06:Inversion,
+  AUTHOR     = {Jesper Andersen},
+  YEAR       = {2006},
+  TITLE      = {A method for Inversion of a Higher-Order Programming Language},
+  SCHOOL     = {DIKU},
+  address    = {University of Copenhagen},
+  month      = {June},
+  ID         = {MTh}
+}
+ 
+
+
+@article{ConselKhoo:93,
+   author =   {Consel, Charles and Khoo, Siau Cheng},
+   title =    {Parameterized partial evaluation},
+   journal =  {ACM TOPLAS},
+   volume =   15,
+   number =   3,
+   pages =    {463--493},
+   year =     1993,
+}
+
+@inproceedings{Consel-etal:96,
+   author =    {Consel, Charles and Hornof, Luke and Nàel, Fran¡ois 
+and Noy\'{e},
+                Jacques and Volanschi, Nicolae},
+   title =     {A uniform approach for compile-time and run-time 
+specialization},
+   booktitle = {Partial Evaluation. Proceedings},
+   editor =    {Danvy, Olivier and Gl\"uck, Robert and Thiemann, Peter},
+   series =    LNCS # 1110,
+   Location =  {Dagstuhl Castle, Germany},
+   publisher = {Springer-Verlag},
+   pages =     {54--72},
+   year =      1996,
+}
+
+@InProceedings{deMoorGibbons:00:rel,
+   Author     = {de Moor, Oege and Gibbons, Jeremy},
+   Title      = {Pointwise relational programming},
+   BookTitle  = {Algebraic Methodology and Software Technology. Proceedings},
+   Editor     = {Rus, T.},
+   Location   = {Iowa City, Iowa},
+   Publisher  = {Springer-Verlag},
+   Volume     = {1816},
+   Pages      = {371--390},
+   Year       = {2000}
+}
+
+@inproceedings{Eppstein:IJCAI85,
+   author =    {Eppstein, David},
+   title =     {A Heuristic Approach to Program Inversion},
+   booktitle = {Int.\ Joint Conference on
+                Artificial Intelligence (IJCAI-85)},
+   publisher = {Morgan Kaufmann, Inc.},
+   pages =     {219--221},
+   year =      1985,
+}
+
+@article{HarrisonKoshnevisan:Acta92,
+   author =  {Harrison, P. G. and Khoshnevisan, H.},
+   title =   {On the Synthesis of Function Inverses},
+   journal = {Acta Informatica},
+   year =    1992,
+   volume =  29,
+   pages =   {211--239},
+}
+
+@inproceedings{Hatcliff:98:ai,
+   author =    {Hatcliff, John and Dwyer, Matthew and Laubach, Shawn},
+   title =     {Staging analysis using abstraction-based program 
+specialization},
+   editor =    {Palamidessi, Catuscia and Glaser, Hugh and
+   Meinke, Karl},
+   booktitle = {Proceedings of ALP/PLILP'98},
+   series =    LNCS # 1490,
+   year =      1998,
+   publisher = {Springer-Verlag},
+   pages =     {134--151},
+}
+
+@InProceedings{Huelsbergen:96,
+   Author     = {Huelsbergen, Lorenz},
+   Title      = {A logically reversible evaluator for the call-by-name 
+lambda calculus},
+   BookTitle  = {Proceedings of the Workshop on Physics and Computation},
+   Editor     = {Toffoli, Tommaso and Biafore, M. and Leao, J.},
+   Location   = {Boston, Massachusetts},
+   Publisher  = {New England Complex Systems Institute},
+   Series     = {},
+   Volume     = {},
+   Pages      = {159--167},
+   Year       = {1996}
+}
+
+@InProceedings{HuMuTakeichi:04,
+   Author     = {Hu, Zhenjiang and Mu, Shin-Cheng and Takeichi, Masato},
+   Title      = {A programmable editor for developing structured documents
+                 based on bidirectional transformations},
+   BookTitle  = {Symposium on Partial Evaluation and  Program Manipulation},
+   Editor     = {},
+   Location   = {Verona, Italy},
+   Publisher  = {ACM Press},
+   Pages      = {178--189},
+   Year       = {2004}
+}
+
+@inproceedings{Jones:94:essence,
+   author =    {Jones, Neil D.},
+   title =     {The essence of program transformation by partial evaluation and
+                driving},
+   booktitle = {Logic, Language and Computation},
+   editor =    {Jones, Neil D. and Hagiya, Masami and Sato, Masahiko},
+   series =    LNCS # 792,
+   publisher = {Springer-Verlag},
+   pages =     {206--224},
+   year =      1994,
+}
+
+@inproceedings{Jones:97:ai,
+   author =    {Jones, Neil D.},
+   title =     {Combining abstract interpretation and partial evaluation (brief
+                overview)},
+   booktitle = {Static Analysis. Proceedings},
+   editor =    {Van Hentenryck, P.},
+   series =    LNCS # 1302,
+   Location =  {Paris, France},
+   publisher = {Springer-Verlag},
+   pages =     {396--405},
+   year =      1997,     
+}
+
+
+@inproceedings{KhoshnevisanSephton:RTA89,
+   author =    {Khoshnevisan, H. and Sephton, K. M.},
+   title =     {{InvX}: {An} Automatic Function Inverter},
+   booktitle = {Rewriting Techniques and Applications. Proceedings},
+   editor =    {Dershowitz, Nachum},
+   year =      1989,
+   pages =     {564--568},
+   series =    LNCS # 355,
+   publisher = {Springer-Verlag},
+}
+
+@InProceedings{Kluge:00,
+   Author     = {Kluge, Werner},
+   Title      = {A reversible SE(M)CD machine},
+   BookTitle  = {Implementation of Functional Languages. Proceedings},
+   Editor     = {Koopman, Pieter and Clack, Chris},
+   Location   = {Lochem, The Netherlands},
+   Publisher  = {Springer-Verlag},
+   Series     = LNCS # 1868,
+   Pages      = {95--113},
+   Year       = {2000}
+}
+
+@article{Knowlton:1965,
+ author = {Knowlton, Kenneth C.},
+ title = {A fast storage allocator},
+ journal = {Commun. ACM},
+ issue_date = {Oct. 1965},
+ volume = {8},
+ number = {10},
+ month = oct,
+ year = {1965},
+ issn = {0001-0782},
+ pages = {623--624},
+ numpages = {2},
+ url = {http://doi.acm.org/10.1145/365628.365655},
+ doi = {10.1145/365628.365655},
+ acmid = {365655},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+} 
+
+
+@book{Knuth:1997:ACP1,
+ author = {Knuth, Donald E.},
+ title = {The art of computer programming, volume 1 (3rd ed.):
+                  fundamental algorithms},
+ year = {1997},
+ isbn = {0-201-89683-4},
+ publisher = {Addison Wesley Longman Publishing Co., Inc.},
+ address = {Redwood City, CA, USA},
+} 
+
+@inproceedings{Korf:IJCAI81,
+   author =    {Korf, Richard E.},
+   title =     {Inversion of Applicative Programs},
+   booktitle = {Int.\ Joint Conference on
+                Artificial Intelligence (IJCAI-81)},
+   publisher = {William Kaufmann, Inc.},
+   pages =     {1007--1009},
+   year =      1981,
+}
+
+@TechReport{Korf:81:draft,
+   Author     = {Korf, Richard E.},
+   Title      = {Complexity of reverse execution},
+   Institution= {Carnegie-Mellon University},
+   Type       = {Draft},
+   Year       = {1981}
+}
+
+@InProceedings{MuBird:02,
+   Author     = {Mu, Shin-Cheng and Bird, Richard},
+   Title      = {Inverting functions as folds},
+   BookTitle  = {Mathematics of Program Construction. Proceedings},
+   Editor     = {Boiten, Eerke A. and M\"oller, Bernhard},
+   Location   = {Dagstuhl Castle, Germany},
+   Publisher  = {Springer-Verlag},
+   Series     = LNCS # 2386,
+   Pages      = {209--232},
+   Year       = {2002}
+}
+
+@InProceedings{MuBird:03,
+   Author     = {Mu, Shin-Cheng and Bird, Richard},
+   Title      = {Rebuilding a tree from its traversals: a case study 
+of program inversion},
+   BookTitle  = {Programming Languages and Systems. Proceedings},
+   Editor     = {Ohori, Atsushi},
+   Location   = {Beijing, China},
+   Publisher  = {Springer-Verlag},
+   Series     = LNCS # 2895,
+   Pages      = {265--282},
+   Year       = {2003}
+}
+
+@InProceedings{MuHuTakeichi:04,
+   Author     = {Mu, Shin-Cheng and Hu, Zhenjiang and Takeichi, Masato},
+   Title      = {An injective language for reversible computation},
+   BookTitle  = {Mathematics of Program Construction. Proceedings},
+   Editor     = {Kozen, Dexter},
+   Location   = {Stirling, Scotland},
+   Publisher  = {Springer-Verlag},
+   Series     = LNCS # 3125,
+   Pages      = {289--313},
+   Year       = {2004}
+}
+
+@inproceedings{Romanenko:PEMC88,
+   author =    {Romanenko, A. Y.},
+   title =     {The Generation of Inverse Functions in {R}efal},
+   booktitle = {Partial Evaluation and Mixed Computation},
+   year =      1988,
+   editor =    {Bj{\o}rner, Dines and Ershov, Andrei P. and Jones, Neil D.},
+   pages =     {427--444},
+   publisher = {North-Holland},
+}
+
+@incollection{Romanenko:88:ConstructionOf,
+   author =    {Romanenko, A. Y.},
+   title =     {Construction of Inverse Functions},
+   booktitle = {Semiotic Aspects of Formalization of Intellectual Activities},
+   publisher = {?},
+   year =      1988,
+   pages =     {62--65},
+   address =   {Moscow},
+   note =      {(In Russian)},
+}
+
+@inproceedings{Romanenko:PEPM91,
+   author =    {Romanenko, A. Y.},
+   title =     {Inversion and Metacomputation},
+   booktitle = {Partial Evaluation and Semantics-Based Program Manipulation, New
+                Haven, Connecticut (Sigplan Notices, vol. 26, no. 9, September
+                1991)},
+   year =      1991,
+   pages =     {12--22},
+   publisher = {New York:\ ACM},
+}
+
+@techreport{DFKI-RR-92-03,
+   author =      {Boley, Harold},
+   title =       {Extended Logic-plus-Functional Programming},
+   institution = {DFKI},
+   year =        1992,
+   type =        {Research Report},
+   issn =        {0946-008X},
+   number =      {RR-92-03},
+   address =     {DFKIADD},
+   pages =       {28},
+}
+
+@InProceedings{Schoenmakers:93,
+   Author     = {Schoenmakers, Berry},
+   Title      = {Inorder traversal of a binary heap and its inversion
+                 in optimal time and space},
+   BookTitle  = {Mathematics of Program Construction},
+   Editor     = {Bird, R. S. and Morgan, C. C. and Woodcock, J. C. P.},
+   Location   = {Oxford, U.K.},
+   Publisher  = {Springer-Verlag},
+   Series     = LNCS # 669,
+   Pages      = {291--301},
+   Year       = {1993}
+}
+
+
+% PARALLEL LANGUAGES
+% ------------------
+
+@article{vonWright:IPL91,
+   author =  {von~Wright, J.},
+   title =   {Program Inversion in the Refinement Calculus},
+   journal = {Information Processing Letters},
+   year =    1991,
+   volume =  37,
+   pages =   {95--100},
+}
+
+@InProceedings{vonWright:02,
+   Author     = {von Wright, Joakim},
+   Title      = {From Kleene algebra to refinement algebra},
+   BookTitle  = {Mathematics of Program Construction. Proceedings},
+   Editor     = {Boiten, Eerke A. and Möller, Bernhard},
+   Location   = {Dagstuhl Castle, Germany},
+   Publisher  = {Springer-Verlag},
+   Series     = {Lecture Notes in Computer Science},
+   Volume     = {2386},
+   Pages      = {233--262},
+   Year       = {2002}
+}
+
+
+% LOGIC PROGRAMMING
+% -----------------
+
+@InProceedings{Green:69:IJCAI69,
+   Author     = {Green, Cordell},
+   Title      = {Application of theorem proving to problem solving},
+   BookTitle  = {Int.\ Joint Conference on
+                 Artificial Intelligence (IJCAI-69)},
+   Editor     = {Walker, Donald E. and Norton, Lewis M.},
+   Location   = {Washington, D.C.},
+   Publisher  = {William Kaufmann, Inc.},
+   Pages      = {219--239},
+   Year       = {1969}
+}
+
+@inproceedings{PueblaHermengegildo:PEPM95,
+   author =    {Germ\'{a}n Puebla and Manuel Hermenegildo},
+   title =     {Implementation of Multiple Specialization in Logic Programs},
+   booktitle = {Proceedings of PEPM'95, the ACM Sigplan Symposium on Partial
+                Evaluation and Semantics-Based Program Manipulation},
+   year =      1995,
+   month =     {June},
+   Location =  {La~Jolla, California},
+   publisher = {ACM Press},
+   pages =     {77--87},
+}
+
+@inproceedings{PueblaGallagherHermenegildo:SP97,
+   author =    {Puebla, German and Gallagher, John and Hermenegildo, Manuel},
+   title =     {Towards Integrating Partial Evaluation in a Specialization
+                Framework based on Generic Abstract Interpretation},
+   booktitle = {Proceedings of the ILPS'97 Workshop on Specialisation of
+                Declarative Programs and its Application},
+   editor =    {Michael Leuschel},
+   year =      1997,
+   month =     {October},
+   Location =  {Port Jefferson, USA},
+   pages =     {29--38},
+   series =    {K.U.\ Leuven, Tech.\ Rep.\ CW 255},
+}
+@inproceedings{PueblaHermenegildo:LOPSTR96,
+   author =    {Puebla, German and Hermenegildo, Manuel},
+   title =     {Abstract Specialization and its Application to Program
+                Parallelization},
+   booktitle = {Proceedings of the International Workshop on Logic Program
+                Synthesis and Transformation (LOPSTR'96)},
+   year =      1996,
+   Location =  {Stockholm, Sweden},
+   editor =    {John Gallagher},
+   month =     {August},
+   series =    LNCS # 1207,
+   pages =     {169--186},
+}
+
+@article{ClarkvanEmden:IEEESE81,
+   author =  {Clark, Keith L. and van~Emden, M. H.},
+   title =   {Consequence Verification of Flowcharts},
+   journal = {IEEE Transactions on Software Engineering},
+   year =    1981,
+   volume =  7,
+   number =  1,
+   pages =   {52--60},
+}
+
+@PhDThesis{Knapen:93:phd,
+   Author     = {Knapen, Ed},
+   Title      = {Relational programming, program inversion
+                 and the derivation of parsing algorithms},
+   School     = {Eindhoven University of Technology},
+   Type       = {Master's Thesis},
+   Year       = {1993}
+}
+
+@article{Ross:FAC97,
+   author =  {Ross, Brian J.},
+   title =   {Running Programs Backwards: {T}he Logical Inversion of Imperative
+              Computation},
+   journal = {Formal Aspects of Computing},
+   year =    1997,
+   volume =  9,
+   pages =   {331--348},
+}
+
+@InProceedings{Sickel:79,
+   Author     = {Sickel, Sharon},
+   Title      = {Invertibility of logic programs},
+   BookTitle  = {Proceedings of the Fourth Workshop on Automated Deduction},
+   Editor     = {},
+   Location   = {Austin, Texas},
+   Publisher  = {},
+   Series     = {},
+   Volume     = {},
+   Pages      = {103--109},
+   Year       = {1979}
+}
+
+@InProceedings{ShohamMcDermott:84,
+   Author     = {Shoham, Yaov and McDermott, Drew V.},
+   Title      = {Knowledge inversion},
+   BookTitle  = {National Conference on Artificial Intelligence AAAI},
+   Editor     = {},
+   Location   = {Austin, Texas},
+   Publisher  = {},
+   Series     = {},
+   Volume     = {},
+   Pages      = {295--299},
+   Year       = {1984}
+}
+
+@inproceedings{Sterling:82,
+   author =    {Sterling, Leon and Bundy, Alan and Larence, Byrd and O'Keefe,
+                Richard and Silver, Bernard},
+   title =     {Solving Symbolic Equations with {Press}},
+   booktitle = {Computer Algebra. Proceedings},
+   editor =    {Calmet, J.},
+   series =    LNCS # 144,
+   Location =  {Marseille, France},
+   publisher = {Springer-Verlag},
+   pages =     {109--116},
+   year =      1982,
+}
+
+@article{Bruynooghe:jlp91,
+   author =  {Bruynooghe, M.},
+   title =   {A Practical Framework for the Abstract Interpretation of Logic
+              Programs},
+   journal = {The Journal of Logic Programming},
+   year =    1991,
+   volume =  10,
+   pages =   {91--124},
+}
+
+@article{Hermenegildo92:jlp,
+   author =  {Hermenegildo, M. and Warren, R. and Debray, S. K.},
+   title =   {Global Flow Analysis as a Practical Compilation Tool},
+   journal = {The Journal of Logic Programming},
+   year =    1992,
+   volume =  13,
+   number =  4,
+   pages =   {349-366},
+}
+
+% TERM REWRITING
+% --------------
+
+@InProceedings{DershowitzKirchner:01,
+   Author     = {Dershowitz, Nachum and Kirchner, Claude},
+   Title      = {Inversion strategies},
+   BookTitle  = {Third Workshop on Rule-Based Constraint Reasoning and
+                 Programming},
+   Editor     = {},
+   Location   = {Paphos, Cyprus},
+   Publisher  = {},
+   Series     = {},
+   Volume     = {},
+   Pages      = {},
+   Year       = {2001}
+}
+
+@InProceedings{NishidaSakaiSakabe:01,
+   Author     = {Nishida, Naoki and Sakai, Masahiko and Sakabe, Toshiki},
+   Title      = {Generation of inverse term rewriting systems for pure 
+treeless functions},
+   BookTitle  = {The International Workshop on Rewriting in Proof and 
+Computation},
+   Editor     = {Toyama, Yoshihito},
+   Location   = {Sendai, Japan},
+   Publisher  = {},
+   Series     = {},
+   Volume     = {},
+   Pages      = {},
+   Year       = {2001}
+}
+
+@InProceedings{NishidaSakaiSakabe:05,
+   Author     = {Nishida, Naoki and Sakai, Masahiko and Sakabe, Toshiki},
+   Title      = {Partial Inversion of Constructor Term Rewriting Systems},
+   BookTitle  = {Term Rewriting and Applications 2005},
+   Editor     = {J{\"u}rgen Geisl},
+   Location   = {Nara, Japan},
+   Publisher  = {Springer},
+   Series     = {LNCS},
+   Volume     = {3467},
+   Pages      = {264--278},
+   Year       = {2005}
+}
+
+@PhDThesis{Nishida:02:phd,
+   Author     = {Nishida, Naoki},
+   Title      = {Study on inversion of term rewriting systems},
+   School     = {Nagoya University, Japan},
+   Type       = {Master's Thesis},
+   Year       = {2002}
+}
+
+% TURING MACHINES
+% ---------------
+
+@incollection{McCarthy:book56,
+   author =    {McCarthy, John},
+   title =     {The Inversion of Functions Defined by {Turing} Machines},
+   booktitle = {Automata Studies},
+   editor =    {Shannon, C. E. and McCarthy, John},
+   publisher = {Princeton University Press},
+   pages =     {177--181},
+   year =      1956,
+}
+
+@Article{Bennett:89,
+   Author     = {Bennett, Charles H.},
+   Title      = {Time/space trade-offs for reversible computation},
+   Journal    = {SIAM Journal on Computing},
+   Volume     = {18},
+   Number     = {4},
+   Pages      = {766--776},
+   Year       = {1989}
+}
+
+@InProceedings{BuhrmanTrompVitanyi:01,
+   Author     = {Buhrman, Harry and Tromp, John and Vit\'{a}nyi, Paul},
+   Title      = {Time and space bounds for reversible simulation},
+   BookTitle  = {Automata, Languages and Programming. Proceedings},
+   Editor     = {Orejas, Fernando and Spirakis, Paul G. and van Leeuwen, Jan},
+   Location   = {Heraklion, Crete, Greece},
+   Publisher  = {Springer-Verlag},
+   Series     = LNCS # 2076,
+   Pages      = {1017--1027},
+   Year       = {2001}
+}
+
+@Article{LiTrompVitanyi:98,
+   Author     = {Li, Ming and Tromp, John and Vitányi, Paul},
+   Title      = {Reversible simulation of irreversible computation},
+   Journal    = {Physica D},
+   Volume     = {120},
+   Number     = {1-2},
+   Pages      = {168--176},
+   Year       = {1998}
+}
+
+@InProceedings{Morihata:05:IO,
+   Author     = {A.\ Morihata and K.\ Kakeki and Z.\ Hu and M.\ Takeichi},
+   Title      = {IO swapping leds you there and back again},
+   BookTitle  = {Proceedings of the 1st DIKU-IST joint workshop on foundations of software},
+   Editor     = {R.\ Gl{\"u}ck and Z.\ Hu},
+   Location   = {},
+   Publisher  = {HC{\OE} Tryk},
+   Series     = {DIKU Technical Report},
+   Volume     = {05/07},
+   Pages      = {111--117},
+   Year       = {2005}
+}
+
+@Article{MoritaShirasakiGono:89,
+   Author     = {Morita, Kenichi and Shirasaki, Akihiro and Gono, Yoshifumi},
+   Title      = {A 1-tape 2-symbol reversible Turing machine},
+   Journal    = {IEICE Transactions},
+   Volume     = {E72},
+   Number     = {3},
+   Pages      = {223--228},
+   Year       = {1989}
+}
+
+% MACHINE LANGUAGE
+% ----------------
+
+@InProceedings{Cezzar:91,
+   Author     = {Cezzar, Ruknet},
+   Title      = {Design of a processor architecture capable of forward and
+                 reverse execution},
+   BookTitle  = {Proceeding of IEEE SOUTHEASTCON`91},
+   Editor     = {},
+   Location   = {},
+   Publisher  = {},
+   Series     = {},
+   Volume     = {2},
+   Pages      = {885--890},
+   Year       = {1991}
+}
+
+% GRAMMARS
+% --------
+
+@book{Yellin:LNCS302,
+   author =    {Yellin, Daniel M.},
+   title =     {Attribute Grammar Inversion and Source-to-Source Translation},
+   publisher = {Springer Verlag},
+   series =    LNCS # 302,
+   year =      1988,
+}
+
+
+% APPLICATIONS
+% ------------
+
+@Article{BiswasMall:99:debug,
+   Author     = {Biswas, Bitan and Mall, R.},
+   Title      = {Reverse execution of programs},
+   Journal    = {SIGPLAN Notices},
+   Volume     = {34},
+   Number     = {4},
+   Pages      = {61--69},
+   Year       = {1999}
+}
+
+@InProceedings{Collberg:97,
+   Author     = {Collberg, Christian S.},
+   Title      = {Reverse interpretation + mutation analysis = 
+automatic retargeting},
+   BookTitle  = {Proceedings of the Conference on Programming Language 
+Design and Implementation},
+   Editor     = {},
+   Location   = {Las Vegas, Nevada},
+   Publisher  = {ACM Press},
+   Series     = {},
+   Volume     = {},
+   Pages      = {57--70},
+   Year       = {1997}
+}
+
+@InProceedings{CornesTerrasse:96,
+   Author     = {Cornes, Cristina and Terrasse, Delphine},
+   Title      = {Automating inversion of inductive predicates in Coq},
+   BookTitle  = {Types for Proofs and Programs. Proceedings},
+   Editor     = {Berardi, Stefano and Coppo, Mario},
+   Location   = {Torino, Italy},
+   Publisher  = {Springer-Verlag},
+   Series     = {Lecture Notes in Computer Science},
+   Volume     = {1158},
+   Pages      = {85--104},
+   Year       = {1996}
+}
+
+@incollection{Dybjer:ICALP87,
+   author =    {Dybjer, Peter},
+   title =     {Inverse Image Analysis},
+   booktitle = {Automata, Languages and Programming (Proceedings of ICALP'87)},
+   publisher = {Springer-Verlag},
+   series =    LNCS # 267,
+   year =      1987,
+   pages =     {21--30},
+}
+
+@Article{Dybjer:91,
+   Author     = {Dybjer, Peter},
+   Title      = {Inverse image analysis generalises strictness analysis},
+   Journal    = {Information and Computation},
+   Volume     = {90},
+   Number     = {2},
+   Pages      = {194--216},
+   Year       = {1991}
+}
+
+@Article{Leeman:86,
+   Author     = {Leeman, George B.},
+   Title      = {A formal approach to undo operations in programming languages},
+   Journal    = {ACM TOPLAS},
+   Volume     = {8},
+   Number     = {1},
+   Pages      = {50--97},
+   Year       = {1986}
+}
+
+@Article{SarboMoritz:89,
+   Author     = {Sarbo, Janos J. and Moritz, Matthias},
+   Title      = {Translator inversion},
+   Journal    = {Computer Languages},
+   Volume     = {14},
+   Number     = {3},
+   Pages      = {205--224},
+   Year       = {1989}
+}
+
+
+% PHYSICAL STUDIES OF COMPUTATION
+% -------------------------------
+
+@article{Bennet:IJTP82,
+   author =  {Bennet, Charles H.},
+   title =   {The Thermodynamics of Computation---a Review},
+   journal = {International Journal of Theoretical Physics},
+   volume =  21,
+   pages =   {905--940},
+   year =    1982,
+   number =  12,
+}
+@article{Bennet:IBM73,
+   author =  {Bennet, Charles H.},
+   title =   {Logical Reversibility of Computation},
+   journal = {IBM Journal of Research and Development},
+   volume =  17,
+   number =  6,
+   pages =   {525--532},
+   year =    1973,
+}
+
+@Article{BennettLandauer:85,
+   Author     = {Bennett, Charles H. and Landauer, Rolf},
+   Title      = {The fundamental physical limits of computation},
+   Journal    = {Scientific American},
+   Volume     = {253},
+   Number     = {},
+   Pages      = {48--56},
+   Year       = {1985}
+}
+
+@book{Feynman:FLCbook,
+   author =    {Feynman, Richard P.},
+   title =     {Feynman Lectures on Computation},
+   publisher = {Addison-Wesley},
+   year =      1996,
+   note =      {Edited by A.J.G. Hey and R.W. Allen},
+}
+%   editor = {Hey, Anthony J. G. and Allen, Robin W.},
+
+@inbook{Feynman:FLCchapter,
+   author =    {Feynman, Richard P.},
+   title =     {Feynman Lectures on Computation},
+   chapter =   {5 Reversible computation and the thermodynamics of computing},
+   publisher = {Addison-Wesley},
+   pages =     {137--184},
+   year =      1996,
+}
+
+@Article{Landauer:61,
+   Author     = {Landauer, Rolf},
+   Title      = {Irreversibility and heat generation in the computing process},
+   Journal    = {IBM Journal of Research and Development},
+   Volume     = {5},
+   Number     = {3},
+   Pages      = {183--191},
+   Year       = {1961}
+}
+
+@InProceedings{Toffoli:80,
+   Author     = {Toffoli, Tommaso},
+   Title      = {Reversible computing},
+   BookTitle  = {Automata, Languages and Programming},
+   Editor     = {de Bakker, J. W. and van Leeuwen, Jan},
+   Publisher  = {Springer-Verlag},
+   Series     = {Lecture Notes in Computer Science},
+   Volume     = {85},
+   Pages      = {632--644},
+   Year       = {1980}
+}
+
+@article{ToffoliMargolus:Physica90,
+   author =  {Toffoli, Tommaso and Margolus, Norman H.},
+   title =   {Invertible Cellular Automata: A Review},
+   journal = {Physica D},
+   volume =  45,
+   pages =   {229--253},
+   year =    1990,
+}
+
+
+% LEVIN'S THEOREM
+% -------------
+
+@book{Jones:ComplexityBook,
+   author =    {Jones, Neil D.},
+   title =     {Computability and Complexity: From a Programming Perspective},
+   publisher = {MIT Press},
+   year =      1997,
+}
+
+@incollection{BenAmran:Levin97,
+   author =    {Ben-Amran, A. M.},
+   title =     {The Existence of Optimal Algorithms},
+   booktitle = {Computability and Complexity: From a Programming Perspective},
+   editor =    {Jones, Neil D.},
+   publisher = {MIT Press},
+   year =      1997,
+   pages =     {297--314},
+}
+
+@article{Gurevich:BEATCS88,
+   author =  {Gurevich, Y.},
+   title =   {Kolmogorov machines and related issues},
+   journal = {Bulletin of the EATCS, the column on logic in computer science},
+   volume =  35,
+   pages =   {71--82},
+   year =    1988,
+}
+
+@incollection{Levin:Complexity74,
+   author =    {Levin, Leonid A.},
+   title =     {Computational Complexity of Functions},
+   booktitle = {Complexity of Algorithms and Computations},
+   editor =    {Kosmidiadi, V. A. and Maslov, N. A. and Petri, N. V.},
+   note =      {In Russian. Partial Translation in {\em Theoretical Computer
+                Science} 157:267--271, 1996},
+   publisher = {Mir},
+   address =   {Moscow},
+   year =      1974,
+   pages =     {174--185},
+}
+
+@article{SchmidhuberZhaoWiering:ML97,
+   author =  {Schmidhuber, J\"{u}rgen and Zhao, Jieyu and Wiering, Marco},
+   title =   {Shifting Inductive Bias with Success-Story Algorithm, Adaptive
+              Levin Search, and Incremental Self-Improvement},
+   journal = {Machine Learning},
+   volume =  28,
+   pages =   {105--130},
+   year =    1997,
+}
+
+% MATHEMATICS
+% -----------
+
+@book{Glasko:84,
+   author =    {Glasko, V.B.},
+   title =     {Inverse Problems of Mathematical Physics},
+   publisher = {Institute of Physics},
+   address =   {New York, NY},
+   year =      1984,
+}
+
+@book{InvProblems,
+   title =     {Inverse Problems. An International Journal},
+   publisher = {Institute of Physics Publishing},
+   address =   {Bristol, United Kingdom},
+}
+
+@article{Keller:76,
+   author =  {Keller, Joseph},
+   title =   {Inverse Problems},
+   journal = {American Mathematical Monthly},
+   volume =  83,
+   pages =   {107--118},
+   year =    1976,
+}
+
+@book{Kirsch:96,
+   author =    {Kirsch, Andreas},
+   title =     {An Introduction to the Mathematical Theory of Inverse Problems},
+   publisher = {Springer-Verlag},
+   volume =    120,
+   edition =   {},
+   series =    {Applied Mathematical Sciences},
+   year =      1996,
+}
+
+@book{PaiSom:93,
+   editor =    {P\"aiv\"arinta, L. and Somersalo, E.},
+   title =     {Inverse Problems in Mathematical Physics},
+   series =    {Lecture Notes in Physics},
+   volume =    422,
+   publisher = {Springer-Verlag},
+   year =      1993,
+}
+
+@book{Sabatier:78,
+   editor =    {Sabatier, P.C.},
+   title =     {Applied Inverse Problems},
+   series =    {Lecture Notes in Physics},
+   volume =    85,
+   publisher = {Springer-Verlag},
+   year =      1978,
+}
+
+@book{Talenti:86,
+   editor =    {Talenti, G.},
+   title =     {Inverse Problems},
+   publisher = {Springer-Verlag},
+   year =      1986,
+}
+
+@book{Wunsch:96,
+   author =    {Wunsch, C.W.},
+   title =     {The ocean circulation inverse problem},
+   publisher = {Cambridge University Press},
+   year =      1996,
+}
+
+@article{ZakharievChabanov:97,
+   author =  {Zakhariev, Boris N. and Chabanov, Vladimir M.},
+   title =   {New situation in quantum mechanics (wonderful potentials from the
+              inverse problem)},
+   journal = {Inverse Problems},
+   volume =  13,
+   number =  6,
+   pages =   {R47--R79},
+   year =    1997,
+}
+
+% LOGIC PROGRAMMING GENERAL
+% ------------------
+
+@incollection{Apt90:htcs,
+   author =    {Apt, Krzysztof R.},
+   title =     {Introduction to logic programming},
+   booktitle = {Handbook of Theoretical Computer Science},
+   editor =    {van~Leeuwen, J.},
+   pages =     {495--574},
+   chapter =   10,
+   year =      1990,
+   publisher = {North-Holland Amsterdam},
+}
+
+@article{Bol93:jlp,
+   author =  {Bol, Roland N.},
+   title =   {Loop Checking and Negation},
+   journal = {The Journal of Logic Programming},
+   year =    1993,
+   month =   {January},
+   volume =  15,
+   number =  {1 \& 2},
+   pages =   {147--175},
+}
+
+@article{Cousot92:jlp,
+   author =  {Cousot, Patrick and Cousot, Radhia},
+   title =   {Abstract Interpretation and Application to Logic Programs},
+   journal = {The Journal of Logic Programming},
+   year =    1992,
+   volume =  13,
+   number =  {2 \& 3},
+   pages =   {103--179},
+}
+
+@article{Drabent:jlp96,
+   author =  {Drabent, W.},
+   title =   {Completeness of {SLDNF}-Resolution for nonfloundering queries},
+   journal = {The Journal of Logic Programming},
+   year =    1996,
+   volume =  27,
+   number =  2,
+   pages =   {89--106},
+}
+
+@book{Lloyd:flp,
+   author =    {J. W. Lloyd},
+   title =     {Foundations of Logic Programming},
+   publisher = {Springer-Verlag},
+   year =      1987,
+}
+
+@article{LeuschelMartensDeSchreye:Toplas,
+   author =  {Leuschel, Michael and Martens, Bern and De~Schreye, Danny},
+   title =   {Controlling Generalisation and Polyvariance in Partial Deduction
+              of Normal Logic Programs},
+   journal = {ACM Transactions on Programming Languages and Systems},
+   year =    1998,
+   month =   {January},
+   volume =  20,
+   number =  1,
+   pages =   {208--258},
+}
+
+@inproceedings{LeuschelDeSchreye:PLILP96,
+   author =    {Leuschel, Michael and De~Schreye, Danny},
+   title =     {Logic Program Specialisation: How To Be More Specific},
+   booktitle = {Proceedings of the International Symposium on Programming
+                Languages, Implementations, Logics and Programs (PLILP'96)},
+   editor =    {Kuchen, H. and Swierstra, S.D.},
+   month =     {September},
+   year =      1996,
+   pages =     {137--151},
+   Location =  {Aachen, Germany},
+   series =    LNCS # 1140,
+   publisher = {Springer-Verlag},
+}
+
+@inproceedings{LeuschelDeSchreyeDeWaal:JICSLP96,
+   author =    {Leuschel, Michael and De~Schreye, Danny and de~Waal, Andr\'{e}},
+   title =     {A Conceptual Embedding of Folding into Partial 
+Deduction: Towards
+                a Maximal Integration},
+   booktitle = {Proceedings of the Joint International Conference and Symposium
+                on Logic Programming JICSLP'96},
+   editor =    {Michael Maher},
+   publisher = {MIT Press},
+   Location =  {Bonn, Germany},
+   month =     {September},
+   pages =     {319--332},
+   year =      1996,
+}
+@inproceedings{GlueckJorgensenMartensSorenson:control,
+   author =    {Gl{\"u}ck, Robert and J{\o}rgensen, Jesper and Martens, Bern and
+                S{\o}rensen, Morten Heine},
+   title =     {Controlling Conjunctive Partial Deduction of Definite Logic
+                Programs},
+   booktitle = {Proceedings of the International Symposium on Programming
+                Languages, Implementations, Logics and Programs (PLILP'96)},
+   editor =    {Kuchen, H. and Swierstra, S.D.},
+   pages =     {152--166},
+   month =     {September},
+   year =      1996,
+   Location =  {Aachen, Germany},
+   series =    LNCS # 1140,
+   publisher = {Springer-Verlag},
+}
+
+@unpublished{Leuschel96:ecce-dppd,
+   author =      {Michael Leuschel},
+   title =       {The {\sc ecce} partial deduction system and the {\sc dppd}
+                  library of benchmarks},
+   year =        1996,
+   institution = {Departement Computerwetenschappen, K.U.\ Leuven, Belgium},
+   note =        {Obtainable via {\tt http://www.cs.kuleuven.ac.be/\verb`~`dtai}},
+}
+
+@inproceedings{Leuschel:TECLP97,
+   author =    {Michael Leuschel},
+   title =     {The {\sc ecce} Partial Deduction System},
+   booktitle = {Proceedings of the ILPS'97 Workshop on Tools and 
+Environments for
+                (Constraint) Logic Programming},
+   editor =    {Puebla, German},
+   year =      1997,
+   month =     {October},
+   Location =  {Port Jefferson, USA},
+   series =    {Universidad Polit\'{e}cnica de Madrid, Tech.\ Rep.\ CLIP7/97.1},
+}
+
+@article{SomogyiHendersonConway:jlp,
+   author =  {Zoltan Somogyi and Fergus Henderson and Thomas Conway},
+   title =   {The Execution Algorithm of {M}ercury: An Efficient Purely
+              Declarative Logic Programming Language},
+   journal = {The Journal of Logic Programming},
+   year =    1996,
+   note =    {to appear.},
+}
+
+@article{ChenWarren:JACM96,
+   author =  {Chen, W. and Warren, D. S.},
+   title =   {Tabled Evaluation with Delaying for General Logic Programs},
+   journal = {Journal of the ACM},
+   volume =  43,
+   number =  1,
+   pages =   {20--74},
+   year =    1996,
+   month =   {January},
+}
+@inproceedings{SagonasSwiftWarren:Sigmod94,
+   author =    {Sagonas, K. and Swift, T. and Warren, D. S.},
+   title =     {{XSB} as an Efficient Deductive Database Engine},
+   booktitle = {Proceedings of the ACM SIGMOD International Conference on the
+                Management of Data},
+   year =      1994,
+   month =     May,
+   pages =     {442--453},
+   publisher = {ACM},
+   Location =  {Minneapolis, Minnesota},
+}
+
+@book{HillLloyd:Goedel,
+   author =    {Patricia Hill and John W. Lloyd},
+   title =     {The G\"odel Programming Language},
+   publisher = {MIT Press},
+   year =      1994,
+}
+
+
+@techreport{Christiansen:MetaTR94,
+   author =      {Henning Christiansen},
+   title =       {Efficient and complete demo predicates for definite clause
+                  languages},
+   institution = {Roskilde University},
+   year =        1994,
+   number =      {Datalogiske skrifter 51},
+}
+
+% -------- MODEL CHECKING
+
+
+@article{Bryant:ACMSurv92,
+   author =  {Bryant, Randy},
+   title =   {Symbolic Boolean Manipulation with Ordered Binary-Decision
+              Diagrams},
+   journal = {ACM Computing Surveys},
+   volume =  24,
+   number =  3,
+   pages =   {293--318},
+   year =    1992,
+   month =   {September},
+}
+@inproceedings{ClarkeEmerson:WLP81,
+   author =    {Clarke, E. M. and Emerson, E. A.},
+   title =     {Design and synthesis of synchronization skeletons using
+                branching-time temporal logic},
+   editor =    {Kozen, D.},
+   booktitle = {Proceedings of the Workshop on Logic of Programs},
+   year =      1981,
+   series =    LNCS # 131,
+   pages =     {52--71},
+   publisher = {Springer-Verlag},
+}
+@article{ClarkeEmersonSistla:Toplas86,
+   author =  {Clarke, E. M. and Emerson, E. A. and Sistla, A. P.},
+   title =   {Automatic verification of finite-state concurrent systems using
+              temporal logic specifications},
+   journal = {ACM Transactions on Programming Languages and Systems},
+   volume =  8,
+   pages =   {244--263},
+   year =    1986,
+   number =  2,
+}
+@inproceedings{LICS::Clarke1994,
+   title =        {Automatic Verification of Finite-State Concurrent Systems},
+   author =       {Edmund M. {Clarke, Jr.}},
+   pages =        {126},
+   booktitle =    {Proceedings, Ninth Annual {IEEE} Symposium on Logic 
+in Computer
+                   Science},
+   year =         1994,
+   month =        "4--7 " # jul,
+   Location =     {Paris, France},
+   organization = {IEEE Computer Society Press},
+}
+@inproceedings{QueilleSifakis:ISP82,
+   author =    {{J.P. Queille} and {J. Sifakis}},
+   title =     {Specification and Verification of Concurrent Systems 
+in {CESAR}},
+   booktitle = {Proceedings of the Fifth International Symposium on 
+Programming},
+   year =      1982,
+   pages =     {337--351},
+   series =    LNCS # 137,
+   publisher = {Springer-Verlag},
+}
+@article{ClarkeWing:ACMSurv96,
+   author =  {Edmund M. Clarke and Jeanette M. Wing},
+   title =   {Formal Methods: {S}tate of the Art and Future Directions},
+   journal = {ACM Computing Surveys},
+   year =    1996,
+   volume =  28,
+   number =  4,
+   pages =   {626--643},
+   month =   dec,
+}
+
+@proceedings{Steffen:TACAS98,
+   editor =    {Steffen, B.},
+   title =     {Tools and Algorithms for the Construction and Analysis 
+of Systems},
+   series =    LNCS # 1384,
+   year =      1998,
+   publisher = {Springer-Verlag},
+   month =     {March},
+}
+
+@techreport{Hatcliff:98:auto,
+   author =      {Hatcliff, John and Dwyer, Matthew and Laubach, Shawn 
+and Mayans,
+                   Jason and Muhammed, Nanda},
+   title =       {Automatically specializing software for finite-state 
+verification},
+   institution = {Kansas State University},
+   number =      {98-4},
+   type =        {KSU CIS Tech Report},
+   year =        1998,
+}
+
+@inproceedings{HuhnNiebertWallner:TACAS98,
+   author =    {Huhn, Michaela and Niebert, Peter and Wallner, Frank},
+   title =     {Verification Based on Local States},
+   editor =    {Steffen, B.},
+   booktitle = {Tools and Algorithms for the Construction and Analysis 
+of Systems},
+   series =    LNCS # 1384,
+   year =      1998,
+   publisher = {Springer-Verlag},
+   month =     {March},
+   pages =     {36--51},
+}
+
+@inproceedings{Leuschel:JICSLP98,
+   author =    {Leuschel, Michael},
+   title =     {Program Specialisation and Abstract Interpretation Reconciled},
+   booktitle = {Proceedings of the Joint International Conference and Symposium
+                on Logic Programming JICSLP'98},
+   editor =    {Joxan Jaffar},
+   publisher = {MIT Press},
+   Location =  {Manchester, UK},
+   month =     {June},
+   year =      1998,
+   pages =     {220--234},
+}
+
+
+% ------ Model Checking from LP Perspective
+
+@inproceedings{CharatonikPodelski:TACAS98,
+   author =    {Charatonik, Witolds and Podelski, Andreas},
+   title =     {Set-Based Analysis of Reactive Infinite-State Systems},
+   editor =    {Steffen, B.},
+   booktitle = {Tools and Algorithms for the Construction and Analysis 
+of Systems},
+   series =    LNCS # 1384,
+   year =      1998,
+   publisher = {Springer-Verlag},
+   month =     {March},
+   pages =     {358--375},
+}
+
+@inproceedings{LiuRamakrishnanSmolka:TACAS98,
+   author =    {Liu, Xinxin and Ramakrishnan, C. R. and Smolka, Scott A.},
+   title =     {Fully Local and Efficient Evaluation of Alternating 
+Fixed Points},
+   editor =    {Steffen, B.},
+   booktitle = {Tools and Algorithms for the Construction and Analysis 
+of Systems},
+   series =    LNCS # 1384,
+   year =      1998,
+   publisher = {Springer-Verlag},
+   month =     {March},
+   pages =     {5--19},
+}
+
+@inproceedings{RamakrishnaEtAl:CAV97,
+   author =    {Ramakrishna, Y. S. and Ramakrishnan, C. R. and Ramakrishnan, I.
+                V. and Smolka, Scott A. and Swift, Terrance and 
+Warrend, David S.},
+   title =     {Efficient Model Checking Using Tabled Resolution},
+   booktitle = {Proceedings of the International Conference on Computer-Aided
+                Verification (CAV'97)},
+   series =    {LNCS},
+   year =      1997,
+   publisher = {Springer-Verlag},
+}
+
+@inproceedings{BruynoogheEtAl:PLILP98,
+   author =    {Bruynooghe, Maurice and Vandecasteele, Henk and 
+De~Waal, D. Andre
+                and Denecker, Marc},
+   title =     {Detecting Unsolvable Queries for Definite Logic Programs},
+   editor =    {Palamidessi, Catuscia and Glaser, Hugh and
+   Meinke, Karl},
+   booktitle = {Proceedings of ALP/PLILP'98},
+   series =    LNCS # 1490,
+   year =      1998,
+   publisher = {Springer-Verlag},
+   pages =     {118--133},
+}
+
+@unpublished{PostOfficeSurveyPaper99,
+   author = {Hartel, Pieter and Butler, Michael and Currie,
+   Andrew and Henderson, Peter and Leuschel, Michael and Martin,
+   Andrew and Smith, Adrian and Ultes-Nitsche, Ulrich and
+   Walters, Bob},
+   title =  {Twenty Questions About Ten Formal Methods},
+   year =      1999,
+   month = {January},
+   note = {Declarative Systems and Software Engineering,
+     University of Southampton}
+}
+
+% ------ Verification
+
+% an early paper:
+@article{GoodLondonBledsoe:IEEESE75,
+   author =  {Good, Donald I. and London, Ralph L. and Bledsoe, W. W.},
+   title =   {An Interactive Program Verification System},
+   journal = {IEEE Transactions on Software Engineering},
+   volume =  1,
+   pages =   {59--67},
+   year =    1975,
+   number =  1,
+}
+
+@incollection{Apt-Olderog91,
+   key =       {Apt \& 0lderog},
+   author =    {Krzysztof R. Apt and Ernst-Rudiger 0lderog},
+   title =     {Introduction to Program Verification},
+   booktitle = {Formal Description of Programming Concepts},
+   publisher = {Springer-Verlag},
+   year =      1991,
+   editor =    {E. J. Neuhold and M. Paul},
+   series =    {IFIP State-of-the-Art Reports},
+   pages =     {363--429},
+   address =   {New York, N.Y.},
+   annote =    {ISBN 0-387-53961-1. 15 references.},
+}
+@article{Fetzer88,
+   key =     {Fetzer},
+   author =  {James H. Fetzer},
+   title =   {Program Verification: The Very Idea},
+   journal = {CACM},
+   volume =  31,
+   number =  9,
+   month =   sep,
+   year =    1988,
+   pages =   {1048--1063},
+   annote =  {Algorithms can be verified absolutely. Programs can only be
+              verified relative to the abstract machine they run on. 37
+              references},
+}
+@conference{VardiMY:autaapv,
+   author =    {M. Y. Vardi and P. Wolper},
+   title =     {An automata-theoretic approach to automatic program 
+verification},
+   booktitle = {lics86},
+   year =      1986,
+   pages =     {332--344},
+}
+@book{IB-A86529,
+   author =     {R. C. Backhouse},
+   title =      {Program Construction and Verification},
+   publisher =  {Prentice Hall},
+   address =    {London},
+   year =       1986,
+   isbn =       {0-13-729146-9},
+   descriptor = {Praedikatenlogik, Programmentwicklung, Programmieren,
+                 Programmiertechnik, Spezifikation, Verifikation},
+   annote =     {Der Autor will zeigen, wie Programmverifikation und
+                 Programmentwicklung zusammen angewandt werden sollten, um
+                 korrekte und gute Programme zu erstellen. Die
+                 Verifikationstechniken werden formal und mit Beispielen
+                 dargestellt. Das Buch basiert auf Vorlesungen und Kursen.},
+}
+@inproceedings{BossiCocco:Tapsoft89,
+   author =    {Bossi, Annalisa and Cocco, Nicoletta},
+   title =     {Verifying the correctness of logic programs},
+   booktitle = {Proceedings of TAPSOFT'89},
+   year =      1989,
+   pages =     {96--110},
+   series =    LNCS # 352,
+   editor =    {D\'{\i}az, J. and Orejas, F.},
+   publisher = {Springer-Verlag},
+}
+
+
+% CONCURRENCY
+% --------------------
+
+
+@article{MilnerParrowWalker:IC92,
+   author =  {R. Milner and J. Parrow and D. Walker},
+   title =   {A Calculus of Mobile Processes Parts 1 \& 2},
+   journal = {Information and Computation},
+   volume =  100,
+   pages =   {1--40, 41--77},
+   year =    1992,
+   month =   {September},
+   number =  1,
+}
+
+
+@book{Milner:CCSbook,
+   author =    {Milner, Robin},
+   title =     {Communication and Concurrency},
+   publisher = {Prentice Hall},
+   year =      1989,
+}
+
+
+% ------ MISC
+
+@InCollection{Partsch:90:invflow,
+   Author     = {Partsch, Helmut},
+   Title      = {Inverting the flow of computation (section 6.2)},
+   BookTitle  = {Specification and Transformation of Programs},
+   Editor     = {},
+   Publisher  = {Springer-Verlag},
+   Address    = {Berlin, Heidelberg, New York},
+   Series     = {},
+   Volume     = {},
+   Edition    = {},
+   Pages      = {275--279},
+   Year       = {1990}
+}
+
+% ----- From Robert
+@article{Glueck:94,
+   author =   {Gl\"uck, Robert},
+   title =    {On the generation of specializers},
+   journal =  {Journal of Functional Programming},
+   volume =   4,
+   number =   4,
+   pages =    {499--514},
+   year =     1994,
+}
+
+@techreport{Andersen:94,
+   author =      {Andersen, Lars Ole},
+   title =       {Program analysis and specialization for the C programming
+                  language},
+   institution = {DIKU, Department of Computer Science, University of 
+Copenhagen},
+   number =      {94/19},
+   type =        {DIKU Report},
+   month =       {},
+   language =    {},
+   year =        1994,
+}
+
+% THEOREM PROVING
+% ---------------
+
+@Article{DavisPutnam:60,
+   Author     = {Davis, Martin and Putnam, Hilary},
+   Title      = {A computing procedure for quantification theory},
+   Journal    = {Journal of the ACM},
+   Volume     = {7},
+   Number     = {3},
+   Pages      = {201--215},
+   Year       = {1960}
+}
+
+@Article{Gilmore:60,
+  Author  = {Gilmore, Paul C.},
+  Title   = {A proof method for quantification theory:
+             its justification and realization},
+  Journal = {IBM Journal of Research and Development},
+  Volume  = {4},
+  Number  = {},
+  Pages   = {28--35},
+  Year    = {1960}
+}
+
+% Added to Robert's file
+
+@inproceedings{YAG:08,
+   author =    {Tetsuo Yokoyama and Holger Boch Axelsen and Robert
+                  Gl{\"u}ck},
+   title =     {Reversible flowchart languages and the structured
+                  reversible program theorem},
+   booktitle = {Automata, Languages and Programming (ICALP)},
+   year =      2008,
+   pages =     {258-270},
+   series =    LNCS # 5126,
+   editor =    {Aceto L. et al.},
+   publisher = {Springer-Verlag},
+   doi =       {10.1007/978-3-540-70583-3-22}
+}
+
+@inproceedings{YokoyamaGluck:07,
+ author = {Yokoyama, Tetsuo and Gl\"{u}ck, Robert},
+ title = {A reversible programming language and its invertible self-interpreter},
+ booktitle = {PEPM '07: Proceedings of the 2007 ACM SIGPLAN symposium on Partial evaluation and semantics-based program manipulation},
+ year = {2007},
+ isbn = {978-1-59593-620-2},
+ pages = {144--153},
+ location = {Nice, France},
+ doi = {http://doi.acm.org/10.1145/1244381.1244404},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ }
+
+@Misc{Lutz:86,
+  AUTHOR       = {C. Lutz},
+  title =        {Janus: a time-reversible language},
+  YEAR         = {1986},
+  howpublished =  {A letter to Landauer.\newline http:://www.tetsuo.jp/ref/janus.pdf},
+  url = {http://www.tetsuo.jp/ref/janus.pdf},
+}
+
+@inproceedings{YAG:08a,
+ author = {Yokoyama, Tetsuo and Axelsen, Holger Bock and Gl\"{u}ck, Robert},
+ title = {Principles of a reversible programming language},
+ booktitle = {Proceedings of the 5th conference on Computing frontiers},
+ series = {CF '08},
+ year = {2008},
+ isbn = {978-1-60558-077-7},
+ location = {Ischia, Italy},
+ pages = {43--54},
+ numpages = {12},
+ url = {http://doi.acm.org/10.1145/1366230.1366239},
+ doi = {http://doi.acm.org/10.1145/1366230.1366239},
+ acmid = {1366239},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ keywords = {backward determinism, fast fourier transform, inverse semantics, reversible computing, turing completeness},
+}
+
+
+% HARDWARE
+% --------
+
+
+
+@book{SparsoeFurber,
+   title =     {Principles of Asynchroneous Circuit Design -- A
+                  Systems Perspective},
+   publisher = {Kluwer Academic Publishers},
+   year =      2001,
+   editor =    {Sparsø, Jens and Furber, Steve},
+}
+
+
+@book{DeVos,
+   author = {De Vos, Alexis},
+   title =     {Reversible Computing},
+   publisher = {Wiley-VCH},
+   year =      2010,
+}
+
+@incollection{Axelsen+Caroe,
+year={2013},
+isbn={978-3-642-36314-6},
+booktitle={Reversible Computation},
+volume={7581},
+series={Lecture Notes in Computer Science},
+editor={Gl{\"u}ck, Robert and Yokoyama, Tetsuo},
+doi={10.1007/978-3-642-36315-3_14},
+title={Garbage-Free Reversible Integer Multiplication with Constants of the Form $2^k\pm 2^l \pm 1$},
+url={http://dx.doi.org/10.1007/978-3-642-36315-3_14},
+publisher={Springer Berlin Heidelberg},
+keywords={Reversible circuits; logic design; constant multipliers; garbage-free},
+author={Axelsen, Holger Bock and Thomsen, Michael Kirkedal},
+pages={171-182}
+}
+
+
+@incollection{deVos-Linear,
+year={2013},
+isbn={978-3-642-36314-6},
+booktitle={Reversible Computation},
+volume={7581},
+series={Lecture Notes in Computer Science},
+editor={Gl\"uck, Robert and Yokoyama, Tetsuo},
+doi={10.1007/978-3-642-36315-3_13},
+title={Garbageless Reversible Implementation of Integer Linear Transformations},
+url={http://dx.doi.org/10.1007/978-3-642-36315-3_13},
+publisher={Springer Berlin Heidelberg},
+author={Burignat, St{\'e}phane and Vermeirsch, Kenneth and Vos, Alexis and Thomsen, Michael Kirkedal},
+pages={160-170}
+}
+
+
+@incollection{Eva:2012,
+year={2013},
+isbn={978-3-642-38985-6},
+booktitle={Reversible Computation},
+volume={7948},
+series={Lecture Notes in Computer Science},
+editor={Dueck, Gerhard W. and Miller, D.\ Michael},
+doi={10.1007/978-3-642-38986-3_5},
+title={Strength of the Reversible, Garbage-Free $2^k\pm1$ Multiplier},
+url={http://dx.doi.org/10.1007/978-3-642-38986-3_5},
+publisher={Springer Berlin Heidelberg},
+keywords={Number theory; constant multiplication; reversible circuit design; Mersenne numbers},
+author={Rotenberg, Eva and Cranch, James and Thomsen, Michael Kirkedal and Axelsen, Holger Bock},
+pages={46-57}
+}
+
+@Misc{wikipedia-Mealy,
+  AUTHOR       = {Wikipedia},
+  title =        {Mealy machine},
+  YEAR         = {2012},
+  howpublished =  {\verb`http://en.wikipedia.org/wiki/Mealy_machine`},
+  url = {http://en.wikipedia.org/wiki/Mealy_machine},
+}
+
+@article{Huffman:1959,
+Author = {Huffman, David A.},
+Journal = {{IRE} Transactions on Information Theory},
+ Number = {5},
+Pages = {41--59},
+Title = {Canonical Forms for Information-Lossless Finite-State Logical
+Machines},
+ Volume = {5},
+Year = {1959}}
+
+@article{Mealy,
+  added-at = {2008-03-17T11:27:54.000+0100},
+  author = {Mealy, George H.},
+  biburl = {http://www.bibsonomy.org/bibtex/2b7f55ef1657e9942037aac2645dedfb6/nlp},
+  interhash = {dcddb96c3ffe3268e5b0ef0feb40397a},
+  intrahash = {b7f55ef1657e9942037aac2645dedfb6},
+  journal = {Bell System Technical Journal},
+  keywords = {2000 book nlp},
+  number = 5,
+  pages = {1045--1079},
+  timestamp = {2008-03-17T11:27:54.000+0100},
+  title = {A Method for Synthesizing Sequential Circuits},
+  volume = 34,
+  year = 1955
+}
+
+@incollection{Axelsen:2013,
+year={2013},
+isbn={978-3-642-38985-6},
+booktitle={Reversible Computation},
+volume={7948},
+series={Lecture Notes in Computer Science},
+editor={Dueck, Gerhard W. and Miller, D. Michael},
+doi={10.1007/978-3-642-38986-3_9},
+title={Reversible Representation and Manipulation of Constructor Terms in the Heap},
+url={http://dx.doi.org/10.1007/978-3-642-38986-3_9},
+publisher={Springer Berlin Heidelberg},
+keywords={Data structures; memory management; reversible programming},
+author={Axelsen, Holger Bock and Gl{\"u}ck, Robert},
+pages={96-109}
+}
+
+@incollection{Mogensen:PSI2012,
+year={2012},
+isbn={978-3-642-29708-3},
+booktitle={Perspectives of Systems Informatics},
+volume={7162},
+series={Lecture Notes in Computer Science},
+editor={Clarke, Edmund and Virbitskaite, Irina and Voronkov, Andrei},
+doi={10.1007/978-3-642-29709-0_25},
+title={Partial Evaluation of {J}anus Part 2: Assertions and Procedures},
+url={http://dx.doi.org/10.1007/978-3-642-29709-0_25},
+publisher={Springer Berlin Heidelberg},
+author={Mogensen, Torben {\AE}gidius},
+pages={289-301}
+}
+
+@incollection{Mogensen:RC2013,
+year={2013},
+isbn={978-3-642-38985-6},
+booktitle={Reversible Computation},
+volume={7948},
+series={Lecture Notes in Computer Science},
+editor={Dueck, Gerhard~W. and Miller, D.~Michael},
+doi={10.1007/978-3-642-38986-3_7},
+title={Garbage-Free Reversible Constant Multipliers for Arbitrary Integers},
+url={http://dx.doi.org/10.1007/978-3-642-38986-3_7},
+publisher={Springer Berlin Heidelberg},
+author={Mogensen, Torben {\AE}gidius},
+pages={70-83}
+}
+
+@ARTICLE{MarkovSaeedi:2012,
+   author = {{Markov}, I.~L. and {Saeedi}, M.},
+    title = "{Constant-Optimized Quantum Circuits for Modular Multiplication and Exponentiation}",
+  journal = {ArXiv e-prints},
+archivePrefix = "arXiv",
+   eprint = {1202.6614},
+ keywords = {Computer Science - Emerging Technologies, Quantum Physics},
+     year = 2012,
+    month = feb,
+   adsurl = {http://adsabs.harvard.edu/abs/2012arXiv1202.6614M},
+  adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+}
+
+@incollection{YokoyamaAxelsenGluck:2011,
+year={2012},
+isbn={978-3-642-29516-4},
+booktitle={Reversible Computation},
+volume={7165},
+series={Lecture Notes in Computer Science},
+editor={Vos, Alexis and Wille, Robert},
+doi={10.1007/978-3-642-29517-1_2},
+title={Towards a Reversible Functional Language},
+url={http://dx.doi.org/10.1007/978-3-642-29517-1_2},
+publisher={Springer Berlin Heidelberg},
+author={Yokoyama, Tetsuo and Axelsen, Holger Bock and Gl{\"u}ck, Robert},
+pages={14-29}
+}
+
+@inproceedings{Axelsen:2011:CTI,
+ author = {Axelsen, Holger Bock},
+ title = {Clean Translation of an Imperative Reversible Programming Language},
+ booktitle = {Proceedings of the 20th International Conference on Compiler Construction: Part of the Joint European Conferences on Theory and Practice of Software},
+ series = {CC'11/ETAPS'11},
+ year = {2011},
+ isbn = {978-3-642-19860-1},
+ location = {Saarbr\&\#252;cken, Germany},
+ pages = {144--163},
+ numpages = {20},
+ url = {http://dl.acm.org/citation.cfm?id=1987237.1987250},
+ acmid = {1987250},
+ publisher = {Springer-Verlag},
+ address = {Berlin, Heidelberg},
+}
+
+@techreport{Goto:74,
+  title  = {Monocopy and associative algorithms in an extended {LISP}.},
+  author = {Goto, Elichi},
+  type   = {Technical Report},
+  number = {TR 74-03},
+  institution = {University of Tokyo},
+  year={1974}
+}
+
+@article{Ershov:1958,
+Author = {Ershov, A. P.},
+Journal = {Communications of the ACM},
+ Number = {8},
+Pages = {3--6},
+Title = {On programming of arithmetic operations},
+ Volume = {1},
+doi = {10.1145/368892.368907},
+Year = {1958}}
+
+
+
+@inproceedings{Raab+Steger:1998,
+ author = {Raab, Martin and Steger, Angelika},
+ title = {"{B}alls into Bins" - A Simple and Tight Analysis},
+ booktitle = {Proceedings of the Second International Workshop on Randomization and Approximation Techniques in Computer Science},
+ series = {RANDOM '98},
+ year = {1998},
+ isbn = {3-540-65142-X},
+ pages = {159--170},
+ numpages = {12},
+ url = {http://dl.acm.org/citation.cfm?id=646975.711521},
+ acmid = {711521},
+ publisher = {Springer-Verlag},
+ address = {London, UK, UK},
+} 
+
+@inproceedings{Berenbrink:2000:BAH:335305.335411,
+ author = {Berenbrink, Petra and Czumaj, Artur and Steger, Angelika and V\"{o}cking, Berthold},
+ title = {Balanced Allocations: The Heavily Loaded Case},
+ booktitle = {Proceedings of the Thirty-second Annual ACM Symposium on Theory of Computing},
+ series = {STOC '00},
+ year = {2000},
+ isbn = {1-58113-184-4},
+ location = {Portland, Oregon, USA},
+ pages = {745--754},
+ numpages = {10},
+ url = {http://doi.acm.org/10.1145/335305.335411},
+ doi = {10.1145/335305.335411},
+ acmid = {335411},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+}
+
+@incollection{Baker:MM1992,
+year={1992},
+isbn={978-3-540-55940-5},
+booktitle={Memory Management},
+volume={637},
+series={Lecture Notes in Computer Science},
+editor={Bekkers, Yves and Cohen, Jacques},
+doi={10.1007/BFb0017210},
+title={NREVERSAL of fortune — The thermodynamics of garbage collection},
+url={http://dx.doi.org/10.1007/BFb0017210},
+publisher={Springer Berlin Heidelberg},
+author={Baker, Henry~G.},
+pages={507-524}
+}
+
+@incollection{Mogensen:RC2014,
+year={2014},
+booktitle={Reversible Computation},
+series={Lecture Notes in Computer Science},
+title={Reference Counting for Reversible Languages},
+url={http://dx.doi.org/10.1007/978-3-642-38986-3_7},
+publisher={Springer Berlin Heidelberg},
+author={Mogensen, Torben {\AE}gidius},
+}
+
+@article{Patrascu+Thorup:2012,
+  author    = {Mihai Patrascu and Mikkel Thorup},
+  title     = {The Power of Simple Tabulation Hashing},
+  journal   = {J. ACM},
+  volume    = {59},
+  number    = {3},
+  year      = {2012},
+  pages     = {14},
+  ee        = {http://doi.acm.org/10.1145/2220357.2220361},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+@incollection{James+Sabry:2014,
+year={2014},
+booktitle={Reversible Computation -- Booklet of work-in-progress and short reports},
+title={Theseus: A High-Level Language for Reversible Computation},
+publisher={http://www.reversible-computation.org},
+author={James, Roshan P. and Sabry, Amr},
+}
+
+@MastersThesis{Hansen:2014,
+  AUTHOR     = {Jonas Stig Kämpf Hansen},
+  YEAR       = {2014},
+  TITLE      = {Translation of a Reversible Functional Programming Language},
+  SCHOOL     = {DIKU},
+  address    = {University of Copenhagen},
+  month      = {December},
+  ID         = {MTh}
+}
+ 
+
+@article{Jenkins:1997,
+  author    = {Bob Jenkins},
+  title     = {Hash Functions},
+  journal   = {Dr.\ Dobb's Journal of Software Tools},
+  volume    = {22},
+  number    = {7},
+  year      = {1997}
+}
+
+
+@inproceedings{conf/rc/ThomsenAG11,
+  added-at = {2012-05-14T00:00:00.000+0200},
+  author = {Thomsen, Michael Kirkedal and Axelsen, Holger Bock and Glück, Robert},
+  biburl = {http://www.bibsonomy.org/bibtex/212d728f7c5b75b676591033efd6e6e9e/dblp},
+  booktitle = {RC 2011},
+  editor = {Vos, Alexis De and Wille, Robert},
+  ee = {http://dx.doi.org/10.1007/978-3-642-29517-1_3},
+  interhash = {39bd77068b7b647296ec0d4891f5487a},
+  intrahash = {12d728f7c5b75b676591033efd6e6e9e},
+  isbn = {978-3-642-29516-4},
+  keywords = {dblp},
+  pages = {30-42},
+  publisher = {Springer},
+  series = {Lecture Notes in Computer Science},
+  timestamp = {2012-05-14T00:00:00.000+0200},
+  title = {A Reversible Processor Architecture and Its Reversible Logic Design.},
+  url = {http://dblp.uni-trier.de/db/conf/rc/rc2011.html#ThomsenAG11},
+  volume = 7165,
+  year = 2011
+}
+
+@MastersThesis{Vieri95areversible,
+    author = {Carlin Vieri},
+    title = {A Reversible Computer Architecture},
+    school = {MIT Artificial Intelligence Laboratory},
+    year = {1995},
+    ID   = {MTh}
+}
+
+@MastersThesis{Oh:2009,
+  AUTHOR     = {Chi Won Oh},
+  YEAR       = {2009},
+  TITLE      = {Reversible Intermediate Language for the Translation of ReversibleProgramming Languages},
+  SCHOOL     = {DIKU},
+  address    = {University of Copenhagen},
+  month      = {November},
+  ID         = {MTh}
+}
+
+
+@incollection{Mogensen:RC2015,
+year={2015},
+booktitle={Proceedings of Reversible Computation 2015 (RC 2015)},
+series={Lecture Notes in Computer Science},
+volume = {9138},
+pages = {79-94},
+title={Garbage Collection for Reversible Functional Languages},
+publisher={Springer Berlin Heidelberg},
+author={Mogensen, Torben {\AE}gidius},
+}
+
+@incollection{Mogensen:PSI2015,
+year={2016},
+booktitle={Perspectives of System Informatics - 10th International Ershov Informatics Conference, {PSI} 2015, Kazan, Russia, August 24-27, 2015},
+title={{RSSA}: A Reversible {SSA} Form},
+series={Lecture Notes in Computer Science},
+volume = {9609},
+pages = {203-217},
+publisher={Springer Berlin Heidelberg},
+author={Mogensen, Torben {\AE}gidius},
+}
+
+
+@Article{Banerjee+Pathak:2009,
+   Author     = {Anindita Banerjee and Anirban Pathak},
+   Title      = {An analysis of reversible multiplier circuits},
+   Journal    = {ar{X}iv.org},
+   Year       = {2009},
+   url        = {https://arxiv.org/abs/0907.3357v1}
+}
+
+@article{Kaur+Singh+Goel:2014,
+   author =    {Mandeep Kaur and Harpreet Singh and Chakshu Goel},
+   title  =    {Reversible Multiplier – A Review},
+   journal =   {International Journal of Advanced Research in Electrical,
+                Electronics and Instrumentation Engineering},
+   volume =    {3},
+   number =    {10},
+   month =     {October},
+   year =      {2014},
+   issn =      {2278-8875},
+   url =       {https://www.rroij.com/open-access/reversible-multiplier--a-review-.php?aid=44047}
+}
+
+@article{Thapliyal++:2013,
+  author    = {Himanshu Thapliyal and
+               H. V. Jayashree and
+               A. N. Nagamani and
+               Hamid R. Arabnia},
+  title     = {Progress in Reversible Processor Design: {A} Novel Methodology for
+               Reversible Carry Look-Ahead Adder},
+  journal   = {Trans. Computational Science},
+  volume    = {17},
+  pages     = {73--97},
+  year      = {2013},
+  url       = {https://doi.org/10.1007/978-3-642-35840-1_4},
+  doi       = {10.1007/978-3-642-35840-1_4},
+  timestamp = {Wed, 17 May 2017 14:25:17 +0200},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/journals/tcos/ThapliyalJNA13},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@Article{Jayashree++:2016,
+author="Jayashree, H. V.
+and Thapliyal, Himanshu
+and Arabnia, Hamid R.
+and Agrawal, V. K.",
+title="Ancilla-input and garbage-output optimized design of a reversible quantum integer multiplier",
+journal="The Journal of Supercomputing",
+year="2016",
+month="Apr",
+day="01",
+volume="72",
+number="4",
+pages="1477--1493",
+issn="1573-0484",
+doi="10.1007/s11227-016-1676-0",
+url="https://doi.org/10.1007/s11227-016-1676-0"
+}
+
+@inproceedings{Broder:2001,
+  added-at = {2015-01-26T00:00:00.000+0100},
+  author = {Broder, Andrei Z. and Mitzenmacher, Michael},
+  biburl = {https://www.bibsonomy.org/bibtex/24f524e82f48ab9d5087f760af8f0aaa4/dblp},
+  booktitle = {INFOCOM},
+  ee = {http://www.ieee-infocom.org/2001/paper/329.ps},
+  interhash = {a995fcd5478d2fcf607895c8a6b7a227},
+  intrahash = {4f524e82f48ab9d5087f760af8f0aaa4},
+  isbn = {0-7803-7016-3},
+  keywords = {dblp},
+  pages = {1454-1463},
+  publisher = {IEEE},
+  timestamp = {2015-06-18T16:38:30.000+0200},
+  title = {Using Multiple Hash Functions to Improve {IP} Lookups.},
+  url = {http://dblp.uni-trier.de/db/conf/infocom/infocom2001-3.html#BroderM01},
+  year = 2001
+}
+
+@Inbook{Lehman:2009,
+author={Lehman, Eric and Panigrahy, Rina},
+editors={Fiat, Amos and Sanders, Peter},
+title={3.5-Way Cuckoo Hashing for the Price of 2-and-a-Bit},
+bookTitle={Algorithms - ESA 2009: 17th Annual European Symposium, Copenhagen, Denmark, September 7-9, 2009. Proceedings},
+year={2009},
+publisher={Springer Berlin Heidelberg},
+address={Berlin, Heidelberg},
+pages={671--681},
+isbn={978-3-642-04128-0},
+doi={10.1007/978-3-642-04128-0_60},
+url={https://doi.org/10.1007/978-3-642-04128-0_60}
+}
+
+
+@article{Pagh:2004,
+ author = {Pagh, Rasmus and Rodler, Flemming Friche},
+ title = {Cuckoo Hashing},
+ journal = {J. Algorithms},
+ issue_date = {May 2004},
+ volume = {51},
+ number = {2},
+ month = may,
+ year = {2004},
+ issn = {0196-6774},
+ pages = {122--144},
+ numpages = {23},
+ url = {http://dx.doi.org/10.1016/j.jalgor.2003.12.002},
+ doi = {10.1016/j.jalgor.2003.12.002},
+ acmid = {1006426},
+ publisher = {Academic Press, Inc.},
+ address = {Duluth, MN, USA},
+ keywords = {data structures, dictionaries, experiments, hashing, information retrieval, searching},
+} 
+
+
+@article{Draper:2006,
+ author = {Draper, Thomas G. and Kutin, Samuel A. and Rains, Eric M. and Svore, Krysta M.},
+ title = {A Logarithmic-depth Quantum Carry-lookahead Adder},
+ journal = {Quantum Info. Comput.},
+ issue_date = {July 2006},
+ volume = {6},
+ number = {4},
+ month = jul,
+ year = {2006},
+ issn = {1533-7146},
+ pages = {351--369},
+ numpages = {19},
+ url = {http://dl.acm.org/citation.cfm?id=2012086.2012090},
+ acmid = {2012090},
+ publisher = {Rinton Press, Incorporated},
+ address = {Paramus, NJ},
+ keywords = {Shor's algorithm, carry-lookahead addition, quantum addition, quantum computation},
+}
+
+@article{vanRentergem+DeVos:2005,
+  author       = {Van Rentergem, Yvan and De Vos, Alexis},
+  journal      = {International Journal of Unconventional Computing},
+  pages        = {339--355},
+  title        = {Optimal design of a reversible full adder},
+  volume       = {1},
+  year         = {2005},
+}
+
+@TECHREPORT{Goubault94implementingfunctional,
+    author = {Jean Goubault},
+    title = {Implementing Functional Languages with Fast Equality, Sets and Maps: an Exercise in Hash Consing},
+    institution = {Bull S.A. Research Center, rue Jean-Jaur`es, 78340 Les Clayes sous Bois},
+    year = {1994}
+}
+
+@inproceedings{Cservenka++:2018,
+  author       = {Cservenka, Martin Holm and Glück, Robert and Haulund, Tue and Mogensen, Torben {\AE}gidius},
+  title        = {Data Structures and Dynamic Memory Management in Reversible Languages},
+booktitle={Proceedings of Reversible Computation 2018 (RC 2018)},
+series={Lecture Notes in Computer Science},
+note={To appear},
+  year         = {2018},
+publisher={Springer Berlin Heidelberg},
+}
+
+@inproceedings{Reif+Tate:1989,
+ author = {Reif, John H. and Tate, Stephen R.},
+ title = {Optimal Size Integer Division Circuits},
+ booktitle = {Proceedings of the Twenty-first Annual ACM Symposium on Theory of Computing},
+ series = {STOC '89},
+ year = {1989},
+ isbn = {0-89791-307-8},
+ location = {Seattle, Washington, USA},
+ pages = {264--273},
+ numpages = {10},
+ url = {http://doi.acm.org/10.1145/73007.73032},
+ doi = {10.1145/73007.73032},
+ acmid = {73032},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+} 
+
+@INPROCEEDINGS{Paterson++:1990,
+author={M. S. Paterson and N. Pippenger and U. Zwick},
+booktitle={31st Annual Symposium on Foundations of Computer Science},
+title={Faster circuits and shorter formulae for multiple addition, multiplication and symmetric Boolean functions},
+year={1990},
+volume={},
+number={},
+pages={642-650 vol.2},
+keywords={Boolean functions;adders;combinatorial switching;digital arithmetic;matrix algebra;multiplying circuits;carry-save addition;delay matrix;multiple addition;multiple carry-save adders;multiplication;multiplication circuits;occurrence matrix;shallowest possible circuits;shortest multiple carry-save addition formulas;shortest possible formulas;symmetric Boolean functions;Adders;Arithmetic;Boolean functions;Circuits;Computational modeling;Computer science;Concurrent computing;Context modeling;Delay;Very large scale integration},
+doi={10.1109/FSCS.1990.89586},
+ISSN={},
+month={Oct},}
+
+
+@article{Mogensen:NGC2018,
+ author = {Mogensen, Torben {\AE}gidius},
+ title = {Reversible Garbage Collection for Reversible Functional Languages},
+ journal = {New Generation Computing},
+ issue_date = {August 2018},
+ publisher = {Springer Verlag},
+}
+
+@InProceedings{Wheeler95tea,
+author="Wheeler, David J.
+and Needham, Roger M.",
+editor="Preneel, Bart",
+title="{TEA}, a tiny encryption algorithm",
+booktitle="Fast Software Encryption",
+year="1995",
+publisher="Springer Berlin Heidelberg",
+address="Berlin, Heidelberg",
+pages="363--366",
+abstract="We give a short routine which is based on a Feistel iteration and uses a large number of rounds to get security with simplicity.",
+isbn="978-3-540-47809-6"
+}
+
+@Misc{Wikipedia-TEA,
+  AUTHOR       = {Wikipedia},
+  title =        {Tiny Encryption Algorithm},
+  YEAR         = {Accessed January 2019},
+  howpublished =  {\url{https://en.wikipedia.org/wiki/Tiny_Encryption_Algorithm}},
+}
+
+@Misc{Wikipedia:Speck,
+  AUTHOR       = {Wikipedia},
+  title =        {Speck (cipher)},
+  YEAR         = {\newline Accessed February 2019},
+  howpublished =  {\url{https://en.wikipedia.org/wiki/Speck_(cipher)}},
+}
+
+@inproceedings{Taborsky:2018,
+  author    = {Dominik T{\'{a}}borsk{\'{y}} and
+               Ken Friis Larsen and
+               Michael Kirkedal Thomsen},
+  title     = {Encryption and Reversible Computations - Work-in-progress Paper},
+  booktitle = {Reversible Computation - 10th International Conference, {RC} 2018,
+               Leicester, UK, September 12-14, 2018, Proceedings},
+  pages     = {331--338},
+  year      = {2018},
+  url       = {https://doi.org/10.1007/978-3-319-99498-7\_23},
+  doi       = {10.1007/978-3-319-99498-7\_23},
+  timestamp = {Thu, 30 Aug 2018 14:23:35 +0200},
+  biburl    = {https://dblp.org/rec/bib/conf/rc/TaborskyLT18},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+
+@misc{cryptoeprint:2013:404,
+    author = {Ray Beaulieu and Douglas Shors and Jason Smith and Stefan Treatman-Clark and Bryan Weeks and Louis Wingers},
+    title = {The {SIMON} and {SPECK} Families of Lightweight Block Ciphers},
+    howpublished = {Cryptology ePrint Archive, Report 2013/404},
+    year = {2013},
+    note = {\url{https://eprint.iacr.org/2013/404}},
+}
+
+@Article{Riv95,
+  author = 	 { Ronald L. Rivest },
+  title = 	 { The {RC5} Encryption Algorithm },
+  pages = 	 { 146--148 },
+  journal = 	 { Dr. Dobb's Journal },
+  date =         { 1995-01 },                  
+  year = 	 { 1995 },
+  month = 	 { January },
+  volume =       { 20 },                  
+  number = 	 { 1 },
+}
+@inproceedings{Simon++:2018,
+  author = {Simon, L. and Chisnall, D. and Anderson, R.},
+  booktitle = {2018 IEEE European Symposium on Security and Privacy ({EuroS\&P})},
+  title = {What You Get is What You {C}: Controlling Side Effects in Mainstream {C} Compilers},
+  year = {2018},
+  pages = {1-15},
+  keywords = {C++ language;cryptographic protocols;optimisation;program compilers;program verification;security properties;compiler commands;cryptographic protocol security;compiler performance;language security;mainstream C compilers;security engineers;careful programmer;cryptographic algorithm;compiler writers;compiler upgrade;timing channel;secure code;compiler optimization;implicit properties;crypto code;side effects;CPUs;Cryptography;Program processors;Standards;Libraries;Timing;Optimization;compilers;LLVM;Clang;compiler optimizations;side channels;cryptography;side effects;C;C abstract machine;constant-time;zeroing;erasing;stack},
+  doi = {10.1109/EuroSP.2018.00009},
+  month = apr
+}
+
+@inproceedings{Necula:1997,
+ author = {Necula, George C.},
+ title = {Proof-carrying Code},
+ booktitle = {Proceedings of the 24th ACM SIGPLAN-SIGACT Symposium on Principles of Programming Languages},
+ series = {POPL '97},
+ year = {1997},
+ isbn = {0-89791-853-3},
+ location = {Paris, France},
+ pages = {106--119},
+ numpages = {14},
+ url = {http://doi.acm.org/10.1145/263699.263712},
+ doi = {10.1145/263699.263712},
+ acmid = {263712},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+} 
+
+@Misc{Wikipedia:RC5,
+  AUTHOR       = {Wikipedia},
+  title =        {{RC5}},
+  YEAR         = {Accessed February 2019},
+  howpublished =  {\url{https://en.wikipedia.org/wiki/RC5}},
+}
+
+@Misc{Wikipedia:RedPike,
+  AUTHOR       = {Wikipedia},
+  title =        {Red Pike (cipher)},
+  YEAR         = {Accessed February 2019},
+  howpublished =  {\url{https://en.wikipedia.org/wiki/Red_Pike_(cipher)}},
+}
+
+@InProceedings{Schneier:1994,
+author="Schneier, Bruce",
+editor="Anderson, Ross",
+title="Description of a new variable-length key, 64-bit block cipher ({B}lowfish)",
+booktitle="Fast Software Encryption",
+year="1994",
+publisher="Springer Berlin Heidelberg",
+address="Berlin, Heidelberg",
+pages="191--204",
+abstract="Blowfish, a new secret-key block cipher, is proposed. It is a Feistel network, iterating a simple encryption function 16 times. The block size is 64 bits, and the key can be any length up to 448 bits. Although there is a complex initialization phase required before any encryption can take place, the actual encryption of data is very efficient on large microprocessors.",
+isbn="978-3-540-48456-1"
+}
+
+
+[download]
+
+@article{Haas++:2017,
+ author = {Haas, Andreas and Rossberg, Andreas and Schuff, Derek L. and Titzer, Ben L. and Holman, Michael and Gohman, Dan and Wagner, Luke and Zakai, Alon and Bastien, JF},
+ title = {Bringing the Web Up to Speed with WebAssembly},
+ journal = {SIGPLAN Not.},
+ issue_date = {June 2017},
+ volume = {52},
+ number = {6},
+ month = jun,
+ year = {2017},
+ issn = {0362-1340},
+ pages = {185--200},
+ numpages = {16},
+ url = {http://doi.acm.org/10.1145/3140587.3062363},
+ doi = {10.1145/3140587.3062363},
+ acmid = {3062363},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ keywords = {assembly languages, just-in-time compilers, programming languages, type systems, virtual machines},
+} 
+
+@article{Watt++:2018,
+  author    = {Conrad Watt and
+               John Renner and
+               Natalie Popescu and
+               Sunjay Cauligi and
+               Deian Stefan},
+  title     = {{CT}-{W}asm: Type-Driven Secure Cryptography for the Web Ecosystem},
+  journal   = {CoRR},
+  volume    = {abs/1808.01348},
+  year      = {2018},
+  url       = {http://arxiv.org/abs/1808.01348},
+  archivePrefix = {arXiv},
+  eprint    = {1808.01348},
+  timestamp = {Sun, 18 Nov 2018 16:10:42 +0100},
+  biburl    = {https://dblp.org/rec/bib/journals/corr/abs-1808-01348},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+
+@inproceedings{Mogensen:2019a,
+  author       = {Mogensen, Torben {\AE}gidius},
+  title        = {Hermes, a Reversible Language for Writing Encryption Algorithms (Work in Progress)},
+booktitle={Proceedings of PSI 2019},
+pages={243--251},
+series={Lecture Notes in Computer Science 11964},
+  year = {2020},
+publisher={Springer Berlin Heidelberg},
+}
+
+@inproceedings{Mogensen:2020,
+  author       = {Mogensen, Torben {\AE}gidius},
+  title        = {Hermes, a Language for Writing Encryption Algorithms},
+booktitle={Proceedings of RC 2020},
+pages={93--110},
+series={Lecture Notes in Computer Science 12227},
+  year = {2020},
+publisher={Springer Berlin Heidelberg},
+}
+
+@article{tr/meltdown/s18,
+  added-at = {2018-01-07T00:00:00.000+0100},
+  author = {Kocher, Paul and Genkin, Daniel and Gruss, Daniel and Haas, Werner and Hamburg, Mike and Lipp, Moritz and Mangard, Stefan and Prescher, Thomas and Schwarz, Michael and Yarom, Yuval},
+  biburl = {https://www.bibsonomy.org/bibtex/2bf49d2185da7fdb980e2c0e074e2ea70/dblp},
+  ee = {https://spectreattack.com/spectre.pdf},
+  interhash = {5f4b69e99050edee51f13937621f9ba4},
+  intrahash = {bf49d2185da7fdb980e2c0e074e2ea70},
+  journal = {meltdownattack.com},
+  keywords = {dblp},
+  timestamp = {2018-01-09T11:37:18.000+0100},
+  title = {Spectre Attacks: Exploiting Speculative Execution.},
+  year = 2018
+}
+
+@proceedings{conf/pepm/1998,
+  added-at = {2019-05-14T00:00:00.000+0200},
+  biburl = {https://www.bibsonomy.org/bibtex/23b16785882d6c970d2ce3d2557066799/dblp},
+  booktitle = {Partial Evaluation},
+  editor = {Hatcliff, John and Mogensen, Torben {\AE}. and Thiemann, Peter},
+  ee = {https://doi.org/10.1007/3-540-47018-2},
+  interhash = {073993a71cbaac9f37df34eefcae71b2},
+  intrahash = {3b16785882d6c970d2ce3d2557066799},
+  isbn = {3-540-66710-5},
+  keywords = {dblp},
+  publisher = {Springer},
+  series = {Lecture Notes in Computer Science},
+  timestamp = {2019-06-04T13:34:23.000+0200},
+  title = {Partial Evaluation - Practice and Theory, DIKU 1998 International Summer School, Copenhagen, 1998},
+  url = {http://dblp.uni-trier.de/db/conf/pepm/pe1998.html},
+  volume = 1706,
+  year = 1999
+}
+
+@inproceedings{conf/pepm/Mogensen11,
+  added-at = {2018-11-06T00:00:00.000+0100},
+  author = {Mogensen, Torben {\AE}.},
+  biburl = {https://www.bibsonomy.org/bibtex/2d53e95473e292c1f0ca4b9b36e812c24/dblp},
+  booktitle = {PEPM 2011},
+  editor = {Khoo, Siau-Cheng and Siek, Jeremy G.},
+  ee = {https://doi.org/10.1145/1929501.1929506},
+  interhash = {cec570c19e96a1d899de1599ab1c938f},
+  intrahash = {d53e95473e292c1f0ca4b9b36e812c24},
+  isbn = {978-1-4503-0485-6},
+  keywords = {dblp},
+  pages = {23-32},
+  publisher = {ACM},
+  timestamp = {2018-11-07T16:38:35.000+0100},
+  title = {Partial evaluation of the reversible language {J}anus.},
+  url = {http://dblp.uni-trier.de/db/conf/pepm/pepm2011.html#Mogensen11},
+  year = 2011
+}
+
+@book{10.5555/1823209,
+author = {Miller, Frederic P. and Vandome, Agnes F. and McBrewster, John},
+title = {Advanced Encryption Standard},
+year = {2009},
+isbn = {6130268297},
+publisher = {Alpha Press}
+}
+
+@TECHREPORT{AES-2001,
+    author = {NIST},
+    title = {Announcing the Advanced Encryption Standard ({AES})},
+    institution = {Federal Information Processing Standards Publication 197},
+    year = {2001},
+    url = {https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.197.pdf}
+}
+
+@TECHREPORT{Bernstein05cache-timingattacks,
+    author = {Daniel J. Bernstein},
+    title = {Cache-timing attacks on {AES}},
+    institution = {},
+    year = {2005},
+    url = {https://pdfs.semanticscholar.org/fbf1/8eb234f19897f758fedeb69c52f29fbbf15a.pdf}
+}
+
+@Misc{AES-Dust,
+  AUTHOR       = {Odzhan},
+  title =        {{AES} Dust},
+  YEAR         = {Accessed September 2020},
+  howpublished =  {\url{https://github.com/odzhan/aes_dust}},
+}

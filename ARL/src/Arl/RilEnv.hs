@@ -30,6 +30,6 @@ liveVars [x] = []
 liveVars [x,xs] = []
 liveVars (x:xs:xss) = filter (`elem` head xss) x ++ liveVars( x: tail xss)
 
--- this waht we use
+-- this what we use
 allVars [x] = []
 allVars x = liveVars x : allVars (tail x)

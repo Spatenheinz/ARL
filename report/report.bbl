@@ -1,0 +1,38 @@
+\begin{thebibliography}{1}
+
+\bibitem{L61}
+R.~{Landauer}.
+\newblock Irreversibility and heat generation in the computing process.
+\newblock {\em IBM Journal of Research and Development}, 5(3):183--191, 1961.
+
+\bibitem{B73}
+C.~H. {Bennett}.
+\newblock Logical reversibility of computation.
+\newblock {\em IBM Journal of Research and Development}, 17(6):525--532, 1973.
+
+\bibitem{Schordan2020}
+Markus Schordan, Tomas Oppelstrup, Michael~Kirkedal Thomsen, and Robert
+  Gl{\"u}ck.
+\newblock {\em Reversible Languages and Incremental State Saving in Optimistic
+  Parallel Discrete Event Simulation}, pages 187--207.
+\newblock Springer International Publishing, Cham, 2020.
+
+\bibitem{YokoyamaAxelsenGluck:2011}
+Tetsuo Yokoyama, Holger~Bock Axelsen, and Robert Gl{\"u}ck.
+\newblock Towards a reversible functional language.
+\newblock In Alexis Vos and Robert Wille, editors, {\em Reversible
+  Computation}, volume 7165 of {\em Lecture Notes in Computer Science}, pages
+  14--29. Springer Berlin Heidelberg, 2012.
+
+\bibitem{Mogensen:RC2014}
+Torben~{\AE}gidius Mogensen.
+\newblock Reference counting for reversible languages.
+\newblock In {\em Reversible Computation}, Lecture Notes in Computer Science.
+  Springer Berlin Heidelberg, 2014.
+
+\bibitem{Mogensen2018ReversibleGC}
+Torben~{\aE}. Mogensen.
+\newblock Reversible garbage collection for reversible functional languages.
+\newblock {\em New Generation Computing}, 36:203--232, 2018.
+
+\end{thebibliography}

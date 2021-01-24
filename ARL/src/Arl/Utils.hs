@@ -79,7 +79,7 @@ class Unique a where
 instance Unique Pattern where
   unique (Var v) = v
   unique NilNil = "nilnil"
-  unique (Arl.Ast.Const c) = "C" ++ show c ++ "_"
+  unique (Const c) = "C" ++ show c ++ "_"
   unique (Pair car cdr) = unique car ++ "_" ++ unique cdr
   unique (Neq id pat) = id ++ "_neq_" ++ unique pat
   unique (As id pat) = id ++ "_As_" ++ unique pat

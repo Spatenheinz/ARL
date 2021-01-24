@@ -1,0 +1,510 @@
+begin main
+includeC "A = 0;\n";
+// initialize hash codes
+hashA += 366001;
+hashB += 827927;
+hashC += 593041;
+hashT += hashA;
+// heap size setup
+// read m; // log of heap size
+b += 8; // segment size
+b1 += b - 1;
+hsize += 1<<15;
+hsize += b1; // number of nodes = 2^m + b - 1
+hsizeB += hsize << 2;
+hsizeB += hsize << 2;
+hsizeB += hsize << 2; // number of bytes
+H += 4800; // heap start
+endH += hsizeB + H; // heap end
+lastH += endH - 12; // address of last node in heap
+mask += 4<<15; // Mask used for hashing: 4*(2^m)
+mask -= 4;
+segSize += b1<<2;
+segSize += b1<<2;
+segSize += b1<<2;
+stackP += endH;
+stackP += 64;
+call initialise;
+call build;
+
+
+call subsequences;
+
+
+includeC "printf(\"max refs = %d\\n\",A);";
+assert z == 0;
+z += H;
+dump1 <-- H != z;
+M[z] > 0 --> used1;
+y += 1;
+used1 <-- M[z] > 0;
+z += 12;
+z < endH --> dump1;
+test y "%d,"
+end main
+
+
+begin initialise
+consA += 2;
+consD += 2;
+call cons;
+nilnil <-> consP
+end initialise
+
+
+begin build
+consD += 2;
+consA += 7;
+call cons;
+A <-> consP;
+skip
+end build
+
+
+begin subsequences
+skip
+--> subsequences_entry_1
+subsequences_exit_1 <--
+skip
+end subsequences
+
+subsequences_entry_1 <--
+// input of rule1
+A != 2 --> subsequences1;
+A -= 2;
+subsequences1 <-- A != 0;
+A != 0 --> subsequences_entry_2;
+
+//def starts here
+
+
+subsequences_exit_2 <-- A != 0;
+
+ // res starts here
+
+A != 0 --> subsequences2;
+A += nilnil;
+subsequences2 <-- A != nilnil;
+skip
+--> subsequences_exit_1
+
+
+subsequences_entry_2 <--
+// input of rule2
+A & 3 --> x_xssubsequences3;
+A <-> consP;
+uncall cons;
+t3x_xs <-> consA;
+t4x_xs <-> consD;
+x <-> t3x_xs;
+t3x_xs != 0 --> subsequences4;
+xs <-> t4x_xs;
+t4x_xs == 0 --> subsequences5;
+subsequences4 <-- t3x_xs != 0;
+x <-> t3x_xs;
+t3x_xs <-> consA;
+t4x_xs <-> consD;
+call cons;
+A <-> consP;
+subsequences5 <-- A == 0;
+x_xssubsequences3 <-- A & 3;
+A != 0 --> subsequences_entry_3;
+
+//def starts here
+
+xs <-> A;
+x <-> M[stackP];
+stackP += 4;
+call subsequences;
+stackP -= 4;
+x <-> M[stackP];
+ss0 <-> A;
+assert A == 0;
+A & 3 --> inv_x_ss0subsequences17;
+A == 0 --> inv_x_ss0subsequences19;
+A <-> consP;
+uncall cons;
+inv_t_subsequences17x_ss0 <-> consA;
+inv_t_subsequences18x_ss0 <-> consD;
+x <-> inv_t_subsequences17x_ss0;
+inv_t_subsequences17x_ss0 != 0 --> inv_x_ss0subsequences18;
+inv_x_ss0subsequences19 <-- inv_t_subsequences18x_ss0 == 0;
+ss0 <-> inv_t_subsequences18x_ss0;
+inv_x_ss0subsequences18 <-- inv_t_subsequences17x_ss0 != 0;
+x <-> inv_t_subsequences17x_ss0;
+inv_t_subsequences17x_ss0 <-> consA;
+inv_t_subsequences18x_ss0 <-> consD;
+call cons;
+A <-> consP;
+inv_x_ss0subsequences17 <-- A & 3;
+
+call consAll;
+
+ss1 <-> A;
+assert A == 0;
+subsequences_exit_3 <-- A != 0;
+
+ // res starts here
+
+ss1 <-> A;
+skip
+--> subsequences_exit_2
+
+subsequences_entry_3 <--
+assert A != A
+--> subsequences_exit_3
+begin consAll
+skip
+--> consAll_entry_1
+consAll_exit_1 <--
+skip
+end consAll
+
+consAll_entry_1 <--
+// input of rule1
+A & 3 --> x_s_ssconsAll1;
+A <-> consP;
+uncall cons;
+t1x_s_ss <-> consA;
+t2x_s_ss <-> consD;
+x <-> t1x_s_ss;
+t1x_s_ss != 0 --> consAll2;
+t2x_s_ss & 3 --> s_ssconsAll5;
+t2x_s_ss <-> consP;
+uncall cons;
+t5s_ss <-> consA;
+t6s_ss <-> consD;
+s <-> t5s_ss;
+t5s_ss != 0 --> consAll6;
+ss <-> t6s_ss;
+t6s_ss == 0 --> consAll7;
+consAll6 <-- t5s_ss != 0;
+s <-> t5s_ss;
+t5s_ss <-> consA;
+t6s_ss <-> consD;
+call cons;
+t2x_s_ss <-> consP;
+consAll7 <-- t2x_s_ss == 0;
+s_ssconsAll5 <-- t2x_s_ss & 3;
+t2x_s_ss == 0 --> consAll3;
+consAll2 <-- t1x_s_ss != 0;
+x <-> t1x_s_ss;
+t1x_s_ss <-> consA;
+t2x_s_ss <-> consD;
+call cons;
+A <-> consP;
+consAll3 <-- A == 0;
+x_s_ssconsAll1 <-- A & 3;
+A != 0 --> consAll_entry_2;
+
+//def starts here
+
+A & 3 --> inv_x_ssconsAll35;
+A == 0 --> inv_x_ssconsAll37;
+A <-> consP;
+uncall cons;
+inv_t_consAll35x_ss <-> consA;
+inv_t_consAll36x_ss <-> consD;
+x <-> inv_t_consAll35x_ss;
+inv_t_consAll35x_ss != 0 --> inv_x_ssconsAll36;
+inv_x_ssconsAll37 <-- inv_t_consAll36x_ss == 0;
+ss <-> inv_t_consAll36x_ss;
+inv_x_ssconsAll36 <-- inv_t_consAll35x_ss != 0;
+x <-> inv_t_consAll35x_ss;
+inv_t_consAll35x_ss <-> consA;
+inv_t_consAll36x_ss <-> consD;
+call cons;
+A <-> consP;
+inv_x_ssconsAll35 <-- A & 3;
+x <-> M[stackP];
+stackP += 4;
+s <-> M[stackP];
+stackP += 4;
+call helper;
+stackP -= 4;
+x <-> M[stackP];
+stackP -= 4;
+s <-> M[stackP];
+ss1 <-> A;
+assert A == 0;
+consAll_exit_2 <-- A != 0;
+
+ // res starts here
+
+A & 3 --> inv_x_s_s_ss1consAll14;
+A == 0 --> inv_x_s_s_ss1consAll16;
+A <-> consP;
+uncall cons;
+inv_t_consAll14x_s_s_ss1 <-> consA;
+inv_t_consAll15x_s_s_ss1 <-> consD;
+inv_t_consAll14x_s_s_ss1 & 3 --> x_sconsAll32;
+inv_t_consAll14x_s_s_ss1 <-> consP;
+uncall cons;
+t32x_s <-> consA;
+t33x_s <-> consD;
+x <-> t32x_s;
+t32x_s != 0 --> consAll33;
+s <-> t33x_s;
+t33x_s == 0 --> consAll34;
+consAll33 <-- t32x_s != 0;
+x <-> t32x_s;
+t32x_s <-> consA;
+t33x_s <-> consD;
+call cons;
+inv_t_consAll14x_s_s_ss1 <-> consP;
+consAll34 <-- inv_t_consAll14x_s_s_ss1 == 0;
+x_sconsAll32 <-- inv_t_consAll14x_s_s_ss1 & 3;
+inv_t_consAll14x_s_s_ss1 != 0 --> inv_x_s_s_ss1consAll15;
+inv_x_s_s_ss1consAll16 <-- inv_t_consAll15x_s_s_ss1 == 0;
+inv_t_consAll15x_s_s_ss1 & 3 --> inv_s_ss1consAll24;
+inv_t_consAll15x_s_s_ss1 == 0 --> inv_s_ss1consAll26;
+inv_t_consAll15x_s_s_ss1 <-> consP;
+uncall cons;
+inv_t_consAll24s_ss1 <-> consA;
+inv_t_consAll25s_ss1 <-> consD;
+s <-> inv_t_consAll24s_ss1;
+inv_t_consAll24s_ss1 != 0 --> inv_s_ss1consAll25;
+inv_s_ss1consAll26 <-- inv_t_consAll25s_ss1 == 0;
+ss1 <-> inv_t_consAll25s_ss1;
+inv_s_ss1consAll25 <-- inv_t_consAll24s_ss1 != 0;
+inv_t_consAll24s_ss1 != 0 --> consAll27;
+s <-> copyP;
+call copy;
+s <-> copyP;
+inv_t_consAll24s_ss1 <-> copyQ;
+consAll27 <-- inv_t_consAll24s_ss1 != s;
+inv_t_consAll24s_ss1 <-> consA;
+inv_t_consAll25s_ss1 <-> consD;
+call cons;
+inv_t_consAll15x_s_s_ss1 <-> consP;
+inv_s_ss1consAll24 <-- inv_t_consAll15x_s_s_ss1 & 3;
+inv_x_s_s_ss1consAll15 <-- inv_t_consAll14x_s_s_ss1 != 0;
+inv_t_consAll14x_s_s_ss1 & 3 --> inv_x_sconsAll17;
+inv_t_consAll14x_s_s_ss1 == 0 --> inv_x_sconsAll19;
+inv_t_consAll14x_s_s_ss1 <-> consP;
+uncall cons;
+inv_t_consAll17x_s <-> consA;
+inv_t_consAll18x_s <-> consD;
+x <-> inv_t_consAll17x_s;
+inv_t_consAll17x_s != 0 --> inv_x_sconsAll18;
+inv_x_sconsAll19 <-- inv_t_consAll18x_s == 0;
+s <-> inv_t_consAll18x_s;
+inv_x_sconsAll18 <-- inv_t_consAll17x_s != 0;
+x <-> inv_t_consAll17x_s;
+inv_t_consAll17x_s <-> consA;
+inv_t_consAll18x_s <-> consD;
+call cons;
+inv_t_consAll14x_s_s_ss1 <-> consP;
+inv_x_sconsAll17 <-- inv_t_consAll14x_s_s_ss1 & 3;
+inv_t_consAll14x_s_s_ss1 <-> consA;
+inv_t_consAll15x_s_s_ss1 <-> consD;
+call cons;
+A <-> consP;
+inv_x_s_s_ss1consAll14 <-- A & 3;
+skip
+--> consAll_exit_1
+
+consAll_entry_2 <--
+assert A != A
+--> consAll_exit_2
+begin helper
+skip
+--> helper_entry_1
+helper_exit_1 <--
+skip
+end helper
+
+helper_entry_1 <--
+// input of rule1
+A & 3 --> x_C2_helper1;
+A <-> consP;
+uncall cons;
+t1x_C2_ <-> consA;
+t2x_C2_ <-> consD;
+x <-> t1x_C2_;
+t1x_C2_ != 0 --> helper2;
+t2x_C2_ != 2 --> helper5;
+t2x_C2_ -= 2;
+helper5 <-- t2x_C2_ != 0;
+t2x_C2_ == 0 --> helper3;
+helper2 <-- t1x_C2_ != 0;
+x <-> t1x_C2_;
+t1x_C2_ <-> consA;
+t2x_C2_ <-> consD;
+call cons;
+A <-> consP;
+helper3 <-- A == 0;
+x_C2_helper1 <-- A & 3;
+A != 0 --> helper_entry_2;
+
+//def starts here
+
+
+helper_exit_2 <-- A != 0;
+
+ // res starts here
+
+A != 0 --> inv_5helper8;
+A += 2;
+inv_5helper8 <-- A != 2;
+skip
+--> helper_exit_1
+
+
+helper_entry_2 <--
+// input of rule2
+A & 3 --> x_ss_neq_C2_helper9;
+A <-> consP;
+uncall cons;
+t9x_ss_neq_C2_ <-> consA;
+t10x_ss_neq_C2_ <-> consD;
+x <-> t9x_ss_neq_C2_;
+t9x_ss_neq_C2_ != 0 --> helper10;
+assert ss == 0;
+A != 2 --> helper13;
+A -= 2;
+helper13 <-- A != 0;
+ss += t10x_ss_neq_C2_;
+A != 0 --> inv_5helper14;
+A += 2;
+inv_5helper14 <-- A != 2;
+t10x_ss_neq_C2_ -= ss;
+t10x_ss_neq_C2_ == 0 --> helper11;
+helper10 <-- t9x_ss_neq_C2_ != 0;
+x <-> t9x_ss_neq_C2_;
+t9x_ss_neq_C2_ <-> consA;
+t10x_ss_neq_C2_ <-> consD;
+call cons;
+A <-> consP;
+helper11 <-- A == 0;
+x_ss_neq_C2_helper9 <-- A & 3;
+A != 0 --> helper_entry_3;
+
+//def starts here
+
+A & 3 --> inv_x_sshelper20;
+A == 0 --> inv_x_sshelper22;
+A <-> consP;
+uncall cons;
+inv_t_helper20x_ss <-> consA;
+inv_t_helper21x_ss <-> consD;
+x <-> inv_t_helper20x_ss;
+inv_t_helper20x_ss != 0 --> inv_x_sshelper21;
+inv_x_sshelper22 <-- inv_t_helper21x_ss == 0;
+ss <-> inv_t_helper21x_ss;
+inv_x_sshelper21 <-- inv_t_helper20x_ss != 0;
+x <-> inv_t_helper20x_ss;
+inv_t_helper20x_ss <-> consA;
+inv_t_helper21x_ss <-> consD;
+call cons;
+A <-> consP;
+inv_x_sshelper20 <-- A & 3;
+
+call consAll;
+
+ss1 <-> A;
+assert A == 0;
+helper_exit_3 <-- A != 0;
+
+ // res starts here
+
+ss1 <-> A;
+skip
+--> helper_exit_2
+
+helper_entry_3 <--
+assert A != A
+--> helper_exit_3
+begin copy
+assert copyP > 0 && copyQ == 0;
+copyP < H --> copySymbol;
+M[copyP] += 1;
+ttt += M[copyP];
+includeC "if (A < var_ttt) A = var_ttt;";
+ttt -= M[copyP];
+copySymbol <-- copyP < H;
+copyQ += copyP;
+assert copyP > 0 && copyQ == copyP
+end copy
+//The rest of the file is cons
+begin cons
+assert consA != 0;
+assert consD != 0;
+assert consP == 0;
+assert hashV == 0;
+assert segEnd == 0;
+call hash;
+segEnd += hashV + segSize;
+consP += hashV;
+consSearchSame <-- consP > hashV;
+M[consP] == 0 --> consNext;
+consP += 4;
+M[consP] != consA --> consNotA;
+consP += 4;
+M[consP] == consD --> consFoundSame;
+consP -= 4;
+consNotA <-- M[consP] != consA;
+consP -= 4;
+consNext <-- M[consP] == 0;
+consP += 12;
+consP <= segEnd --> consSearchSame;
+consSearchEmpty <-- consP <= segEnd;
+consP -= 12;
+consP < hashV --> consFail;
+M[consP] != 0 --> consSearchEmpty;
+segEnd -= hashV + segSize;
+uncall hash;
+M[consP] += 1;
+consP += 4;
+consA <-> M[consP];
+consP += 4;
+consD <-> M[consP];
+consP -= 8;
+consEnd <-- M[consP] > 1;
+assert consP !& 3 && consP >= H && consA == 0 && consD == 0;
+assert hashV == 0 && segEnd == 0;
+failedCons <-- failed > 0 // return point for fail handler
+end cons
+
+consFoundSame <--
+segEnd -= hashV + segSize; // was 60
+uncall hash;
+consD < H --> consSymbolD;
+M[consD] -= 1;
+consSymbolD <-- consD < H;
+consD -= M[consP];
+consP -= 4;
+consA < H --> consSymbolA;
+M[consA] -= 1;
+consSymbolA <-- consA < H;
+consA -= M[consP];
+consP -= 4;
+M[consP] += 1;
+ttt += M[consP];
+includeC "if (A < var_ttt) A = var_ttt;";
+ttt -= M[consP]
+--> consEnd
+consFail <--
+failed += 1;
+assert z == 0;
+z += H;
+dump <-- H != z;
+M[z] > 0 --> used;
+y += 1;
+used <-- M[z] > 0;
+z += 12;
+z < endH --> dump;
+test y " free nodes: %d,"
+--> failedCons // jump to end of cons procedure
+
+begin hash
+assert hashV == 0 && hashT ==  366001;
+hashT ^= consA << 7;
+hashT += consA >> 1;
+hashT ^= consD << 5;
+hashT += consD >> 3;
+hashV += hashT & mask;
+hashV += hashT & mask;
+hashV += hashT & mask;
+hashV += H
+end hash

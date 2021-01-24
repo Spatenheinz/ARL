@@ -1,0 +1,15 @@
+fun subsequences [] = [[]]
+    | (x :: xs) = let ss0 = subsequences xs in
+                  let ss1 = consAll (x :: ss0) in
+                  ss1
+
+fun consAll (x, (s :: ss)) =
+     let ss1 = helper (x,ss) in
+     ((x :: s) :: s :: ss1)
+
+fun helper (x,[]) = []
+    | (x, (ss <> [])) = let ss1 = consAll (x :: ss) in
+                        ss1
+
+fun main =
+    subsequences

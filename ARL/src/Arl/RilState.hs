@@ -60,29 +60,40 @@ innerTick =
      get
 
 
-putVars :: (MonadState RilState m) => Pattern -> m RilState
-putVars p =
+putVar :: (MonadState RilState m) => ID -> m RilState
+putVar p =
   do st <- get
      put RilState { ruleNo = ruleNo st
                   , rLabel = rLabel st
                   , fnameS = fnameS st
                   , labNo  = labNo st
                   , label = fnameS st
-                  , pVars = M.union (getVars p) (pVars st)
+                  , pVars = M.insert p 1 (pVars st)
+
                   }
      get
 
-rmVar :: (MonadState RilState m) => ID -> m RilState
-rmVar v =
+resetVar :: (MonadState RilState m) => m RilState
+resetVar =
   do st <- get
      put RilState { ruleNo = ruleNo st
                   , rLabel = rLabel st
                   , fnameS = fnameS st
                   , labNo  = labNo st
                   , label = fnameS st
-                  , pVars = M.delete v (pVars st)
+                  , pVars = M.empty
                   }
      get
+
+fetchState :: (MonadState RilState m) => RilState -> m ()
+fetchState st =
+     put RilState { ruleNo = ruleNo st
+                  , rLabel = rLabel st
+                  , fnameS = fnameS st
+                  , labNo = labNo st + 1
+                  , label = fnameS st ++ show (labNo st+1)
+                  , pVars = pVars st
+                  }
 
 resetSt :: (MonadState RilState m) => m()
 resetSt = put emptyState

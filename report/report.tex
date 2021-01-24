@@ -1,4 +1,4 @@
-% Created 2021-01-19 Tue 11:10
+% Created 2021-01-24 Sun 22:36
 % Intended LaTeX compiler: pdflatex
 \documentclass[a4paper]{article}
 \usepackage[utf8]{inputenc}
@@ -30,17 +30,16 @@
 \maketitle
 
 \section{Introduction}
-\label{sec:org0293a97}
-Reversible computation dates backs quite some time, but had its first milestone in 1961 when Landauer's principle were proposed\ref{}. Then in 1973 Bennett\ref{} formalised a model for reversible turing machines (RTM). Any RTM can only compute injective functions as any input must map to a exactly one unique output, otherwise reversiblility would be ambigious. Despite this constriction compared to a classical turing machine, there has been some significant research on the topic and its usecases. Obviously a lot of the work has been done in relation to heat dissipation of reversible vs irreversible languages, but have also shown usecases in the fields of quantum computing, cryptography and checkpointing of simulations\ref{}. Already in 1982 the time reversible language Janus, and later formalised by Yokoyama and Glück. Janus might be the most prevelant reversible programming language, however the rise of reversible functional languages have been noticeable, probably because of the restriction or property of injectivity. Multiple functional languages have been formalised over the years. The most significant of these might be RFUN, which was Yokoyama, Axelsen and Glück\ref{}. RFUN uses a heap manager build on the principle of linearity. Mogensen then presented RCFUN which uses another approach for the heap manager, namely simple sharing using reference counting. Mogensen then later presented RIL, which is an intermediate language, where the heap manager uses maximal sharing. The reasoning for a maximally shared heap manager is to abstract away or eliminate memory management completely, opposed to the linear and reference counting models. For the linear approach one can only use a variable once and must use that variable exactly once. In reference counting, this constriction is eliminated, as we may use a variable multiple times, however reference counting limits the way we can construct patterns. RIL with its maximal sharing system resolves this. The constriction for what languages can use RIL is however limited to pure functional languages as RIL uses cons-hashing to improve searches in the heap. And since RIL is an intermediate language and is tedious and error-prone to write by hand, RIL poses a great choice for a heap manager for a reversible function language. This report concerns itself with an informalisation and implementation of such language.
-
+\label{sec:org2b09096}
+Reversible computation dates back quite some time but had its first milestone in 1961 when Landauer's principle was proposed\cite{L61}. Then in 1973 Bennett\cite{B73} formalized a model for Reversible Turing Machines (RTM). Any RTM can only compute injective functions as any input must map to exactly one unique output. Otherwise, reversibility would be ambiguous. Despite this constriction, compared to a classical Turing Machine, there has been some significant research on the topic and its use cases. A lot of the work has been done concerning heat dissipation of reversible vs irreversible languages. But reversibility of programs have also shown uses in the fields of quantum computing, cryptography, and checkpointing of simulations\cite{Schordan2020}. Already in 1982 the time-reversible language Janus was presented, and later formalized by Yokoyama and Glück\cite{}. Janus might be the most prevalent reversible programming language, however, the rise of reversible functional languages have been noticeable, probably because of the injectivity restriction. Multiple functional languages have been formalized over the years. The most significant of these might be RFUN, presented Yokoyama, Axelsen, and Glück\cite{YokoyamaAxelsenGluck:2011}. RFUN uses a heap manager built on the principle of linearity. Mogensen then presented RCFUN\cite{Mogensen:RC2014} which uses another approach for the heap manager, namely simple sharing using reference counting. Mogensen then later presented RIL, which is an intermediate language, where the heap manager uses maximal sharing\cite{Mogensen2018ReversibleGC}. The reasoning for a maximally shared heap manager is to abstract away or eliminate memory management completely from the high-level language, opposed to the linear and reference counting models. For the linear approach, one can only use a variable once and must use that variable exactly once. In reference counting, this constriction is eliminated, as we may use a variable multiple times, however, reference counting limits the way we can construct patterns. RIL with its maximal sharing system resolves this. The constriction for what languages can use RIL is however limited to purely functional languages as RIL uses cons-hashing to improve lookups in the heap. And since RIL is an intermediate language and is tedious and error-prone to write by hand, RIL poses a great choice for a heap manager for a reversible function language. This report concerns itself with a formal description and implementation of such language.
 \section{The Functional Reversible Language ARL}
-\label{sec:orgfe06cb9}
-The Functional Reversible language ARL (A Reversible Programming-language) is an
-implementation of the simple suggested language presented by Mogensen. ARL implements the core concepts of the language, meaning ARL in its current state is a simple type-free language, with Pairs as its only construct, in the ML-style family. The syntax for ARL has undergone a few modifications from the original syntax to make
-the language more manageble and easier to work with as a programmer, adhering to
+\label{sec:org2895534}
+The Functional Reversible language ARL (A Reversible Language) is an
+implementation of the simple language presented by Mogensen\cite{Mogensen2018ReversibleGC}. ARL implements the core concepts of the language, meaning ARL in its current state is a simple type-free language, with Pairs as its only construct, in the ML-style family. The syntax for ARL has undergone a few modifications from the original syntax to make
+the language more manageable and easier to work with as a programmer, adhering to
 the same philosophy constituting the heap management in RIL. An example showing the syntax of ARL can be seen in fig \ref{flip} which inverts a tree. One thing to note from this example is
-that flip is invertible meaning it satisfies \(a \circ a^{\dag} \equiv a^{\dag} \circ a\).
-That is, it doesnt matter whether we call the function or uncalls it, it will have the same semantics. Thus the semantics of the supplied program is actually the same as the identity of input as we invert the program 2 times. This property however does not have to hold for all functions. They do however, have to satisfy \(a \circ a^{\dag} a = a\). We uses the dagger from category theory, as this carries nicely over in the syntax of ARL, and has the same meaning as the functions being injective. Therefore it is still important for the programmer to know when a function is partially or fully invertible.
+that flip is invertible meaning it satisfies \(a \circ a^{\dag} \equiv a^{\dag} \circ a\) where \texttt{a} is a function.
+That is, it doesn't matter whether we call the function or uncalls it, it will have the same semantics. Thus the semantics of the supplied program is equivalent to the identity of input as we in the main function calls flip 2, thus invert the tree 2 times. This property however does not have to hold for all functions. They do, however, have to satisfy \(a \circ a^{\dag} \circ a = a\). We use the dagger from category theory, as this carries nicely over in the syntax of ARL, and has the same mathematical meaning as the functions being injective in the context. We programming one therefore might have to keep track of when a function is partially or fully invertible.
 
 \begin{verbatim}
 fun flip (l,r) = let fl = flip l in
@@ -54,7 +53,7 @@ fun main =
 \end{verbatim}
 
 
-\begin{table}[!htb]
+\begin{figure}[!htb]
 \centering
 \begin{tabular}{>{$}l<{$}>{$}r<{$}>{$}l<{$}}
    Program &\Coloneqq & Main\; Function^+\\
@@ -80,36 +79,104 @@ fun main =
 \end{tabular}
 \caption{Syntax of ARL}
 \label{grammar}
-\end{table}
+\end{figure}
 
-As shown in \ref{grammar} and from the example code previously presented, there is some changes to the original grammar presented by Mogensen, which has been carefully selected to make the syntax cleaner and somewhat easier and more relatable to programmers who are not comfortable with reversible programming languages. These are as follows
+As shown in Figure\textasciitilde{}\ref{grammar} and from the \texttt{flip} function in Figure\ref{flip}, there are some changes to the original grammar presented by Mogensen. These changes have been carefully selected to make the syntax cleaner and somewhat easier, and more relatable to programmers who are not comfortable with reversible programming languages. These are as follows
 \begin{itemize}
 \item \textbf{Introduction of a main}\\
-the introduction of a main functions, is most likely the biggest adjustment. The reasoning behind for a main function stems from the fact that the original presentation of the language provides no interface for IO. Futhermore, ARL is a pure functional language exactly because of RIL's implementation of a maximally shared heap manager is implemented using a con-hashing, resulting in no obvious way to do IO. The main function will hereby serve as an entrypoint and be a pipeline over the function-calls envoked inside main. That is the input from stdin will be the argument for the first function, and since the compilation ensures that inputs and outputs will be placed in the same register or rather variable in the case of RIL, the input for the next function call will be the result of the previous one. This might not be the optimal solution, and might thus change as the need decides, but for now this simple interface will work. Furthermore there is no current way for the program to output anything, this has to be decided in the compilation. One solution could be to provide the compiler with a flag stating whether or not the user wants any form of output.
+the introduction of a Main function, is most likely the biggest adjustment. The need for a Main function stems from the fact that the original presentation of the language provides no interface for IO. Since the heap manager in RIL is maximally shared and uses a con-hashing algorithm, ARL cannot allow any updating of variables and no way of doing side-effects, there is no obvious way to do IO. The main function will contextually serve as an entry point and be a pipeline over the function-calls invoked inside Main. That is the input from stdin will be the argument for the first function, and since the compilation ensures that inputs and outputs will be placed in the same register or rather variable in the case of RIL, the input for the next function call will be the result of the previous one. This might not be the optimal solution and might thus change as ARL evolves and the needs change. But for now, this simple interface will work. Furthermore, there is no current way for the program to output anything, this has to be decided in the compilation. One solution could be to provide the compiler with a flag stating whether or not the user wants any form of output.
 \item \textbf{Two ways of constructing a pair}\\
-It might seems unimportant to have multiple ways to construct pairs, and at first hand it is, as they have the same semantic meaning. However the decision to do so, is to give programmers an easier time. A pure mathematical function can only take a single argument, where this argument might be an argument-vector. This is unsuprisingly also the case for ARL. The difference between ARL and other programming languages is that ARL litterally only takes one argument where most others take arbitrary many, either by currying as in Haskell or as a vector like in C-style languages. However, with the distinction between cons as (::) representing the cons from ML-style languages and cons as (,) representing a dotted pair from LISP. Letting (::) having a higher level of precedence, following \verb+(x::xs,y)+ will construct  \verb+Pair (Pair (Var ``x'') (Var ``xs'')) (Var ``y'')+ . One can hereby interpret it as a dotted pair with \texttt{car} being a list with a head \texttt{x} and a tail \texttt{xs}, and a \texttt{cdr} of any construct. This might make it easier for the programmer despite them beeing equivalent. Furthermore it is also allowed to introduce arbitrary many cons operators as this will get folded the same as the example above.
+It might seem unimportant to have multiple ways to construct pairs, and at first hand, it is, as they have the same semantical meaning. However, the decision to do so is to give programmers an easier time. A pure mathematical function can only take a single argument, where this argument might be an argument-vector. This is unsurprisingly also the case for ARL. The difference between ARL and other programming languages is that ARL only takes a single argument where most other popular languages take arbitrary many, either by currying as in Haskell or vector-like in C-style languages. However, these are pure abstractions. And in the same manner, we can abstract away any single argument restriction in ARL. With the distinction between cons as (::) representing the cons from ML-style languages and cons as (,) representing a dotted pair from LISP. One can interpret any (::) as a list with a head and tail and (,) as vector/tuple abstractly giving a C-like parameter list. Letting (::) having a higher level of precedence than (,), following \verb+(x::xs,y)+ will construct
+
+\verb+Pair (Pair (Var ``x'') (Var ``xs'')) (Var ``y'')+ .
+
+One can see this as a dotted pair with \texttt{car} being a list with a head \texttt{x} and a tail \texttt{xs}, and a \texttt{cdr} of any construct \texttt{y}. This abstraction might make it easier for the programmer despite them being equivalent. Furthermore, it is also allowed to introduce arbitrary many cons operators as this will get folded the same as the example above.
 \item \textbf{More readable let declarations}\\
-The let declarations have likewise been modifed in the same philosophy as the rest of the modifications, to make it more approachable by using familiar or close to familiar syntax to ML. Thus instead of having function call on the rhs of the assignment and function uncall on the lhs, we consistently delimit calls and uncalls to the rhs, denoting a difference with a prefix \texttt{!}, since this is the symbol closest resembling a dagger. the same concept holds for loops.
+The let declarations have likewise been modified in the same philosophy as the rest of the modifications, to make it more approachable by using familiar or close to familiar syntax to ML. Thus instead of having function call on the RHS of the assignment and function uncall on the LHS, we consistently delimit calls and uncalls to the RHS, denoting a difference with a prefix \texttt{!}, since this is the symbol closest resembling a dagger. the same concept holds for loops.
 \item \textbf{Change of != to <>}\\
 This is simply a minor syntactical change, changing the denotation of != to <> as the inequality operator. This has been reasoned to having a more relatable ML-style syntax.
 \end{itemize}
 
-\section{Semantics}
-\label{sec:org3996f41}
-We will go over how ARL is translated into RIL, both using the formal specifications presented by Mogensen \ref{}, and with the flip function as an example.
-Firstly, RIL as a different value representatition than ARL. RIL is as mentioned a intermediate language, with a syntax of very simple instructions. It thus uses specific patterns of machine words for different values.
-\begin{itemize}
-\item 0 in RIL is simply null.
-\item ARL's pairs is in RIL represented as a pointer to a 3-word block memory, where the first word is the reference count, the second and third word is the first and second part of the pair respectively. the RIL pointer is always represented as a multiple of 4. A special instance of this is nilnil (\texttt{[[]]}), which simply is a pair of two empty lists, and has the value 4.
-\item Constants n in ARL will be translated to \(2n+1\) in RIL, since constants in RIL has to be an odd number. This ensure that constants and pairs dont get mixed up.
-\item The last type of word in RIL is even numbers, whose value is not a multiple of 4.
-In its current state only one symbol (\texttt{[]}) is present, which is represented as 2.
-\end{itemize}
+\section{Parsing}
+\label{sec:org97da5c1}
+The compiler for ARL has been written in Haskell using Megaparsec as the parsing library. This was chosen over lexer/parser tools such as Alex/Happy, because of familiarity and because ARL as a language is quite small, thus making it pretty easy to implement. Megaparsec was chosen over other parsing libraries such as Parsec for 2 main reasons. First ARL is an indentation sensitive language, chosen to have quite strict rules, which we will see later on. Second Megaparsec makes position handling extremely easy giving the exact position of when parsing failed without having to bundle the AST with positions.
 
-\subsection{Functions}
-\label{sec:org07863a8}
-\begin{minipage}[t]{0.6\textwidth}
-\textbf{Translation Scheme}
+\subsection{AST}
+\label{sec:orgfff26ab}
+The implementation of the abstract syntax tree is almost true to the Grammar presented in \ref{grammar}. There are however three minor changes. Instead of rules looking like
+\begin{verbatim}
+data Rules = P Pattern [Def] Pattern
+          | R Rules Rules
+\end{verbatim}
+it simply will be a product type of the constructor Rule, and then the Func sum type will take a list of rules, as such:
+\begin{verbatim}
+data Func = Func ID [Rules]
+
+data Rule = Rule { args :: Pattern, body :: [Def], output :: Pattern }
+\end{verbatim}
+This change is mainly reasoned by being easier to parse and evaluate. the meaning should not change.
+For the same reason we introduce another pattern namely a NilNil, essentially this is a constant value, however, NilNil as a legal value in RIL depends on the build procedure that will create it. We, therefore, want it to have its own constructor as this simply makes implementation easier.
+Lastly, we earlier described the usefulness of having two ways of creating pairs, in the AST, we however only have one constructor for these as we can use some build-in functionality of megaparsec to enforce precedence without rewriting our grammar.
+\subsection{Parsers}
+\label{sec:org2ce1cd5}
+\subsubsection{Basics.}
+\label{sec:org762656c}
+Comments are based on f\#. line-comments is the same as in // and block-comments is (* *). Identifiers can be any string starting with a lower character followed by any alphanumerical character, a dash, or an underscore.\footnote{any code described the following subsections can be found in appendix ?? or in the file Parser.hs}
+
+\subsubsection{Functions}
+\label{sec:org18bf185}
+As described ARL has been chosen to have some strict indentation rules. This is forced to make the code readable. We must thus enforce the specific rules in the parser. Firstly we ensure that a function is always declared in column 0. This makes for a fine structure but might need to be changed in the future if we allow for nested function declarations. we will then consume the unnecessary garbage. A function will then either be a Main function or a pure function, if we encounter a main we will then parse the function calls. Here we enforce another indentation rule. A function call, must reside directly under the function name of main (which is ``main''), like in the example code in Figure\textasciitilde{}\ref{flip}. In the parsing we do not enforce a single main function, instead, we handle this in the pre-processing.
+If we however encounter a non-main function (from here just function) we will parse its rules. Like in the main function we ensure that a rule (other than the first, which must be on the same line) resides under the function name. that is the guard | must be placed here. Other than this indentation handling, the parser is simply a sequence of parsers and combinators.
+\subsubsection{Rules}
+\label{sec:org823f1f2}
+The parsing for the Rule sum type is in itself quite simple as most of the indentation is handled in the function parser. Although the rule parser also will have to do some indentation enforcement, it will pass on its indentation level for the let-declarations parser, to make certain that let definitions is deeper indented than the rule, along with forcing let declarations to be lined up with the resulting pattern. Again this is simply used to establish a structure for the body of a particular function pattern, also called a rule.
+\subsubsection{Let declarations}
+\label{sec:orgc027d6f}
+Unsurprisingly the let declaration follows a similar structure as the other parsers. overall we can reduce a let declaration to either of two, it is a function call/uncall or it is a loop. These are very similar in structure so we will only go over the simple case for function calls. again we ensure the indentation is correct, throwing a parse error otherwise. we then use the same strategy as we did for function calls in main to distinguish between a call and an uncall using the observing function. depending on whether the symbol ! is present before the function identifier, we get a \texttt{Left} or a \texttt{Right} value which we then convert to the appropriate type.
+This function has a lot of duplicate code, as the loop/unloop construct is very similar. This could potentially be eliminated.
+\subsubsection{Patterns}
+\label{sec:org88a8fac}
+Patterns are the most atomic part of the grammar, as its only non-terminal symbol is that of Pattern. It is thus also the easiest to parse. We construct a parser for each terminal and combine these using the parser combinators.
+We can see that whenever we encounter a \texttt{[[]]} we have a \texttt{NilNil} constructor. for integer constants we simply wrap the constant value in the Const constructor, we, however, omit to change the value to its internal representation in RIL which would be 2n+1. The reason for this is that we want to distinguish between the syntactical and semantical meaning of the program. It is further noticeable that we also wrap \texttt{nil} as a Const with a value of 2.
+A variable is simply the identifier wrapped in our \texttt{Var} constructor.
+A not equal pattern is likewise simply the identifier and a recursive pattern call. The same holds for the \texttt{as} constructor, however, the second part of an \texttt{as} can only be a pair. For \texttt{Pairs} we can see\ref{patternP} it makes use of the MakeExprParser which specifies associativity and precedence for the two ways of constructing pairs.
+Lastly, we also want to allow to wrap any \texttt{Pattern} in parenthesis.
+\section{Semantics}
+\label{sec:org8b98fcb}
+\subsection{RIL}
+\label{sec:orgffae8b3}
+Before we explain the semantics of ARL, we will shortly go over RIL. At its core, RIL is a set of blocks consisting of an Entry, a Body, and an Exit. Both entries and exits are one of 3 constructs, either a conditional entry/jump, an unconditional entry/jump, or a subroutine entry/exit. These works fairly similar to regular jumps and labels, known from other languages. The biggest difference is the conditional entry, which is not present in those languages. It is the inverse of the conditional jump and is used when run in reverse. It is worth noting, that since RIL has such a basic structure it is a parameterless language, meaning subroutines will use specific variables for their computation. The body of a block consists of statements or subroutine calls. Therefore any control-flow will be in its own block. However, when looking at RIL code this might not be immediately obvious. As RIL is reversible, the statements in a body are quite limited to the form L\textsubscript{1} cross = R\textsubscript{1} dot R\textsubscript{2}, or L\textsubscript{1} <-> L\textsubscript{2}. where L is a variable or a memory location and R is either an L or an integer constant in the range -1\textsuperscript{31}-2\textsuperscript{31}-1, with some restrictions to which L value R can take. The reason for this that loss of information cannot be as the statement would be non-invertible. The swap likewise swaps the value of the two L's, ensuring no loss of information. the following table shows how each RIL instruction inverts, which will be useful as a reference for evaluating patterns in reverse.
+\subsubsection{Value representation}
+\label{sec:orgaf9dd9b}
+RIL furthermore has a different value representation than ARL. RIL is as mentioned an intermediate language, with a syntax of very simple instructions. It thus uses specific patterns of machine words for different values.
+\begin{itemize}
+\item 0 represents the absence of a value.
+\item ARL's pairs are in RIL represented as a pointer to a 3-word block memory, where the first word is the reference count, the second and third word is the first and second part of the pair respectively. the RIL pointer is always represented as a multiple of 4. An instance of this is nilnil (\texttt{[[]]}), which simply is a pair of two empty lists, represented by 2, and is constructed by an initialize procedure looking as such:
+\end{itemize}
+insert code
+\begin{itemize}
+\item Integer constants n in ARL will be translated to \(2n+1\) in RIL since constants in RIL has to be an odd number. This ensures that constants and pairs don't get mixed up.
+\item The last type of word in RIL is even numbers, whose value is not a multiple of 4.  In its current state, only one symbol (\textasciitilde{}[]\textasciitilde{}/nil) is present, which is represented as the value 2.
+\end{itemize}
+\subsubsection{Subroutines}
+\label{sec:orgd3f0b1c}
+RIL also has 3 subroutines, which are used by the heap manager to manage the reference counts of nodes along with ensuring maximal sharing. These are used for some of the more complicated patterns in ARL.
+copy - is used to copy values, which is what allows us to use the same variable multiple times.
+fields - is used in the ``as'' pattern.
+cons - is used for pairs.
+\subsubsection{Copy}
+\label{sec:org473e38b}
+the copy subroutine uses the variables copyP and copyQ. Copy assumes copyP to be bigger than 0 and copyQ to be equal to 0. This makes sense, since 0 is the absence of a value, and thus copyP cannot be 0 as there would be no value to copy and it must be a positive integer as it is an index in memory. CopyQ likewise needs to be 0 as would not be a true copy of copyP if it weren't. If copyP is a pointer the reference count is increased and copyQ is set to the same value as copyP using \texttt{copyQ += copyP}. Called in Reverse copy assumes the two variables to be equivalent, as this is the only way to ``destroy'' a variable without loss of information. This happens by subtracting copyP from copyQ. thus copyQ will be 0. again if copyP is a pointer the reference counter is decreased.
+\subsubsection{Fields}
+\label{sec:org7546fa2}
+Fields have 3 variables, fieldsA, fieldsD, and fieldsP. We have previously described how an as pattern is an identifier and a pair. the identifier will be the pointer to this pair and will be located in the fieldsP variable. The other two variables must be 0, to ensure correctness. It will then set the fieldsA and fieldsD to the second and third word of the pair respectively, which corresponds to the car and cdr of the pair. In reverse, the fieldsA and fieldsD will be cleared.
+\subsubsection{Cons}
+\label{sec:org7c22514}
+The cons subroutine is quite a bit more complex than the other two. This is because it also has to allocate and deallocate nodes and it is implemented using hashing to make lookup more efficient. We will not go over the specifics, but only the general functionality. Cons take two arguments consA and consD, which must be values (not 0). These values will be cleared, or possibly more intuitive they will be placed as second and third word of the pair, if the pair doesn't already exist on the heap, otherwise the reference count will be increased, while consA and consD are cleared. The pointer to the pair (consA, consD) will be in consP. Called in reverse a pair is deconstructed, deallocating the pointer if the reference count reaches 0 and increasing the reference count for the consA and consD fields.
+\subsection{Functions and Rules}
+\label{sec:orgadc53c6}
+\begin{figure}[!htb]
+\begin{minipage}{0.4\textwidth}
 \begin{lstlisting}
 $F\llb f\; r_1 | \cdots | r_n \rrb =$
     begin f
@@ -125,32 +192,9 @@ $F\llb f\; r_1 | \cdots | r_n \rrb =$
     assert A != A
     --> f$_{n+1}'$
 \end{lstlisting}
-where \(R \llb r_i \rrb\) is the translation of the Rules and \(f_i\) and  \(f_i'\) represent entrypoint and exitpoints respectively. Essentially a function will evalute each rule sequentially, if a rule evalutes correctly it will terminate and if no rules is matched it will assert a false statement, thus exiting with a failure.
 \end{minipage}
 \qquad
-\begin{minipage}[t]{0.4\textwidth}
-\textbf{Example flip}
-\begin{lstlisting}
-$F\llb flip\; r_1 | \cdots | r_n \rrb =$
-    begin flip
-    skip
-    --> flip$_1$
-    flip$_1'$ <--
-    skip
-    end flip
-    $R \llb r_1 \rrb$
-    $\vdots$
-    $R \llb r_n \rrb$
-    flip$_{n+1}$ <--
-    assert A != A
-    --> flip$_{n+1}'$
-\end{lstlisting}
-As the structure of a function is quite generic we only change f to flip in the example.
-\end{minipage}
-\subsection{Rules}
-\label{sec:org423bef6}
-\begin{minipage}[t]{0.6\textwidth}
-\textbf{Translation Scheme}
+\begin{minipage}{0.4\textwidth}
 \begin{lstlisting}
 $R\llb p_i = d_i^1 \cdots d_i^n o_i \rrb =$
     f$_i$ <--
@@ -163,127 +207,201 @@ $R\llb p_i = d_i^1 \cdots d_i^n o_i \rrb =$
     $\overline{P \llb o_i \rrb A}$
     --> f$_i'$
 \end{lstlisting}
-A rule will first evaluate \(P \llb p_i \rrb A\). If this evaulates correctly, meaning \(A = 0\) (we have moved the value of A into \(p_i\)), the body of the function will be evaluated. the result \(o_i\) will be evaluted under \(\overline{P \llb o_i \rrb A}\) as we needs to reconstruct a pattern and \(P \llb x \rrb\) corresponds to a deconstruction of a pattern whereas \(\overline{ P \llb x \rrb }\) corresponds to a construction.
 \end{minipage}
-\qquad
-\begin{minipage}[t]{0.4\textwidth}
-\textbf{Example flip}
-\begin{lstlisting}
-$R\llb (l,r) = fl_{d_1^1}\; fr_{d_1^2}\; (fr,fl) \rrb =$
-    flip$_1$ <--
-    $ P \llb (l,r) \rrb A$
-    A != 0 --> flip$_2$
-    $ D \llb fl \rrb$
-    $ D \llb fr \rrb$
-    flip$_{2}'$ <-- A != 0;
-    $\overline{P \llb (fr,fl) \rrb A}$
-    --> flip$_1'$
-$R\llb x = x \rrb =$
-    flip$_2$ <--
-    $ P \llb x \rrb A$
-    A != 0 --> flip$_3$;
-    flip$_3'$ <-- A != 0;
-    $ \overline{P \llb x \rrb A}$
-    --> flip$_2'$
-\end{lstlisting}
-Rules, like Functions, are quite generic in nature, so only small changes have to be made.
-\end{minipage}
+
+\caption{Semantics of functions and rules}
+\label{rules}
+\end{figure}
+
+Figure\textasciitilde{}\ref{rules} show how we evaluate functions and rules, where \(R \llb r_i \rrb\) is the translation of the Rules and \(f_i\) and  \(f_i'\) represent entry points and exit points respectively. Essentially a function will have its entry point, and jump immediately to the entry of the first rule. It will evaluate each rule sequentially until one is evaluated correctly, that is, its exit point has been reached it will then terminate the function/subroutine (this is a simplification). If no rules are matched the function will assert a false statement, thus exiting with a failure, which essentially means a function cannot be called on any construct only those matching the rules.
+
+Rules are introduced by their entry point f\textsubscript{i}. From here p\textsubscript{i}, which is the parameter pattern of the rule will be evaluated. Essentially what we do when we evaluate a pattern in the forward direction we try to move it out of A, which is the variable chosen for input and output as RIL as stated is parameterless. If A is correctly distributed to p\textsubscript{i}, the value of A will be 0 and we can thus ignore the conditional jump. and proceed to evaluate the body of the rule. Is A however not equal to 0, it means that the pattern was not correctly matched and thus we want to make the jump, which leads us to the next rule. If the jump is not taken the body can safely be evaluated. We can then see there is an exit point for f'\textsubscript{i+1}. The reason for this is we have to evaluate the result of each previous rule to make sure the output is disjoint, meaning the function is injective. It is also worth noting that when evaluating the result o\textsubscript{i}, we evaluate it inversely. This can be seen as a construction of A based on o\textsubscript{i}, whereas the \(P\llb p_i \rrb A\) could be the deconstruction of A into p\textsubscript{i}. Lastly, we will take an unconditional jump to right before the result in the previous rule, to do the disjoint checking as described.
+
 \subsection{Patterns}
-\label{sec:org984c7af}
-\begin{minipage}[t]{0.6\textwidth}
-\textbf{Translation Scheme (variables)}
+\label{sec:org62f0b75}
+\subsubsection{Variables}
+\label{sec:org5ff9d66}
+\begin{figure}[!htb]
+\begin{minipage}{0.4\textwidth}
 \begin{lstlisting}
 $P\llb x \rrb v =$
    x <-> v
 \end{lstlisting}
-where x is a variable. This is the most basic rule and will be valid whenever x first occurs, if x however is not the first occurence we will need to use the copy subroutine.
+when x is first occurence
 \begin{lstlisting}
 $P\llb x \rrb v =$
    v != x --> l$_1$;
    v <-> copyQ;
    x <-> copyP;
    uncall copy;
+   x <-> copyP;
    l$_1$ <-- v != 0;
 \end{lstlisting}
-What we first need to do is to check whether or not x and v is identical. This is a prerequisite for the copy subroutine to work. we then switch the values into the variables that is used in the routine. we switch v into copyQ as this is the value that will be consumed. x will be switched into copyP as this is the value that will be saved.
 \end{minipage}
 \qquad
-\begin{minipage}[t]{0.4\textwidth}
-\textbf{Example flip}
+\begin{minipage}{0.4\textwidth}
 \begin{lstlisting}
-$P\llb x \rrb A =$
-   x <-> A
+$\overline{P\llb x \rrb v} =$
+   x <-> v
 \end{lstlisting}
-This evaluation happens, a few times in the translation of flip. One of these is when we want to destruct our input of the second rule. Essentially we bind the input A into x and clears A.
-
-every variable only occurs once in the flip example.
+when x is first occurence
+\begin{lstlisting}
+$\overline{P\llb x \rrb v} =$
+   v != 0 --> l$_1$;
+   x <-> copyP;
+   call copy;
+   x <-> copyP;
+   v <-> copyQ;
+   l$_1$ <-- v != x;
+\end{lstlisting}
 \end{minipage}
 
-\begin{minipage}[t]{0.6\textwidth}
-\textbf{Translation Scheme (pairs)}
-\begin{lstlisting}
-$P\llb (p_1,p_2) \rrb v =$
-   v & 3 --> l$_1$;
-   v <-> consP;
-   uncall cons;
-   $P \llb p_1 \rrb$consA;
-   consA != 0 --> l$_2$;
-   $P \llb p_2 \rrb$consD;
-   consD == 0 --> l$_3$;
-   l$_2$ <-- consA != 0;
-   $\overline{P \llb p_1 \rrb consA}$;
-   call cons;
-   v <-> consP;
-   l$_3$ <-- v == 0;
-   l$_1$ <-- v & 3;
-\end{lstlisting}
-When translating a pattern to RIL, we first start by checking whether or not v is a pointer to a pair, since we can safely skip unfolding the pattern if it is not. we will then move the v into consP as this is the variable used by the cons sub-routine. The results of these are stored in consA and consD. We therefore recursively check if p\textsubscript{1} can be correctly unfolded, meaning the value of consA should be 0. If this is not the case we jump to l\textsubscript{2} reconstructing the p\textsubscript{1}. Afterwards p\textsubscript{2} is checked in the same way and is the result of consD 0, then we have safely deconstructed the pattern.
-\end{minipage}
-\qquad
-\begin{minipage}[t]{0.4\textwidth}
-\textbf{Example flip}
-\begin{lstlisting}
-$P\llb (p_1,p_2) \rrb A =$
-   A & 3 --> l$_1$;
-   A <-> consP;
-   uncall cons;
-   l <-> consA;
-   consA != 0 --> l$_2$;
-   r <-> consD;
-   consD == 0 --> l$_3$;
-   l$_2$ <-- consA != 0;
-   l <-> consA;
-   call cons;
-   v <-> consP;
-   l$_3$ <-- v == 0;
-   l$_1$ <-- v & 3;
-\end{lstlisting}
-This is used both as a deconstruction of pair in the argument of the first rule of flip and its inverse in constructing the result (fr, fl) in the same rule. Every case of translation of a subterm i.e. \(P \llb p_1 \rrb consA\) translates into the simple case
+\caption{Semantics of variables}
+\label{variables}
+\end{figure}
+There are two different ways a variable needs to be compiled. The most basic rule \texttt{x <-> v}, with x being the variable, will be valid whenever x first occurs in a pattern. Called in reverse this is simply the same instruction. For every occurrence of x that is not the first occurrence, we will need to use the copy subroutine, described earlier. When evaluating a variable that has occurred previously we first need to check whether or not x and v are identical. This is a prerequisite for the copy subroutine to work as it results in an assertion failure in the copy subroutine otherwise. we then switch the values into the variables that are used in the routine. we switch v into copyQ as this is the value that will be consumed. x will be switched into copyP as this is the value that will be saved. When evaluated in reverse, we check that v is 0 as this again would result in an assertion failure, we move x into copyP and makes a copy into copyQ and move it back to x and v.
 
-\texttt{l <-> consA}.
-
-Every variable only occurs once in the flip example.
-\end{minipage}
-\subsubsection{stuff that is not included in flip}
-\label{sec:org77e4660}
-\begin{minipage}[t]{0.6\textwidth}
-\textbf{Translation Scheme (constant)}
+\subsubsection{Constants}
+\label{sec:org4edb57e}
+\begin{figure}[!htb]
+\begin{minipage}{0.4\textwidth}
 \begin{lstlisting}
 $P \llb k \rrb v =$
     v != k --> l$_1$;
     v -= k;
     l$_1$ <-- v != 0;
 \end{lstlisting}
-Constants is quite simple. firstly the constant needs be equivalent to v for the pattern to match. Is this the case, we subtract k from v, essentially setting v = 0.
 \end{minipage}
 \qquad
-\begin{minipage}[t]{0.4\textwidth}
-\textbf{Example flip}
+\begin{minipage}{0.4\textwidth}
+\begin{lstlisting}
+$\overline{P\llb k \rrb v} =$
+    v != 0 --> l$_1$;
+    v += k;
+    l$_1$ <-- v != x;
+\end{lstlisting}
 \end{minipage}
 
+\caption{Semantics of constants}
+\label{constants}
+\end{figure}
+Constants are quite simple. firstly the constant need to be equivalent to v for the pattern to match. Once again this we want to extract the constant k from v, getting v to equal 0 if the pattern matches. This can only be the case when they are equivalent. In the case they are, we simply subtract k from v, and since k is a constant and will never change we cannot and there is no need to do anything to k. In reverse we do the opposite we check if v is 0 if it is we can set it to the value of k.
 
-\begin{minipage}[t]{0.6\textwidth}
-\textbf{Translation Scheme (not equal)}
+\subsubsection{Pairs}
+\label{sec:orge75efa8}
+\begin{figure}[!htb]
+\begin{minipage}{0.4\textwidth}
+\begin{lstlisting}
+$P\llb (p_1,p_2) \rrb v =$
+   v & 3 --> l$_1$;
+   v <-> consP;
+   uncall cons;
+   $t_1$ <-> consA;
+   $t_2$ <-> consD;
+   $P \llb p_1 \rrb t_1$;
+   t$_1$ != 0 --> l$_2$;
+   $P \llb p_2 \rrb t_2$;
+   t$_2$ == 0 --> l$_3$;
+   l$_2$ <-- t$_1$ != 0;
+   $\overline{P \llb p_1 \rrb t_1}$;
+   $t_1$ <-> consA;
+   $t_2$ <-> consD;
+   call cons;
+   v <-> consP;
+   l$_3$ <-- v == 0;
+   l$_1$ <-- v & 3;
+\end{lstlisting}
+\end{minipage}
+\qquad
+\begin{minipage}{0.4\textwidth}
+\begin{lstlisting}
+$\overline{P\llb (p_1,p_2) \rrb v} =$
+   v & 3 --> l$_1$;
+   v == 0 -> l$_3$;
+   v <-> consP;
+   uncall cons;
+   $t_1$ <-> consA;
+   $t_2$ <-> consD;
+   $P \llb p_1 \rrb t_1$;
+   t$_1$ != 0 --> l$_2$;
+   l$_3$ <-- t$_2$ == 0;
+   $\overline{P \llb p_2 \rrb t_2}$;
+   l$_2$ <-- t$_1$ != 0;
+   $\overline{P \llb p_1 \rrb t_1}$;
+   $t_1$ <-> consA;
+   $t_2$ <-> consD;
+   call cons;
+   v <-> consP;
+   l$_1$ <-- v & 3;
+\end{lstlisting}
+\end{minipage}
+
+\caption{Semantics of pairs}
+\label{pairs}
+\end{figure}
+When translating a pair to RIL, we first start by checking whether or not v is a pointer to a pair. This can be done by checking \texttt{v \& 3}, as pointers always will have 11 in their 2 least significant bits. If v simply is not a pair, we can skip the entire unfolding of v, jumping straight to the bottom. is v however a pair, we move v into consP, as we need to deconstruct by uncalling cons. the car and cdr will then be in consA and consD. we however have to move these to two newly created variables t\textsubscript{1} and t\textsubscript{2}. this might seems unnecessary at first but whenever we have nested patterns, not moving consA and consD out to new variables will make the program fail as these will not be 0 in the uncall to cons in the nested pair. when moved accordingly, we can then evaluate p\textsubscript{1} under t\textsubscript{1}. After this evaluation we need to check if \texttt{v} was correctly cleared. If t\textsubscript{1} is 0 we can move on to evaluate p\textsubscript{2} under t\textsubscript{2}. Is it the case that t\textsubscript{1} is not 0 we jump to entry l\textsubscript{3} and reconstruct v\textsubscript{1}. Once again this is to ensure we don't lose any information while evaluating a pattern we will then proceed to reconstruct v by doing the inverse sequence of operations as when we deconstructed the pair. Do we on the other hand evaluate p\textsubscript{2} correctly we can jump to entry l\textsubscript{4}. When evaluated inversely we start by checking whether v is a pointer, skipping the entire thing if it isn't. we then check wether v is 0. if it is we jump to entry l\textsubscript{4}, and proceed to construct v by evaluating t\textsubscript{2} and t\textsubscript{1} inversely, calling cons and moving into v. If v is not 0 we have to deconstruct it even further, by uncalling cons and make evaluate t\textsubscript{1}. Overall the procedure will deconstruct a pair in forward direction and create a pair in the inverse direction.
+\subsubsection{As pattern}
+\label{sec:org541e4e6}
+\begin{figure}[!htb]
+\begin{minipage}{0.4\textwidth}
+\begin{lstlisting}
+$P \llb x \uptext{as} (p_1,p_2) \rrb v =$
+   v & 3 --> l$_1$;
+   v <-> fieldsP;
+   call fields;
+   x <-> fieldsP;
+   $t_1$ <-> fieldsA;
+   $t_2$ <-> fieldsD;
+   $P \llb p_1 \rrb t_1$;
+   t$_1$ != 0 --> l$_2$;
+   $P \llb p_2 \rrb t_2$;
+   t$_2$ == 0 --> l$_3$;
+   l$_2$ <-- t$_1$ != 0;
+   $\overline{P \llb p_1 \rrb consA}$;
+   x <-> fieldsP;
+   $t_1$ <-> fieldsA;
+   $t_2$ <-> fieldsD;
+   uncall fields;
+   v <-> fieldsP;
+   l$_3$ <-- v == 0;
+   l$_1$ <-- v & 3;
+\end{lstlisting}
+\end{minipage}
+\qquad
+\begin{minipage}{0.4\textwidth}
+\begin{lstlisting}
+$\overline{P \llb x \uptext{as} (p_1,p_2) \rrb v} =$
+   v & 3 --> l$_1$;
+   v == 0 -> l$_3$;
+   v <-> fieldsP;
+   call fields;
+   x <-> fieldsP;
+   $t_1$ <-> fieldsA;
+   $t_2$ <-> fieldsD;
+   $P \llb p_1 \rrb t_1$;
+   t$_1$ != 0 --> l$_2$;
+   l$_3$ <-- t$_2$ == 0;
+   $\overline{P \llb p_2 \rrb t_2}$;
+   l$_2$ <-- t$_1$ != 0;
+   $\overline{P \llb p_1 \rrb t_1}$;
+   x <-> fieldsP;
+   $t_1$ <-> fieldsA;
+   $t_2$ <-> fieldsD;
+   uncall fields;
+   v <-> fieldsP;
+   l$_1$ <-- v & 3;
+\end{lstlisting}
+\end{minipage}
+
+\caption{Semantics of As pattern}
+\label{As}
+\end{figure}
+An \texttt{as} pattern is almost identical to the pairs, the only difference is that we want to keep the integrity of x, which is done by using the fields sub-routine. Just like with a pair, we check if v is in fact a pair. we will then move v into fieldsP, calling \texttt{fields} and then distributing the pointer to x, fieldsA to t\textsubscript{1} and fieldD to t2. Again t\textsubscript{1} and t\textsubscript{2} needs to be unique newly created variables, such that we encounter any trouble with nested patterns. The rests of the evaluation of an \texttt{as} pattern is the same as for pairs, since the only difference between an \texttt{as} pattern and a \texttt{pair} pattern is that we in the \texttt{as} pattern want to keep a reference to the pair.  In reverse the same principles also holds.
+
+\subsubsection{Not equal (<>)}
+\label{sec:orgce7aec1}
+\begin{figure}[!htb]
+\begin{minipage}{0.4\textwidth}
 \begin{lstlisting}
 $P \llb x \neq p \rrb v =$
     assert x == 0;
@@ -292,64 +410,119 @@ $P \llb x \neq p \rrb v =$
     $\overline{P \llb p \rrb v}$
     v -= x
 \end{lstlisting}
-When evaluating a not equal pattern, we first needs to assume x is 0 otherwise our two updates, first to x then to v, would compromise the integrity of v. For instance in the case of flip the rule \texttt{| x = x} could be written as \texttt{| x <> (l,r) = x <> (fr,fl)}. In such a case p would not be a pointer (v !\& 3), thus we skip the entire evaluation of p. we would then subtract, v from x, do nothing once again, and then subtract a value larger than v from v, which is nonsensical. Therefore x must be 0 before the evaluation.
 \end{minipage}
-
-
-\begin{minipage}[t]{0.6\textwidth}
-\textbf{Translation Scheme (As pattern)}
+\qquad
+\begin{minipage}{0.4\textwidth}
 \begin{lstlisting}
-$P \llb x \uptext{as} (p_1,p_2) \rrb v =$
-   v & 3 --> l$_1$;
-   x <-> fieldsP;
-   call fields
-   $P \llb p_1 \rrb$fieldsA;
-   consA != 0 --> l$_2$;
-   $P \llb p_2 \rrb$fieldsD;
-   consD == 0 --> l$_3$;
-   l$_2$ <-- consA != 0;
-   $\overline{P \llb p_1 \rrb consA}$;
-   uncall fields;
-   x <-> fieldsP;
-   l$_3$ <-- v == 0;
-   l$_1$ <-- v & 3;
+$\overline{P \llb x \neq p \rrb v} =$
+    v += x
+    $P \llb p \rrb v$
+    x -= v;
+    $\overline{P \llb p \rrb v}$
+    assert x == 0;
 \end{lstlisting}
-An as pattern is almost identical from the pairs, the only difference is that we want to keep the integrity of x, which is done by using the fields sub-routine.
 \end{minipage}
-\subsubsection{Let definitions}
-\label{sec:orgf8aa22e}
-\subsubsection{{\bfseries\sffamily TODO} describe the let defs}
-\label{sec:org16507a5}
-\section{Parsing}
-\label{sec:org1bb46c8}
-The compiler for ARL has been written in haskell using Megaparsec as parsing library. This was chosen over lexer/parser tools such as Alex/Happy, because of familiarity and because ARL as a language is quite small, thus making it pretty easy to implement. Megaparsec was chosen over other parsing libraries such as Parsec for 2 main reasons. First ARL is an indentation sensitive language, chosen to have quite strict rules, which we will se later on. Second Megaparsec makes position handling extremely easy giving exact position of when parsing failed with out having to bundle the AST with positions.
 
-\subsection{AST}
-\label{sec:org12363e7}
-The implementation of the abstract syntax tree, is almost true to the Grammar presented in \ref{grammar}. There are however three minor changes. Instead rules looking like
+\caption{Semantics of <> pattern}
+\label{Neq}
+\end{figure}
+
+For a \texttt{not equal} pattern, we first need to assume x is 0 otherwise our two updates, first to x then to v, would compromise the integrity of v. For instance in the case of flip the rule \texttt{| x = x} could be written as \texttt{| x <> (l,r) = x <> (fr,fl)}. In such a case v would not be a pointer (v !\& 3), thus we skip the entire evaluation of p. we would then subtract, v from x, do nothing once again, and then subtract a value larger than v from v, which is nonsensical. Therefore x must be 0 before the evaluation. As explained, after the assertion we want to deconstruct p under v, then update x with \texttt{x += v}, setting x to v. here v should have its original value as it should skip moving v into p, else x would be equal to p. we then reconstruct p under v and subtract the value of x from v. In its core this is a simple swap, however, if p matches v, v should be 0 and no update to x is happening.
+
+\subsection{Let definitions}
+\label{sec:org2642d81}
+\begin{figure}[!htb]
+\begin{minipage}{0.4\textwidth}
+\begin{lstlisting}
+$D \llb \textup{let} p_1 = \textup{call} f p_2 \textup{in} \rrb =$
+    $\overline{P \llb p_2 \rrb A}$
+    call f;
+    $P \llb p_2 \rrb A$
+    assert A == 0;
+\end{lstlisting}
+\end{minipage}
+\qquad
+\begin{minipage}{0.4\textwidth}
+\begin{lstlisting}
+$D \llb \textup{let} p_1 = \textup{loop} f p_2 \textup{in} \rrb =$
+    l$_1$ <-- A != 0;
+    $\overline{P \llb p_2 \rrb A}$
+    $P \llb p_1 \rrb A$
+    A == 0 --> l$_2$;
+    uncall f
+    --> l$_1$
+    l$_2$ <--
+    assert x == 0;
+\end{lstlisting}
+\end{minipage}
+
+\caption{Semantics of let definitions}
+\label{defs}
+\end{figure}
+\subsubsection{function calls}
+\label{sec:org951b0ba}
+A call consists of 4 parts. First, we want to evaluate p\textsubscript{2} under A in inverse. We want to construct A from p\textsubscript{2}. this should prepare A to be the input for \texttt{f}. the call to \texttt{f} then happens, and the result is always placed in A. we then evaluate p\textsubscript{1} under A, moving the value from A into p\textsubscript{1}. lastly, we need to assert that A is 0. this assertion is important, as it ensures us that the result of \texttt{f} is in fact a matching pattern to p\textsubscript{1}. For instance, if \texttt{f} returns 7, we cannot assign 7 to a pair, thus such a construct should fail.
+\subsubsection{Loops}
+\label{sec:orgd219309}
+Loops are useful in situations where tail-recursive functions are needed. but since these are not allowed we can write these as our loop construct. The loop will keep calling \texttt{f} until p\textsubscript{1} is matched. we first have an entry l\textsubscript{1}. This is where the loop starts. we then construct A from p\textsubscript{2}. Then right after we deconstruct A into p\textsubscript{1}. if A is 0 it means p\textsubscript{1} was matched correctly and we do not call the function \texttt{f} as we jump to entry l\textsubscript{2}. if A is not 0 p\textsubscript{1} is not matched and we call the function \texttt{f}. We then jump back to l\textsubscript{1}, repeating the procedure until p\textsubscript{1} is matched.* Evaluation
+
+\section{Compiler implementation}
+\label{sec:orgaeb9201}
+The implementation of the evaluation functions for ARL is built on a stack of monad-transformers. The reason for choosing such a solution is that monads are a well-integrated part of Haskell and it makes it a lot easier to implement the recursive calls to the different functions as we can use do notation to lift our functions into the monad. Furthermore, we both have an environment we want to pass on to the different \texttt{eval}-functions and some states to make it a lot easier to ensure that entries and exits are unique and that variables are correct etc. And probably most importantly, the stack allows for easy extensibility as we can easily add new monad transformers to our stack. The stack looks as follows:
+
 \begin{verbatim}
-data Rules = P Pattern [Def] Pattern
-          | R Rules Rules
+type Eval a = ReaderT Env (StateT RilState Identity) a
+
+runEval env st ev = runIdentity $ runStateT (runReaderT ev env) st
 \end{verbatim}
-it simply will be a sum type of only the single constructor P, and then the Func sumtype will take a list of rules, as such:
+
+As can be seen from Figure\textasciitilde{}\ref{}, the stack is fairly simple. The eval type takes an arbitrary type a, we only use \texttt{String} as this allows us to write the RIL code directly to a file. our string is then wrapped in an identity monad, this in itself is useless, but works well with other monads. This again is better for extensibility as, we can always substitute for another monad such as IO, which cannot be stacked as a transformer. The identity monad is then wrapped in a state transformer, where the state itself is of the type \texttt{RilState}, which is a product type we will go over later in this section. And lastly, we wrap readerT around the State. In the future, it could be useful to add the error monad to the stack to handle failures, which we currently don't do, or the writer monad to add some kind of logging.
+
+\subsection{Why reader?}
+\label{sec:org763fa06}
+The reader monad is extremely useful in our case as we have an environment we want to pass around to the different function, and it makes it easier to manage if this is not passed around as parameters but is kept isolated in the environment which can then be locally set to the specific function calls. From section\textasciitilde{}\ref{} it might be clear that we often use \texttt{A} as the variable, we evaluate under, however in some cases this change, for instance when evaluating a pair where we need to evaluate t\textsubscript{1} and t\textsubscript{2}. Therefore we might want to keep track of this. This at first seems like a state but since it never changes inside of any function we can define it in the environment. The second part of the environment is a map. We use this to keep track of which variables are alive in the program. These should be stored on the stack before a function call. this is fairly simple to do since the control flow of ARL is extremely simple. One solution might be to search the AST from the bottom up, however since the control-flow is as simple as it is, we extract all variable IDs from a Rule into a list of ID lists. we then check if a variable in a list is in any of the following lists. If this is the case the variable must be alive. we can then zip these results with the unique identifier for a let declaration, constructing our map. Thus the Environment looks as follows:
 \begin{verbatim}
-data Func = Func ID [Rules]
+   type Env = (String, M.Map String [ID])
 
-data Rules = P Pattern [Def] Pattern
+   baseEnv = ("A", M.empty)
 \end{verbatim}
-This changes is mainly because it is easier to parse and evaluate. the meaning should not change.
-For the same reason we introduce another pattern namely a NilNil, essentially this is a constant value of 4 or even more explicit a pair of nils (2's). NilNil as a legal value in RIL however depends on the build procedure that will create it. This distinction just makes it easier.
-Lastly, we earlier described the usefulness of having two ways of creating pairs, in the AST, we however only have one constructor for these as we can use some build-in functionality of megaparsec to enforce precedence without rewriting our grammar.
+\subsection{RilState}
+\label{sec:orgf78172a}
+As mentioned, there is some state in RIL that we want to keep track of to make everything easier to grasp. The RilState can be seen in figure\textasciitilde{}\ref{}, where one can notice that there is quite a lot of fields for the product type. Firstly there is RuleNo, this simply is a counter on rules, which \texttt{rLabel} is simply the string version of \texttt{ruleNo}, so we don't have to call \texttt{show} whenever we need the rule number. This might be a bit excessive. fnameS will be set at the beginning of the \texttt{evalFun}, and is used together with the unique identifiers for patterns and let declarations to ensure that label names do not occur multiple times. We can exploit this since we know, any function name needs to be unique and every rule needs to be unique. \texttt{LabNo} and \texttt{label} are the same duality as ruleNo and \texttt{rLabel} and will number jumps and entries inside the rules. Once again to enforce no duplication of labels. \texttt{pVars} is the last field of the state. \texttt{pVars} is used to check if a variable has previously occurred in a pattern. Now that we have already gotten over how we use the reader monad, the reader might seem like a good solution for this. It would be if it weren't for how pairs are evaluated. As described in section\ref{} we need to rebuild t\textsubscript{1} if is not correctly matched, which is opposes some problems. Therefore an easier solution is to add a variable to pVars when it is first encountered, otherwise generating duplicate code, and then resetting this map back to empty right before we check \(\overline{P \llb p_1\rrb t_1\rrb}\).
+\begin{verbatim}
+data RilState = RilState { ruleNo :: Int
+                         , rLabel :: String
+                         , fnameS :: ID
+                         , labNo :: Int
+                         , label :: String
+                         , pVars :: M.Map ID Int
+                         }
+\end{verbatim}
+\subsection{Generating RIL code}
+\label{sec:orgd2308c6}
+Just like in the parser, we have an \texttt{eval} function for each non-terminal in the AST. We use the do notation to generate the state etc. we need for a specific function, and then we want to wrap the string inside the monad. we construct the strings, by creating a list of strings, where each string is a RIL instruction, which then gets intercalated, with newlines to preserve structure in the RIL file. To make the code easier to read we abstract away the operations. functions with names v(EQ|NEQ)(0|x)(E|J), will be conditional jumps and entries, where v is equal or not to 0 or x. Plus and sub is the updates (+=) (-=) respectively. Swap is (<->). Furthermore, we have defined swap functions for each of the variables used in the 3 subroutines described in section\textasciitilde{}\ref{} as these are used quite often, e.g. \texttt{consP x} swaps x with consP.
 
-\subsection{Parsers}
-\label{sec:org974220a}
-the basics.
-Comments is based of f\#. line-comments is the same as in // and block-comments is (* *). identifers can be any string starting with a lower character followed by any alphanumerical character, a dash or an underscore.
 
-\subsubsection{Functions}
-\label{sec:orgbe40d3a}
-As described ARL has been chosen to have some strict rules for indentation. This is forced to make the code readable. We must thus enforce the specific rules in the parser. Firstly we ensure that a function is always declared in column 0. This makes for a fine structure, but might need to be changed in the future if we allow for nested function declarations. we will then consume the unecessary garbage. We will then either have a main function er a pure function, if we encouter a main we will then parse the function calls. Here we enforce another indentation rule, a function call, must reside directly under the fname of main, like solution in the flip code-example. In the parsing we do not enforce a single main function, instead we handle this in the pre-processing.
-If we however encounter a non-main function (from here just function) we will parse its rules. Like in the main function we ensure that a rule (other than the first, which must be on the same line) resides under under the fname. that is the guard | must be placed here. Other than this indentation handling the parser is simply a sequence of parsers and combinators.
+\section{Results}
+\label{sec:org3285223}
+\subsubsection{{\bfseries\sffamily TODO} describe tests}
+\label{sec:org22d23b9}
+\subsubsection{{\bfseries\sffamily TODO} describe how well the project has come along}
+\label{sec:orgf726c34}
+When it comes to the actual ARL compiler it is still in its early stages. First and foremost they are no optimizations implemented. One such optimization could be dead code removal, which would make the actual RIL file less cluttered. Furthermore, there is very little error-handling implemented in the ARL compiler itself. As described in section\textasciitilde{}\ref{} MegaParsec does fine error handling on its own and we let any syntax error be handled by the library. We then check that functions are not defined multiple times, but this is where the error-checking stops. The reason for this is the compiler does not do a whole lot of static checks. However, the need for these checks is also very limited, when keeping in mind there are no types that need to be unified, type-checked, etc. One thing that is not
+\section{How to use - code structure}
+\label{sec:org6c3ec0d}
+\subsubsection{{\bfseries\sffamily TODO} describe the code structure and how to run the program.}
+\label{sec:org9b415c1}
+In its current state the compiler is still a bit tedious to use, since no good interface have been implemented. The ARL compiler will simply generate a RIL file, which has to be compiled by the RIL compiler, which then in turn needs to be compiled using a C compiler.
+\section{Conclusion}
+\label{sec:orgf350639}
+\subsubsection{TODO}
+\label{sec:org0b73c81}
+
+\bibliographystyle{unsrt}
+\bibliography{inverse}
+\appendix
 \begin{verbatim}
 funP :: Parser (Either Main Func)
 funP = L.nonIndented scn $ L.lineFold scn p
@@ -365,15 +538,12 @@ funP = L.nonIndented scn $ L.lineFold scn p
                       mapM_ (\(_,x) -> when (x /= mkPos 5)
                           (L.incorrectIndent EQ (mkPos 5) x)) rs
                       return $ Func id $ r:map fst rs
-    rules  = do scn; ind <- L.indentLevel; symbol "|"; r <- ruleP ind; return (r,ind)
+    rules  = do scn
+                ind <- L.indentLevel; symbol "|"
+                r <- ruleP ind
+                return (r,ind)
     mainP  = do symbol "="; some $ try funC
 \end{verbatim}
-\subsubsection{Rules}
-\label{sec:org2e6f225}
-The parsing for the Rule sum type is actually quite simple as most of the of the indetation is handled in the function parser. Although the rule parser also will have to do some indentation enforcement, it will pass on its indentation level for the let-declarations parser, to make certain that let definitions is deeper indented than the rule, along with forcing let declarations to be lined up with the resulting pattern. Again this is simply used to establish structure for the body of a particular function pattern, also called rule.
-\subsubsection{Let declarations}
-\label{sec:org584276e}
-Unsurprsingly the let declaration follow a similar structure as the the other parsers. overall we can reduce a let declaration to either of two, it is a function call/uncall or it is a loop. These are very similar in structure so we will only go over the simple case for function calls. again we ensure the indentation is correct, throwing a parse error otherwise. we then uses the same strategy as we did for function calls in main to distinguise between a call and an uncall using the observing function. depending on whether the symbol ! is present before the function identifier, we get a \texttt{Left} or a \texttt{Right} value which we then converts to the appropriate type.
 \begin{verbatim}
 defP :: Pos -> Parser Def
 defP ind = try call <|> try loop <?> "Let def"
@@ -391,24 +561,17 @@ defP ind = try call <|> try loop <?> "Let def"
                     Left _ -> return $ Call lhs fname rhs
                     Right _ -> return $ Uncall lhs fname rhs
 \end{verbatim}
-This function has a lot of duplicate code, which potentially could be eliminated.
-\subsubsection{Patterns}
-\label{sec:org2dfd57b}
-Patterns is the most atomic part of the grammar, as its only non-terminal symbol is that of Pattern. It is thus also the easiest to parse. We construct a parser for each terminal and combine these using the parser combinators.
-We can see that whenever we encounter a \texttt{[[]]} we have a \texttt{NilNil} constructor. for constants we simply wrap the constant value in the Const constructor, we however ommit to changing the value to its internal representation in RIL which would be 2n+1. The reason for this is that we want to distingus between the sytactical and sematical meaning of the program. It is further noticeable that we also wrap \texttt{nil} as a Const with a value of 1.
-A variable is simply the indentifier wrapped.
-A not equal pattern is likewise simply the identifier and a recursive pattern call. The same holds for the \texttt{as} constructor, however the second part of an \texttt{as} can only be a pair. For pairs we can see it makes use of the MakeExprParser which specifies associativity and precedence for the two ways of constructing pairs.
-Lastly we also want to allow to wrap any \texttt{Pattern} in parenthesis.
 \begin{verbatim}
 patternP :: Parser Pattern
-patternP = try as <|> try neq <|> try nilnil <|> var <|> const' <|> try pair <|> parLE <?> "Pattern"
+patternP = try as <|> try neq <|> try nilnil <|> var <|> const'
+           <|> try pair <|> parLE <?> "Pattern"
   where
     nilnil = rword "[[]]" >> return NilNil
     const' = (integer <|> nils) <&> Const
     nils   = rword "[]" >> return 1
     var    = identifier <&> Var
     neq    = do ident <- identifier; rword "<>"; Neq ident <$> patternP
-    as     = do ident <- identifier; rword "as"; As ident <$> pair --patternP
+    as     = do ident <- identifier; rword "as"; As ident <$> pair
     pair   = parens pairP
     pairP  = makeExprParser patternP
              [
@@ -417,28 +580,4 @@ patternP = try as <|> try neq <|> try nilnil <|> var <|> const' <|> try pair <|>
              ]
     parLE  = parens patternP
 \end{verbatim}
-\section{Evaluation}
-\label{sec:org1a6ee6b}
-\subsubsection{{\bfseries\sffamily TODO} describe how the compiler is implemented.}
-\label{sec:org5c1837a}
-
-\section{Results}
-\label{sec:org9650fd0}
-\subsubsection{{\bfseries\sffamily TODO} describe tests}
-\label{sec:org09482d0}
-\subsubsection{{\bfseries\sffamily TODO} describe how well the project has come along}
-\label{sec:orgb3ad359}
-
-\section{How to use - code structure}
-\label{sec:org71376e1}
-\subsubsection{{\bfseries\sffamily TODO} describe the code structure and how to run the program.}
-\label{sec:org0d2e23f}
-\section{Conclusion}
-\label{sec:org08367fa}
-\subsubsection{TODO}
-\label{sec:org18cf01f}
-\section{References}
-\label{sec:org82cd50a}
-\subsubsection{{\bfseries\sffamily TODO} fill, mostly with references in the introduction.}
-\label{sec:orgd4a2b13}
 \end{document}

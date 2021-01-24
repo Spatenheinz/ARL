@@ -14,11 +14,6 @@ import Arl.RilEnv
 
 -- --------------------- MONAD AND EVAL --------------------------------
 
--- type Eval a = ReaderT Env (ExceptT String (StateT Integer Identity)) a
-
--- runEval :: Env -> Integer -> Eval a -> (Either String a, Integer)
--- runEval env st e = runIdentity (runStateT (runExceptT (runReaderT e env)) st)
-
 type Eval a = ReaderT Env (StateT RilState Identity) a
 
 runEval env st ev = runIdentity $ runStateT (runReaderT ev env) st
@@ -41,6 +36,7 @@ evalProg (main, funcs) =
        , "\n"
        , newlines funcs'
        , copy
+       , fields
        , cons
        ]
 
@@ -75,10 +71,10 @@ evalFun (Func id rules) =
 evalRules :: Rule -> Eval String
 evalRules r@Rule{args, body, output} =
   do st <- get
-     putVars output
-     res' <- local (const ("A", M.empty)) $ evalInvPattern output
-     putVars args
      inp' <- local (const ("A", M.empty)) $ evalPattern args
+     resetVar
+     res' <- local (const ("A", M.empty)) $ evalInvPattern output
+     resetVar
      defs' <- local (const ("A", getLiveVars r)) $ mapM evalDef body
      ruleTick
      return $ newlines
@@ -101,14 +97,14 @@ evalPattern :: Pattern -> Eval String
 evalPattern (Var x) =
   do (v,_) <- ask
      st <- innerTick
-     rmVar x
+     putVar x
      case M.lookup x (pVars st) of
-       Just _ -> return $ swap x v
-       Nothing -> return $ newlines
+       Nothing -> return $ swap x v -- ++ show (pVars st)
+       Just _  -> return $ newlines
                     [ vNeqxJ v x (label st)
                     , copyP x
                     , copyQ v
-                    , "uncall copy;"
+                    , "uncall copy;" --, show (pVars st)
                     , copyP x
                     , vNeq0E (label st) v
                     ]
@@ -131,7 +127,6 @@ evalPattern (Const c) =
   where rval = if c == 2 then c else c*2+1
 evalPattern p@(Pair car cdr) =
   do (v,_) <- ask
-     putVars p
      st1 <- innerTick
      st2 <- innerTick
      st3 <- innerTick
@@ -139,10 +134,12 @@ evalPattern p@(Pair car cdr) =
      let t2 = "t" ++ show (labNo st2) ++ unique p
      car' <- local (const (t1, M.empty)) $ evalPattern car
      cdr' <- local (const (t2, M.empty)) $ evalPattern cdr
-     putVars car
+     st4 <- innerTick
+     resetVar
      carInv' <- local (const (t1, M.empty)) $ evalInvPattern car
+     fetchState st4
      return $ newlines
-        [ isPointerJ v (label st1)
+        [ isPointerJ v (unique p ++ label st1)
         , consP v
         , "uncall cons;"
         , consA t1
@@ -158,7 +155,7 @@ evalPattern p@(Pair car cdr) =
         , "call cons;"
         , consP v
         , vEq0E (label st3) v
-        , isPointerE (label st1) v
+        , isPointerE (unique p ++ label st1) v
         ]
 evalPattern (Neq id pat) =
   do (v, _) <- ask
@@ -173,16 +170,14 @@ evalPattern (Neq id pat) =
         ]
 evalPattern (As id p@(Pair car cdr)) =
   do (v,_) <- ask
-     putVars p
      st1 <- innerTick
      st2 <- innerTick
      st3 <- innerTick
      let t1 = "t_" ++ show (labNo st1) ++ unique p
      let t2 = "t_" ++ show (labNo st2) ++ unique p
+     carInv' <- local (const (t1, M.empty)) $ evalInvPattern car
      car' <- local (const (t1, M.empty)) $ evalPattern car
      cdr' <- local (const (t2, M.empty)) $ evalPattern cdr
-     putVars car
-     carInv' <- local (const (t1, M.empty)) $ evalInvPattern car
      return $ newlines
         [ isPointerJ v (label st1)
         , fieldsP v
@@ -210,22 +205,22 @@ evalInvPattern :: Pattern -> Eval String
 evalInvPattern (Var x) =
   do (v, _) <- ask
      st <- innerTick
-     rmVar x
+     putVar x
      case M.lookup x (pVars st) of
-       Just _ -> return $ swap x v
-       Nothing -> return $ newlines
-                    [ vNeq0E (label st) v
+       Nothing -> return $ swap x v -- ++ show (pVars st)
+       Just _ -> return $ newlines
+                    [ vNeq0J v (label st)
                     , copyP x
-                    , "call copy;"
+                    , "call copy;" -- , show (pVars st)
                     , copyP x
                     , copyQ v
-                    , vNeq0J v (label st)
+                    , vNeqxE (label st) v x
                     ]
 evalInvPattern NilNil =
   do (v,_) <- ask
      st <- innerTick
      return $ newlines
-        [ vNeq0J (label st) v
+        [ vNeq0J v (label st)
         , plus v "nilnil"
         , vNeqxE (label st) v "nilnil"
         ]
@@ -245,23 +240,24 @@ evalInvPattern (Neq id pat) =
      pat2 <- local (const ("A", M.empty)) $ evalInvPattern pat
      return $ newlines
         [ plus v id
-        , pat2
-        , sub id v
         , pat1
+        , sub id v
+        , pat2
         , assert0 id
         ]
 evalInvPattern p@(Pair car cdr) =
   do (v, _) <- ask
-     putVars p
      st1 <- innerTick
      st2 <- innerTick
      st3 <- innerTick
      let t1 = "inv_t_" ++ label st1 ++ unique p
      let t2 = "inv_t_" ++ label st2 ++ unique p
-     car' <- local (const (t1, M.empty)) $ evalPattern car
-     putVars p
      carInv' <- local (const (t1, M.empty)) $ evalInvPattern car
      cdrInv' <- local (const (t2, M.empty)) $ evalInvPattern cdr
+     st4 <- innerTick
+     resetVar
+     car' <- local (const (t1, M.empty)) $ evalPattern car
+     fetchState st4
      return $ newlines
         [ isPointerJ v (invP ++ label st1)
         , vEq0J v (invP ++ label st3)
@@ -284,14 +280,12 @@ evalInvPattern p@(Pair car cdr) =
   where invP = "inv_" ++ unique p
 evalInvPattern (As id p@(Pair car cdr)) =
   do (v, _) <- ask
-     putVars p
      st1 <- innerTick
      st2 <- innerTick
      st3 <- innerTick
      let t1 = "inv_t" ++ label st1 ++ unique p
      let t2 = "inv_t" ++ label st2 ++ unique p
      car' <- local (const (t1, M.empty)) $ evalPattern car
-     putVars p
      carInv' <- local (const (t1, M.empty)) $ evalInvPattern car
      cdrInv' <- local (const (t2, M.empty)) $ evalInvPattern cdr
      return $ newlines
@@ -321,13 +315,13 @@ evalInvPattern (As id p@(Pair car cdr)) =
 evalDef :: Def -> Eval String
 evalDef def =
   do (v, env) <- ask
-     putVars $ res def
-     putVars $ input def
      innerTick
      st <- get
      innerTick
      st2 <- get
+     resetVar
      arg' <- local (const ("A", M.empty)) $ evalInvPattern (input def)
+     resetVar
      l' <- local (const ("A", M.empty)) $ evalPattern (res def)
      let live = case M.lookup (unique def) env of
                   Nothing -> undefined --throwError "live variables for def " ++ show d ++ "not defined"
