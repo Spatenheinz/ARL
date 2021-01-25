@@ -17,6 +17,14 @@ Markus Schordan, Tomas Oppelstrup, Michael~Kirkedal Thomsen, and Robert
   Parallel Discrete Event Simulation}, pages 187--207.
 \newblock Springer International Publishing, Cham, 2020.
 
+\bibitem{janus}
+Tetsuo Yokoyama and Robert Gl\"{u}ck.
+\newblock A reversible programming language and its invertible
+  self-interpreter.
+\newblock In {\em Proceedings of the 2007 ACM SIGPLAN Symposium on Partial
+  Evaluation and Semantics-Based Program Manipulation}, PEPM '07, page
+  144–153, New York, NY, USA, 2007. Association for Computing Machinery.
+
 \bibitem{YokoyamaAxelsenGluck:2011}
 Tetsuo Yokoyama, Holger~Bock Axelsen, and Robert Gl{\"u}ck.
 \newblock Towards a reversible functional language.
@@ -31,8 +39,13 @@ Torben~{\AE}gidius Mogensen.
   Springer Berlin Heidelberg, 2014.
 
 \bibitem{Mogensen2018ReversibleGC}
-Torben~{\aE}. Mogensen.
+Torben~{\AE}gidius Mogensen.
 \newblock Reversible garbage collection for reversible functional languages.
 \newblock {\em New Generation Computing}, 36:203--232, 2018.
+
+\bibitem{patterns}
+Torben~{\AE}gidius Mogensen.
+\newblock Compiling pattern-matching for reversible functional languages.
+\newblock {\em Unpublished}, 2018.
 
 \end{thebibliography}

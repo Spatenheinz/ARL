@@ -1,0 +1,5 @@
+fun head xs as (x::xss) = (x,xs)
+
+fun main =
+    head
+    !head

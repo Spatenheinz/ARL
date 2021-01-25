@@ -22,13 +22,13 @@ fUncall f = "uncall " ++ f ++ ";"
 
 -- JUMPS/ENTRIES
 -- unconditionals
-uJ l = " -->" ++ l
+uJ l = "--> " ++ l
 
 uE l = l ++ " <--"
 -- is v a pointer ?
-isPointerJ v l = v ++ " & 3 --> " ++ l ++ ";"
+nPointerJ v l = v ++ " & 3 --> " ++ l ++ ";"
 
-isPointerE l v = l ++ " <-- " ++ v ++ " & 3;"
+nPointerE l v = l ++ " <-- " ++ v ++ " & 3;"
 
 -- is v == 0 ?
 vEq0J v l = v ++ " == 0 --> " ++ l ++ ";"
@@ -86,3 +86,16 @@ instance Unique Pattern where
 
 instance Unique Def where
   unique x = unique (res x) ++ "_" ++ fname x ++ "_" ++ unique (input x) ++ "_"
+
+-- used for the build procedure
+makeList :: [Int] -> String
+makeList l = let m = intercalate "\n" $
+                     map (\x -> intercalate "\n"
+                       [ "consA += " ++ show (2*x+1) ++ ";"
+                       , "call cons;"
+                       , "consP <-> consD;"]) (reverse l) in
+             intercalate "\n"
+                [ "consD += 2;"
+                , m
+                , "consD <-> A"
+                ]

@@ -27,6 +27,7 @@ library
   exposed-modules:
       Arl.Ast
       Arl.Eval
+      Arl.Options
       Arl.Parser
       Arl.RIL
       Arl.RilEnv
@@ -52,6 +53,7 @@ executable ARL-exe
   other-modules:
       Arl.Ast
       Arl.Eval
+      Arl.Options
       Arl.Parser
       Arl.RIL
       Arl.RilEnv

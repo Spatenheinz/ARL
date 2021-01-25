@@ -1,0 +1,4 @@
+fun head (x::xs) = (x, x::xs)
+
+fun main =
+    head

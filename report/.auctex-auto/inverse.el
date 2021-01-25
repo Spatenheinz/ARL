@@ -6,6 +6,8 @@
     "L61"
     "Schordan2020"
     "Mogensen2018ReversibleGC"
+    "patterns"
+    "janus"
     "Briggs:87"
     "CPF:99"
     "ChenUdding:SCP90"

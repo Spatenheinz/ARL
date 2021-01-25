@@ -2,19 +2,15 @@ module Arl.RIL where
 
 import Arl.Utils
 
-build :: String
-build = newlines
+build :: [Int] -> String
+build lst = newlines
   [ "begin build"
-  , "consD += 2;"
-  , "consA += 7;"
-  , "call cons;"
-  , "A <-> consP;"
-  , "skip"
+  , makeList lst
   , "end build"
   ]
 
-mainSetup :: String
-mainSetup = newlines
+mainSetup :: String -> String
+mainSetup n = newlines
   [ "begin main"
   , "includeC \"A = 0;\\n\";"
   , "// initialize hash codes"
@@ -23,10 +19,9 @@ mainSetup = newlines
   , "hashC += 593041;"
   , "hashT += hashA;"
   , "// heap size setup"
-  , "// read m; // log of heap size"
   , "b += 8; // segment size"
   , "b1 += b - 1;"
-  , "hsize += 1<<15;"
+  , "hsize += 1<<" ++ n ++ ";"
   , "hsize += b1; // number of nodes = 2^m + b - 1"
   , "hsizeB += hsize << 2;"
   , "hsizeB += hsize << 2;"
@@ -34,7 +29,7 @@ mainSetup = newlines
   , "H += 4800; // heap start"
   , "endH += hsizeB + H; // heap end"
   , "lastH += endH - 12; // address of last node in heap"
-  , "mask += 4<<15; // Mask used for hashing: 4*(2^m)"
+  , "mask += 4<<" ++ n ++ ";"
   , "mask -= 4;"
   , "segSize += b1<<2;"
   , "segSize += b1<<2;"
@@ -74,12 +69,12 @@ copy :: String
 copy = newlines
   [ "begin copy"
   , "assert copyP > 0 && copyQ == 0;"
-  , "copyP < H --> copySymbol;" --- copyP !& 3 =>
+  , "copyP !& 3 --> copySymbol;" --- copyP !& 3 =>
   , "M[copyP] += 1;"
   , "ttt += M[copyP];"
   , "includeC \"if (A < var_ttt) A = var_ttt;\";"
   , "ttt -= M[copyP];"
-  , "copySymbol <-- copyP < H;" ---
+  , "copySymbol <-- copyP !& 3;" ---
   , "copyQ += copyP;"
   , "assert copyP > 0 && copyQ == copyP"
   , "end copy"
@@ -88,18 +83,20 @@ copy = newlines
 fields :: String
 fields = newlines
   [ "begin fields"
-  , "assert fieldsP !& 3 && fieldsA == 0 && fieldsD == 0;"
+  , "assert fieldsP > 0 && fieldsA == 0 && fieldsD == 0;"
   , "fieldsP += 4;"
-  , "fieldsA < H --> fields1;"
+  , "fieldsA += M[fieldsP];"
+  , "fieldsA !& 3 --> fields1;"
   , "M[fieldsA] += 1;"
   , "fields1 <-- fieldsA !& 3;"
   , "fieldsP += 4;"
   , "fieldsD += M[fieldsP];"
-  , "fieldsD < H --> fields2;"
+  , "fieldsD !& 3 --> fields2;"
   , "M[fieldsD] += 1;"
-  , "fields2 <-- fieldsD < H;"
+  , "fields2 <-- fieldsD !& 3;"
   , "fieldsP -= 8;"
-  , "assert fieldsP !& 3 && fieldsA && fieldsD > 0"
+  , "assert fieldsP > 0 && fieldsA > 0 && fieldsD > 0"
+  , "end fields"
   ]
 
 

@@ -1,0 +1,4 @@
+fun abb (x,y) = ((x,y),y,x)
+
+fun main =
+    abb

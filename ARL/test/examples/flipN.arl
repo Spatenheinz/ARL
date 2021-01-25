@@ -5,4 +5,4 @@ fun flip (l,r) =
      let fl = flip l in
      let fr = flip r in
      (fr, fl)
-    | x<>(l,r)     = x<>(l,r)
+    | x<>(l,r)     = x<>(fr, fl)

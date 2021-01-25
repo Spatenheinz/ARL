@@ -11,6 +11,7 @@ import Arl.RIL
 import Arl.Utils
 import Arl.RilState
 import Arl.RilEnv
+import Arl.Options
 
 -- --------------------- MONAD AND EVAL --------------------------------
 
@@ -19,24 +20,27 @@ type Eval a = ReaderT Env (StateT RilState Identity) a
 runEval env st ev = runIdentity $ runStateT (runReaderT ev env) st
 
 -- PROGRAM ---------------------------------------------------------------------
-evalProg :: Prog' -> Eval String
-evalProg (main, funcs) =
+evalProg :: Options -> Prog' -> Eval String
+evalProg opts (main, funcs) =
   do main' <- mapM evalFCall main
      funcs' <- mapM evalFun funcs
      return $ newlines
-       [ mainSetup
-       , "\n"
+       [ mainSetup (show (heapSize opts))
+       , ""
        , newlines main'
-       , "\n"
+       , ""
        , freeNodes
        , "\n"
        , initialize
        , "\n"
-       , build
+       , build (argInp opts)
        , "\n"
        , newlines funcs'
+       , "\n"
        , copy
+       , "\n"
        , fields
+       , "\n"
        , cons
        ]
 
@@ -82,10 +86,10 @@ evalRules r@Rule{args, body, output} =
             , "// input of rule" ++ rLabel st
             , inp'
             , "A != 0 --> " ++ fnameS st ++ "_entry_" ++ show (ruleNo st + 1) ++ ";"
-            , "\n//def starts here\n"
+            , "//def starts here"
             , newlines defs'
             , fnameS st ++ "_exit_" ++ show (ruleNo st + 1) ++ " <-- A != 0;"
-            , "\n // res starts here\n"
+            , "//res starts here"
             , res'
             , "skip"
             , "--> " ++ fnameS st ++ "_exit_" ++ rLabel st
@@ -139,23 +143,23 @@ evalPattern p@(Pair car cdr) =
      carInv' <- local (const (t1, M.empty)) $ evalInvPattern car
      fetchState st4
      return $ newlines
-        [ isPointerJ v (unique p ++ label st1)
+        [ nPointerJ v (unique p ++ label st1)
         , consP v
         , "uncall cons;"
         , consA t1
         , consD t2
         , car'
-        , vNeq0J t1 (label st2)
+        , vNeq0J t1 (unique p ++ label st2)
         , cdr'
-        , vEq0J t2 (label st3)
-        , vNeq0E (label st2) t1
+        , vEq0J t2 (unique p ++ label st3)
+        , vNeq0E (unique p ++ label st2) t1
         , carInv'
         , consA t1
         , consD t2
         , "call cons;"
         , consP v
-        , vEq0E (label st3) v
-        , isPointerE (unique p ++ label st1) v
+        , vEq0E (unique p ++ label st3) v
+        , nPointerE (unique p ++ label st1) v
         ]
 evalPattern (Neq id pat) =
   do (v, _) <- ask
@@ -175,29 +179,32 @@ evalPattern (As id p@(Pair car cdr)) =
      st3 <- innerTick
      let t1 = "t_" ++ show (labNo st1) ++ unique p
      let t2 = "t_" ++ show (labNo st2) ++ unique p
-     carInv' <- local (const (t1, M.empty)) $ evalInvPattern car
      car' <- local (const (t1, M.empty)) $ evalPattern car
      cdr' <- local (const (t2, M.empty)) $ evalPattern cdr
+     st4 <- innerTick
+     resetVar
+     carInv' <- local (const (t1, M.empty)) $ evalInvPattern car
+     fetchState st4
      return $ newlines
-        [ isPointerJ v (label st1)
+        [ nPointerJ v (unique p ++ label st1)
         , fieldsP v
         , "call fields;"
         , fieldsP id
         , fieldsA t1
         , fieldsD t2
         , car'
-        , vNeq0J t1 (label st2)
+        , vNeq0J t1 (unique p ++ label st2)
         , cdr'
-        , vEq0J t2 (label st3)
-        , vNeq0E (label st2) t1
+        , vEq0J t2 (unique p ++ label st3)
+        , vNeq0E (unique p ++ label st2) t1
         , carInv'
         , fieldsP id
         , fieldsA t1
         , fieldsD t2
         , "uncall fields;"
         , fieldsP v
-        , vEq0E (label st3) v
-        , isPointerE (label st1) v
+        , vEq0E (unique p ++ label st3) v
+        , nPointerE (unique p ++ label st1) v
         ]
 
 -- INVERSE PATTERNS ------------------------------------------------------------
@@ -259,7 +266,7 @@ evalInvPattern p@(Pair car cdr) =
      car' <- local (const (t1, M.empty)) $ evalPattern car
      fetchState st4
      return $ newlines
-        [ isPointerJ v (invP ++ label st1)
+        [ nPointerJ v (invP ++ label st1)
         , vEq0J v (invP ++ label st3)
         , consP v
         , "uncall cons;"
@@ -275,7 +282,7 @@ evalInvPattern p@(Pair car cdr) =
         , consD t2
         , "call cons;"
         , consP v
-        , isPointerE (invP ++ label st1) v
+        , nPointerE (invP ++ label st1) v
         ]
   where invP = "inv_" ++ unique p
 evalInvPattern (As id p@(Pair car cdr)) =
@@ -285,11 +292,14 @@ evalInvPattern (As id p@(Pair car cdr)) =
      st3 <- innerTick
      let t1 = "inv_t" ++ label st1 ++ unique p
      let t2 = "inv_t" ++ label st2 ++ unique p
-     car' <- local (const (t1, M.empty)) $ evalPattern car
      carInv' <- local (const (t1, M.empty)) $ evalInvPattern car
      cdrInv' <- local (const (t2, M.empty)) $ evalInvPattern cdr
+     st4 <- innerTick
+     resetVar
+     car' <- local (const (t1, M.empty)) $ evalPattern car
+     fetchState st4
      return $ newlines
-        [ isPointerJ v (invP ++ label st1)
+        [ nPointerJ v (invP ++ label st1)
         , vEq0J v (invP ++ label st3)
         , fieldsP v
         , "call fields;"
@@ -307,7 +317,7 @@ evalInvPattern (As id p@(Pair car cdr)) =
         , fieldsP id
         , "uncall fields;"
         , fieldsP v
-        , isPointerE (invP ++ label st1) v
+        , nPointerE (invP ++ label st1) v
         ]
   where invP = "inv_" ++ unique p
 

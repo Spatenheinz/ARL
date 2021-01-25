@@ -1,0 +1,5 @@
+fun dup x = (x,x)
+
+fun main =
+    dup
+    !dup

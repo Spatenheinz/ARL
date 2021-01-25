@@ -6,16 +6,16 @@
    (TeX-add-to-alist 'LaTeX-provided-package-options
                      '(("inputenc" "utf8") ("fontenc" "T1") ("ulem" "normalem")))
    (add-to-list 'LaTeX-verbatim-environments-local "lstlisting")
-   (add-to-list 'LaTeX-verbatim-macros-with-braces-local "lstinline")
-   (add-to-list 'LaTeX-verbatim-macros-with-braces-local "href")
-   (add-to-list 'LaTeX-verbatim-macros-with-braces-local "hyperref")
-   (add-to-list 'LaTeX-verbatim-macros-with-braces-local "hyperimage")
-   (add-to-list 'LaTeX-verbatim-macros-with-braces-local "hyperbaseurl")
-   (add-to-list 'LaTeX-verbatim-macros-with-braces-local "nolinkurl")
-   (add-to-list 'LaTeX-verbatim-macros-with-braces-local "url")
    (add-to-list 'LaTeX-verbatim-macros-with-braces-local "path")
-   (add-to-list 'LaTeX-verbatim-macros-with-delims-local "lstinline")
+   (add-to-list 'LaTeX-verbatim-macros-with-braces-local "url")
+   (add-to-list 'LaTeX-verbatim-macros-with-braces-local "nolinkurl")
+   (add-to-list 'LaTeX-verbatim-macros-with-braces-local "hyperbaseurl")
+   (add-to-list 'LaTeX-verbatim-macros-with-braces-local "hyperimage")
+   (add-to-list 'LaTeX-verbatim-macros-with-braces-local "hyperref")
+   (add-to-list 'LaTeX-verbatim-macros-with-braces-local "href")
+   (add-to-list 'LaTeX-verbatim-macros-with-braces-local "lstinline")
    (add-to-list 'LaTeX-verbatim-macros-with-delims-local "path")
+   (add-to-list 'LaTeX-verbatim-macros-with-delims-local "lstinline")
    (TeX-run-style-hooks
     "latex2e"
     "baseHeader"
@@ -35,52 +35,56 @@
     "capt-of"
     "hyperref")
    (LaTeX-add-labels
-    "sec:org2b09096"
-    "sec:org2895534"
+    "intro"
+    "sec:org31f5b6b"
+    "tree"
     "grammar"
-    "sec:org97da5c1"
-    "sec:orgfff26ab"
-    "sec:org2ce1cd5"
-    "sec:org762656c"
-    "sec:org18bf185"
-    "sec:org823f1f2"
-    "sec:orgc027d6f"
-    "sec:org88a8fac"
-    "sec:org8b98fcb"
-    "sec:orgffae8b3"
-    "sec:orgaf9dd9b"
-    "sec:orgd3f0b1c"
-    "sec:org473e38b"
-    "sec:org7546fa2"
-    "sec:org7c22514"
-    "sec:orgadc53c6"
+    "parsing"
+    "sec:orgd664a6e"
+    "sec:orgb3df1b5"
+    "sec:org52ae51f"
+    "sec:orgff77383"
+    "sec:orga1127d1"
+    "sec:org95cf4a2"
+    "sec:orga2db384"
+    "semantics"
+    "ril"
+    "operators"
+    "invop"
+    "sec:org3cd3e66"
+    "sec:orgee28d1e"
+    "sec:org32080fb"
+    "sec:org0101e74"
+    "sec:org0ecb2e8"
+    "secrules"
     "rules"
-    "sec:org62f0b75"
-    "sec:org5ff9d66"
+    "flowg"
+    "sec:orge886a06"
+    "sec:orge509945"
     "variables"
-    "sec:org4edb57e"
+    "sec:org0f48a46"
     "constants"
-    "sec:orge75efa8"
+    "sec:org77e86bb"
     "pairs"
-    "sec:org541e4e6"
+    "sec:orge57bbfe"
     "As"
-    "sec:orgce7aec1"
+    "sec:orgc304eb4"
     "Neq"
-    "sec:org2642d81"
+    "secdefs"
     "defs"
-    "sec:org951b0ba"
-    "sec:orgd219309"
-    "sec:orgaeb9201"
-    "sec:org763fa06"
-    "sec:orgf78172a"
-    "sec:orgd2308c6"
-    "sec:org3285223"
-    "sec:org22d23b9"
-    "sec:orgf726c34"
-    "sec:org6c3ec0d"
-    "sec:org9b415c1"
-    "sec:orgf350639"
-    "sec:org0b73c81")
+    "sec:orgf21bddc"
+    "sec:org332d5f9"
+    "compiler"
+    "stack"
+    "sec:orgf493c49"
+    "sec:org6ecb169"
+    "state"
+    "sec:org10c8bd3"
+    "sec:org4b98734"
+    "sec:orgc3bd244"
+    "sec:org8574572"
+    "sec:org7aab773"
+    "sec:orge9e92ca")
    (LaTeX-add-bibliographies
     "inverse"))
  :latex)
