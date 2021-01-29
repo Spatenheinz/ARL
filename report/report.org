@@ -613,7 +613,7 @@ here the filename is the .arl file to compile. Notice opposite of the RIL compil
 - -o ~--output~: this option specifies the name of the produced .ril file. The default option is to have the same name as the .arl file.
 - -c ~--compile~: This flag is a little redundant but will specify which file to compile if it is not provided.
 
-When the RIL code has been generated, the program can be compiled to C code using the comRIL binary. We provide this in the project folder. Now one can compile the c file. The generated file can now be generated. If the output shows 4 lines, which shows some program statistics, the program terminated correctly. To make this project easier, we provide a Makefile to compile and run the example programs. Simply run
+When the RIL code has been generated, the program can be compiled to C code using the comRIL binary. We provide this in RIL-folder where it can be compiled itself\footnote{We need the entie folder as the was some weird problems with interpretation???}. Now one can compile the c file. The generated file can now be generated. If the output shows 4 lines, which shows some program statistics, the program terminated correctly. To make this project easier, we provide a Makefile to compile and run the example programs. Simply run
 #+BEGIN_SRC bash
 $ source makeEXc
 #+END_SRC
@@ -624,7 +624,8 @@ $ source cleanEXc
 #+END_SRC
 ** Code structure
 the project consists of the following
-- test-folder: This folder tests the parsing both that it works correctly and fails correctly. It also tests some of the other functions used in the code. These tests could have been a lot more extensive. Lastly, the test-folder has the examples-folder. This is where all the examples files are stored. In this folder, the comRIL compiler is also provided. This file is not original work of the author but can be credited to Mogensen.
+- test-folder: This folder tests the parsing both that it works correctly and fails correctly. It also tests some of the other functions used in the code. These tests could have been a lot more extensive. Lastly, the test-folder has the examples-folder. This is where all the examples files are stored.
+- RIL-folder: In this folder, the RIL compiler code is provided. This folder is not original work of the author but can be credited to Torben Ægidius Mogensen.
 - src-folder: This folder consists of the source-code to the ARL compiler. Moreover, it includes the following files:
     - Main: Here, we do the IO, read a file, call the parser and the evaluation, and writes to a file.
     - Ast: This defines the Abstract syntax tree.
