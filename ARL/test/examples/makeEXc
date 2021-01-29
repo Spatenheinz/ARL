@@ -1,3 +1,5 @@
+source ../../RIL/makeRILc
+
 stack build --exec "ARL-exe flip.arl"
 stack build --exec "ARL-exe flipN.arl"
 stack build --exec "ARL-exe flipU.arl"
@@ -7,14 +9,14 @@ stack build --exec "ARL-exe headDup.arl"
 stack build --exec "ARL-exe rev.arl"
 stack build --exec "ARL-exe abb.arl"
 
-./comRIL flip
-./comRIL flipN
-./comRIL flipU
-./comRIL head
-./comRIL dup
-./comRIL headDup
-./comRIL rev
-./comRIL abb
+../../RIL/comRIL flip
+../../RIL/comRIL flipN
+../../RIL/comRIL flipU
+../../RIL/comRIL head
+../../RIL/comRIL dup
+../../RIL/comRIL headDup
+../../RIL/comRIL rev
+../../RIL/comRIL abb
 
 gcc flip.c -o run_flip
 gcc flipN.c -o run_flipN

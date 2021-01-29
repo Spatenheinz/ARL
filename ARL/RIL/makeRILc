@@ -1,0 +1,11 @@
+mosmlc -c RIL.sml
+mosmlyac -v Parser.grm
+mosmlc -c Parser.sig
+mosmlc -c Parser.sml
+mosmllex Lexer.lex
+mosmlc -c Lexer.sml
+mosmlc -o RShow RShow.sml
+mosmlc -c Compiler.sig
+mosmlc -c Compiler.sml
+mosmlc -o comRIL comRIL.sml
+mosmlc -o test test.sml
