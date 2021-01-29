@@ -1,0 +1,4 @@
+stack clean
+rm -f *.ril
+rm -f run_*
+rm -f *.c

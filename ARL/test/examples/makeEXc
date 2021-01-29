@@ -1,0 +1,35 @@
+stack build --exec "ARL-exe flip.arl"
+stack build --exec "ARL-exe flipN.arl"
+stack build --exec "ARL-exe flipU.arl"
+stack build --exec "ARL-exe head.arl"
+stack build --exec "ARL-exe dup.arl"
+stack build --exec "ARL-exe headDup.arl"
+stack build --exec "ARL-exe rev.arl"
+stack build --exec "ARL-exe abb.arl"
+
+./comRIL flip
+./comRIL flipN
+./comRIL flipU
+./comRIL head
+./comRIL dup
+./comRIL headDup
+./comRIL rev
+./comRIL abb
+
+gcc flip.c -o run_flip
+gcc flipN.c -o run_flipN
+gcc flipU.c -o run_flipU
+gcc head.c -o run_head
+gcc dup.c -o run_dup
+gcc headDup.c -o run_headDup
+gcc rev.c -o run_rev
+gcc abb.c -o run_abb
+
+./run_flip
+./run_flipN
+./run_flipU
+./run_head
+./run_dup
+./run_headDup
+./run_rev
+./run_abb

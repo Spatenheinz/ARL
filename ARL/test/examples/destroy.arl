@@ -1,4 +1,0 @@
-fun destroy (x,x) = x
-
-fun main =
-    destroy

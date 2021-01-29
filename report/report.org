@@ -109,7 +109,7 @@ For the same reason, we introduce another pattern, namely a NilNil. Essentially 
 Lastly, we earlier described the usefulness of having two ways of creating pairs in the AST. Nevertheless, we only have one constructor for these as we can use some build-in functionality of megaparsec to enforce precedence without rewriting our grammar.
 ** Parsers
 *** Basics.
-Comments are based on f#. Line-comments is //, and block-comments is (* *). Identifiers can be any string starting with a lower character followed by any alphanumerical character, a dash, or an underscore.\footnote{any code described the following subsections could be found in appendix ?? or in the file Parser.hs}
+Comments are based on f#. Line-comments is //, and block-comments is (* *). Identifiers can be any string starting with a lower character followed by any alphanumerical character, a dash, or an underscore.\footnote{any code described the following subsections could be found in appendix\ref{appParse} or in the file Parser.hs}
 
 *** Functions
 As described, ARL has been chosen to have some strict indentation rules. This is forced to make the code readable. We must thus enforce the specific rules in the parser. Firstly we ensure that a function is always declared in column 0. This makes for a fine structure but might need to be changed in the future if we allow for nested function declarations. We will then consume the unnecessary garbage. A function will then either be a Main function or a pure function, and if we encounter a main function, we will then parse the proceeding as function calls. Here we enforce another indentation rule. A function call must reside directly under the function name of main (which is "main"), like in the example code in Figure\ref{flip}. We do not enforce a single main function in the parsing; instead, we handle this in the pre-processing.
@@ -254,10 +254,9 @@ $R\llb p_i = d_i^1 \cdots d_i^n o_i \rrb =$
 \end{figure}
 #+END_EXPORT
 
-Mogensen has developed a schematic to compile pattern-matching for functional programming languages such as ARL\cite{patterns}. The semantic of ARL, which will be covered in section\ref{secrules}-\ref{secdefs}. We will present these using valid RIL syntax, unlike the original scheme, which used C-like pseudocode. Figure\ref{rules} show how we evaluate functions and rules, where \(R \llb r_i \rrb \) is the translation of the Rules and \(f_i\), and  \(f_i'\) represent entry points and exit points respectively. Essentially a function will have its entry point and jump immediately to the first rule's entry. It will evaluate each rule sequentially until one is evaluated correctly. If its exit point has been reached, it will then terminate the function/subroutine (this is a simplification, which we will cover shortly). If no rules are matched, the function will assert a falsum, thus exiting with a failure, which essentially means a function cannot be called on any construct, only those matching the rules.
+Mogensen has developed a schematic to compile pattern-matching for functional programming languages such as ARL\cite{patterns}. The semantic of ARL will be covered in section\ref{secrules}-\ref{secdefs},  will be presented using valid RIL syntax, unlike the original scheme, which used C-like pseudocode. Examples of how this looks for flip can be found in appendix\ref{appFlip}. Figure\ref{rules} show how we evaluate functions and rules, where \(R \llb r_i \rrb \) is the translation of the Rules and \(f_i\), and  \(f_i'\) represent entry points and exit points respectively. Essentially a function will have its entry point and jump immediately to the first rule's entry. It will evaluate each rule sequentially until one is evaluated correctly. If its exit point has been reached, it will then terminate the function/subroutine (this is a simplification, which we will cover shortly). If no rules are matched, the function will assert a falsum, thus exiting with a failure, which essentially means a function cannot be called on any construct, only those matching the rules.
 \\
 Rules are introduced by their entry point f_i. From here, p_i, which is the rule's parameter pattern, will be evaluated. Essentially, when we evaluate a pattern in the forward direction, we try to move it out of A, which is the variable chosen for input and output as RIL, as stated, is parameterless. If A is correctly distributed to p_i, the value of A will be 0, and we can thus ignore the conditional jump. Then proceed to evaluate the body of the rule. On the other hand, is A not equal to 0, it means that the pattern was not correctly matched, and thus we want to make the jump, which leads us to the next rule. If the jump is not taken, the body can safely be evaluated. One might notice an exit point for f'_{i+1} after the let definitions have been evaluated. The reason for this is we have to evaluate the result of each previous rule to make sure the output is disjoint, meaning the function is injective. This concept is visualized in figure\ref{flowg}. It is also worth noting that when evaluating the result o_i, we evaluate it inversely. This can be seen as a construction of A based on o_i, whereas the \(P\llb p_i \rrb A \) could be the deconstruction of A into p_i. Lastly, we will take an unconditional jump to right before the previous rule's result to do the disjoint checking as described.
-
 #+BEGIN_EXPORT latex
 \begin{figure}[!htb]
 \includegraphics[width=\textwidth]{pattern.png}
@@ -588,7 +587,7 @@ data RilState = RilState { ruleNo :: Int
 Like in the parser, we have an ~eval~ function for each non-terminal in the AST. We use the do notation to generate the state etc., we need a specific function, and then we want to wrap the string inside the monad. We construct the strings by creating a list of strings, where each string is a RIL instruction, which then gets intercalated, with newlines to preserve structure in the RIL file. To make the code easier to read, we abstract away the operations. Functions with names v(EQ|NEQ)(0|x)(E|J) will be conditional jumps and entries, where v is equal or not to 0 or x. Plus and sub is the updates (+=) (-=) respectively. Swap is (<->). Furthermore, we have defined swap functions for each of the variables used in the 3 subroutines described in section\ref{ril} as these are used quite often, e.g., ~consP x~ swaps x with ~consP~.
 
 * Results
-*When it comes to the actual ARL compiler, it is still in its early stages. First and foremost, there are no optimizations implemented. One such optimization could be dead code removal, which would make the actual RIL file less cluttered. Furthermore, there is very little error-handling implemented in the ARL compiler itself. As described in section \ref{parsing} MegaParsec does fine error handling on its own, and we let the library handle any syntax error. We then check that functions are not defined multiple times, but the error-checking stops. This is because the compiler does not do a lot of static checks. However, the need for these checks is also minimal, when keeping in mind there are no types that need to be unified, type-checked, etc. However, one thing that is not ideal is that any errors that might occur will be RIL-errors and can be hard to identify right away. Nevertheless, error-handling is one area where the ARL compiler could improve significantly.
+When it comes to the actual ARL compiler, it is still in its early stages. First and foremost, there are no optimizations implemented. One such optimization could be dead code removal, which would make the actual RIL file less cluttered. Furthermore, there is very little error-handling implemented in the ARL compiler itself. As described in section \ref{parsing} MegaParsec does fine error handling on its own, and we let the library handle any syntax error. We then check that functions are not defined multiple times, but the error-checking stops. This is because the compiler does not do a lot of static checks. However, the need for these checks is also minimal, when keeping in mind there are no types that need to be unified, type-checked, etc. However, one thing that is not ideal is that any errors that might occur will be RIL-errors and can be hard to identify right away. Nevertheless, error-handling is one area where the ARL compiler could improve significantly.
 
 There are further downsides to the compiler in its current state. First and foremost, there is no adequate way to provide any program input other than lists. It means one needs to modify the RIL file to construct the desired structure in the A variable, which is highly undesirable since this a tedious and error-prone task. Despite these flaws, we successfully have implemented a compiler for ARL.
 
@@ -596,10 +595,11 @@ There are further downsides to the compiler in its current state. First and fore
 We provide some example programs to test the evaluation and show the expressiveness of ARL.
 
 - *flip*: This is the function used in the example. This program is an example of a program that needs some modification in the RIL as it is designed to work on a tree and not a list, despite it working on lists.
-- *flipN*: This function is a duplicate of flip but with the explicit disjoint patterns meaning in the ~| x = x~ case we specify that x cannot be equal to (l,r) as such ~| x<>(l,r) = x<>(fr,fl). Thus this works as a test for the neq pattern.
+- *flipN*: This function is a duplicate of flip but with the explicit disjoint patterns meaning in the ~| x = x~ case we specify that x cannot be equal to (l,r) as such ~| x<>(l,r) = x<>(fr,fl)~. Thus this works as a test for the neq pattern.
 - *dup*: Dup is a function that duplicates a structure. This program shows that we correctly can use a variable multiple times (in a simple manner). Called in reverse, it will test that the "forward" direction of multiple occurrences works as well.
 - *head*: This creates a pair of the head and a list using the ~as~-pattern. This program is interesting compared to the other functions we have looked at. This is because the head is an obviously non-invertible function in its classical sense. We must hereby pair it with some garbage to identify the original input. This shows some of the major limits with ARL and reversible computing in general. However, many "regular" functions can be expressed in ARL if we include some garbage.
 - *rev*: this shows that our loop construct works. Reverse is a fully invertible function, meaning we can use call and uncall interchangeably. We also can do this inside the loop of ~reverse~ which calls a helper function ~rev~.
+- *abb*: This shows that copy works for more complex cases.
 It should be clear that these programs show some of the interesting properties of reversible computing. One big advantage is that many functions are injective, and for partially invertible functions, we can limit ourselves only to define a function once, that can then do multiple things. An example of such would be zip and unzip functions. Clearly, these advantages hold for all reversible languages, and despite ARL's relatively low expressiveness, it has some clear advantages because of the backend. The heap manager's maximal sharing makes ARL a bit more manageable compared to RFUN etc., where one has to call a duplicate function every time a variable is used multiple times. On the other hand, ARL is still very limited in its structure. It can be difficult to make any larger programs since there is no obvious way to store results of function calls, and function calls are structured as a pipeline, which means functions in the same program must fit together. To be able to store variables would be highly valuable. Another place ARL could be improved is in the unexisting type-system. It would be very nice to be able to do arithmetic on integers etc. Lastly, since ARL is a functional language, it would make obvious sense to allow higher-order functions, potentially circumventing some of the limitations. Overall, ARL shows some great promise, and the syntax makes it quite easy to understand compared to other languages, but it is limited to do some fairly simple programs.
 * How to use - code structure
 The compiler is still a bit tedious to use in its current state since no good interface has been implemented. The ARL compiler will generate a RIL file, which has to be compiled by the RIL compiler, which then needs to be compiled using a C compiler. The Haskell project is built using stack and is thus required (The build details are defined in the packages.yaml file and might also work with cabal). The workflow of compiling and running an ARL file looks as follows:
@@ -615,14 +615,13 @@ here the filename is the .arl file to compile. Notice opposite of the RIL compil
 
 When the RIL code has been generated, the program can be compiled to C code using the comRIL binary. We provide this in the project folder. Now one can compile the c file. The generated file can now be generated. If the output shows 4 lines, which shows some program statistics, the program terminated correctly. To make this project easier, we provide a Makefile to compile and run the example programs. Simply run
 #+BEGIN_SRC bash
-$ make
+$ source makeEXc
 #+END_SRC
-to compile all the examples, or
-
+to compile and run all the files
+To clean the repositiory run
 #+BEGIN_SRC bash
-$ make filename
+$ source cleanEXc
 #+END_SRC
-without .arl to build and run a specific program.
 ** Code structure
 the project consists of the following
 - test-folder: This folder tests the parsing both that it works correctly and fails correctly. It also tests some of the other functions used in the code. These tests could have been a lot more extensive. Lastly, the test-folder has the examples-folder. This is where all the examples files are stored. In this folder, the comRIL compiler is also provided. This file is not original work of the author but can be credited to Mogensen.
@@ -637,14 +636,117 @@ the project consists of the following
     - Util: Holds functions to make the eval-functions more manageable.
     - Options: implements the compiler options.
 * Conclusion
-*** TODO
-
+We have in this report described the reversible functional language ARL. We have successfully reasoned about the need for a new language and its relation to the already present ones. We have given a formal overview of the language itself and presented some of the considerations taken to make the language more approachable by making the syntax so familiar to ML as possible. Likewise, we have shown some of the strict indentation rules forced upon the language to make it more readable. We have seen how the heap manager implemented in RIL can be used for ARL by following a particular compilation scheme presented by Mogensen\cite{patterns} and described in section\ref{semantics}. Using this heap manager, which uses maximal sharing, allows for features such as reuse of variables, ~as~-patterns, etc. We have reasoned about how this improves the programming experience compared to popular languages in the same category, namely RFUN. However, we have omitted to make any performance comparisons of any kind. This seemed like a reasonable choice as ARL still is very limited and should not perform very well since no optimizations of any kind have been considered. We have likewise seen some of the shortcomings in ARL. These mainly relate to the ease of use and general usefulness of ARL. Currently, ARL is severely limited from the pipeline-structure, along with the limited way of specifying data structures. Furthermore, we have argued for some possible extensions that would allow ARL to be quite a bit more expressive in nature. These are features such as arithmetic, higher-order functions, etc.
 # report ends here
 \bibliographystyle{unsrt}
 \bibliography{inverse}
 \newpage
 \begin{appendix}
+* example-translation (flip)
+:PROPERTIES:
+:UNNUMBERED: nil
+:CUSTOM_ID: appFlip
+:END:
+#+BEGIN_EXPORT latex
+\begin{figure}[!htb]
+\begin{lstlisting}
+$F\llb f\; r_1 | r_2 \rrb =$
+    begin flip
+    skip
+    --> flip_entry_1
+    flip_exit_1 <--
+    skip
+    end flip
+$R\llb (l,r) = d_i^1, d_i^2 (fr,fl) \rrb =$
+    flip_entry_1 <--
+    $P\llb (l,r) \rrb A =$
+        A & 3 --> l_rflip1;
+        A <-> consP;
+        uncall cons;
+        t1l_r <-> consA;
+        t2l_r <-> consD;
+        l <-> t1l_r;
+        t1l_r != 0 --> l_rflip2;
+        r <-> t2l_r;
+        t2l_r == 0 --> l_rflip3;
+        l_rflip2 <-- t1l_r != 0;
+        l <-> t1l_r;
+        t1l_r <-> consA;
+        t2l_r <-> consD;
+        call cons;
+        A <-> consP;
+        l_rflip3 <-- A == 0;
+        l_rflip1 <-- A & 3;
+    A != 0 --> flip_entry_2;
+    $D \llb \textup{let} fl = flip l \textup{in} \rrb =$
+        $\overline{P\llb l \rrb A} =$
+            l <-> A;
+        r <-> M[stackP];
+        stackP += 4;
+        call flip;
+        stackP -= 4;
+        r <-> M[stackP];
+        $P\llb fl \rrb A =$
+            fl <-> A;
+        assert A == 0;
+    $D \llb \textup{let} fl = flip l \textup{in} \rrb =$
+        $\overline{P\llb r \rrb A} =$
+            r <-> A;
+        fl <-> M[stackP];
+        stackP += 4;
+        call flip;
+        stackP -= 4;
+        fl <-> M[stackP];
+        $P\llb fr \rrb A =$
+            fr <-> A;
+        assert A == 0;
+    flip_exit_2 <-- A != 0;
+\end{lstlisting}
+\end{figure}
+\begin{figure}[!htb]
+\begin{lstlisting}
+    $\overline{P\llb (fr,fl) \rrb A} =$
+        A & 3 --> inv_fr_flflip8;
+        A == 0 --> inv_fr_flflip10;
+        A <-> consP;
+        uncall cons;
+        inv_t_flip8fr_fl <-> consA;
+        inv_t_flip9fr_fl <-> consD;
+        fr <-> inv_t_flip8fr_fl;
+        inv_t_flip8fr_fl != 0 --> inv_fr_flflip9;
+        inv_fr_flflip10 <-- inv_t_flip9fr_fl == 0;
+        fl <-> inv_t_flip9fr_fl;
+        inv_fr_flflip9 <-- inv_t_flip8fr_fl != 0;
+        fr <-> inv_t_flip8fr_fl;
+        inv_t_flip8fr_fl <-> consA;
+        inv_t_flip9fr_fl <-> consD;
+        call cons;
+        A <-> consP;
+        inv_fr_flflip8 <-- A & 3;
+    skip
+    --> flip_exit_1
+$R\llb x = x \rrb =$
+    flip_entry_2 <--
+    $P\llb x \rrb A =$
+        x <-> A;
+    A != 0 --> flip_entry_3;
+    flip_exit_3 <-- A != 0;
+    $\overline{P\llb x \rrb A} =$
+        x <-> A;
+    skip
+    --> flip_exit_2
+flip_entry_3 <--
+assert A != A
+--> flip_exit_3
+\end{lstlisting}
+\end{figure}
+#+END_EXPORT
+\newline
 * Parser code
+:PROPERTIES:
+:UNNUMBERED: nil
+:CUSTOM_ID: appParse
+:END:
 #+BEGIN_SRC haskell
 funP :: Parser (Either Main Func)
 funP = L.nonIndented scn $ L.lineFold scn p
@@ -685,7 +787,8 @@ defP ind = try call <|> try loop <?> "Let def"
 #+END_SRC
 #+BEGIN_SRC haskell
 patternP :: Parser Pattern
-patternP = try as <|> try neq <|> try nilnil <|> var <|> const' <|> try pair <|> parLE <?> "Pattern"
+patternP = try as <|> try neq <|> try nilnil <|>
+           var <|> const' <|> try pair <|> parLE <?> "Pattern"
   where
     nilnil = rword "[[]]" >> return NilNil
     const' = (integer <|> nils) <&> Const
